@@ -102,6 +102,24 @@ LEX.createSniCallback(opts)     // this will call letsencrypt.renew and letsencr
   , memorizeFor: <1 day>        // how long to wait before checking the disk for updated certificates
   , renewWithin: <3 days>       // the first possible moment the certificate staggering should begin
   , failedWait:  <5 minutes>    // how long to wait before trying again if the certificate registration failed
+
+
+                                // registrations are NOT approved automatically by default due to security concerns
+  , approveRegistration: func   // (someone can spoof servername indication to your server and cause you to be rate-limited)
+                                // but you can implement handling of them if you wish
+                                // (note that you should probably call the callback immediately with a tlsContext)
+                                //
+                                // default    function (hostname, cb) { cb(null, null); }
+                                //
+                                // example    function (hostname, cb) {
+                                //              cb(null, { domains: [hostname], agreeTos: true, email: 'user@example.com' });
+                                //            }
+
+
+  , handleRenewFailure: func    // renewals are automatic, but sometimes they may fail. If that happens, you should handle it
+                                // (note that renewals happen in the background)
+                                //
+                                // default    function (err, letsencrypt, hostname, certInfo) {}
   }
 
 
