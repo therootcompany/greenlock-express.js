@@ -23,7 +23,8 @@ npm install --save letsencrypt-express
 ```javascript
 'use strict';
 
-var le = require('letsencrypt-express');
+// Note: using staging server url, remove .testing() for production
+var le = require('letsencrypt-express').testing();
 var express = require('express');
 var app = express();
 
@@ -32,7 +33,7 @@ app.use('/', function (req, res) {
 });
 
 le.create('/etc/letsencrypt', app).listen([80], [443, 5001], function () {
-  console.log("ENCRYPT **ALL** THE DOMAINS!");
+  console.log("ENCRYPT __ALL__ THE DOMAINS!");
 });
 ```
 
@@ -52,6 +53,7 @@ app.use('/', function (req, res) {
 var results = le.create({
   configDir: '/etc/letsencrypt'
 , onRequest: app
+, server: require('letsencrypt').productionServerUrl
 }).listen(
 
   // you can give just the port, or expand out to the full options
@@ -91,11 +93,14 @@ Partially defined values will be merged with the defaults.
 Setting the value to `false` will, in many cases (as documented), disable the defaults.
 
 ```
-configDir: string               //
+configDir: string               // string     the letsencrypt configuration path (de facto /etc/letsencrypt)
+                                //
+                                // default    os.homedir() + '/letsencrypt/etc'
 
 
 webrootPath: string             // string     a path to a folder where temporary challenge files will be stored and read
-                                // default    os.tmpdir() + path.sep + 'acme-challenge'
+                                //
+                                // default    os.tmpdir() + '/acme-challenge'
 
 
 getChallenge: func | false      // false      do not handle getChallenge
@@ -126,6 +131,11 @@ sniCallback: func               // func       replace the default sniCallback ha
 letsencrypt: object             // object     configure the letsencrypt object yourself and pass it in directly
                                 //
                                 // default    we create the letsencrypt object using parameters you specify
+
+server: url                     // url        use letsencrypt.productionServerUrl (i.e. https://acme-v01.api.letsencrypt.org/directory)
+                                //            or letsencrypt.stagingServerUrl     (i.e. https://acme-staging.api.letsencrypt.org/directory)
+                                //
+                                // default    production
 ```
 
 ## Heroku?
