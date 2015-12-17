@@ -1,0 +1,40 @@
+{
+  "name": "letsencrypt-express",
+  "version": "1.0.0",
+  "description": "Free SSL and Automatic HTTPS for node.js with Express, Connect, and other middleware systems",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Daplie/letsencrypt-express.git"
+  },
+  "keywords": [
+    "acme",
+    "free",
+    "ssl",
+    "tls",
+    "https",
+    "letsencrypt",
+    "le",
+    "boulder",
+    "express",
+    "expressjs",
+    "connect",
+    "middleware"
+  ],
+  "author": "AJ ONeal <coolaj86@gmail.com> (https://coolaj86.com/)",
+  "license": "(MIT OR Apache-2.0)",
+  "bugs": {
+    "url": "https://github.com/Daplie/letsencrypt-express/issues"
+  },
+  "homepage": "https://github.com/Daplie/letsencrypt-express#readme",
+  "dependencies": {
+    "letsencrypt": "^1.1.0",
+    "mkdirp": "^0.5.1"
+  }
+}
