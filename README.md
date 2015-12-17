@@ -52,7 +52,9 @@ You can run **registration** manually:
 ```bash
 npm install -g letsencrypt-cli
 
-letsencrypt certonly --standalone --agree-tos --domains example.com --email user@example.com
+letsencrypt certonly --standalone \
+  --config-dir ~/letsencrypt/etc \
+  --agree-tos --domains example.com --email user@example.com
 ```
 
 (note that the `--webrootPath` option is also available if you don't want to shut down your webserver to get the cert)
