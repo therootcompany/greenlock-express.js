@@ -18,13 +18,18 @@ npm install --save letsencrypt-express
 
 // Note: using staging server url, remove .testing() for production
 var lex = require('letsencrypt-express').testing();
+
 var express = require('express');
 var app = express();
 
-app.use('/', function (req, res) {
+
+// A happy little express app
+app.use(function (req, res) {
   res.send({ success: true });
 });
 
+
+// assumes ~/letsencrypt/etc as the configDir and ports 80, 443, and 5001 by default
 lex.create(app).listen();
 ```
 
