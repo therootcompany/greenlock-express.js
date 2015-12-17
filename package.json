@@ -34,6 +34,7 @@
   },
   "homepage": "https://github.com/Daplie/letsencrypt-express#readme",
   "dependencies": {
+    "homedir": "^0.6.0",
     "letsencrypt": "^1.1.0",
     "mkdirp": "^0.5.1"
   }
