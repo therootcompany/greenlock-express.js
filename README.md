@@ -2,6 +2,32 @@
 
 Free SSL and Automatic HTTPS for node.js with Express, Connect, and other middleware systems.
 
+
+## Install
+
+```
+npm install --save letsencrypt-express
+```
+
+## Usage
+
+**Minimal**
+
+```javascript
+'use strict';
+
+// Note: using staging server url, remove .testing() for production
+var lex = require('letsencrypt-express').testing();
+var express = require('express');
+var app = express();
+
+app.use('/', function (req, res) {
+  res.send({ success: true });
+});
+
+lex.create(app).listen();
+```
+
 ## How Automatic?
 
 **Extremely**.
@@ -43,39 +69,12 @@ Or you can approve registrations with the `opts.approveRegistration(domain, cb)`
 }
 ```
 
-In  you would need to provide a handler 
-to approve a registration (otherwise an attacker could send bad SNI packets and cause you to be
-rate-limited on the ACME server).
-
-In **production** I recommend running the commandline client with the same directory as the webserver.
-After the **one time** setup, it will renew automatically.
-
-## Install
-
-```
-npm install --save letsencrypt-express
-```
+(if you don't check and simply complete the callback, an attacker will spoof SNI packets with bad hostnames
+and that will cause you to be rate-limited and or blocked from the ACME server)
 
 ## Examples
 
-**Minimal**
-
-```javascript
-'use strict';
-
-// Note: using staging server url, remove .testing() for production
-var lex = require('letsencrypt-express').testing();
-var express = require('express');
-var app = express();
-
-app.use('/', function (req, res) {
-  res.send({ success: true });
-});
-
-lex.create(app).listen();
-```
-
-## < 140 Characters
+### < 140 Characters
 
 Let's Encrypt in 128 characters, with spaces!
 
