@@ -2,14 +2,6 @@
 
 Free SSL and Automatic HTTPS for node.js with Express, Connect, and other middleware systems
 
-## Coming Soon
-
-We're working on it
-
-## In the meantime
-
-See [examples/express-minimal.js](https://github.com/Daplie/node-letsencrypt/blob/master/examples/express-minimal.js)
-
 ## Install
 
 ```
@@ -33,6 +25,14 @@ app.use('/', function (req, res) {
 });
 
 lex.create(app).listen();
+```
+
+## < 140 Characters
+
+Let's Encrypt in 128 characters, with spaces!
+
+```
+node -e 'require("letsencrypt-express").testing().create( require('express')().use(function (_, r) { r.end("Hi!") }) ).listen()'
 ```
 
 ### Slightly more verbose
