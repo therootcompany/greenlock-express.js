@@ -1,6 +1,54 @@
 # LetsEncrypt Express
 
-Free SSL and Automatic HTTPS for node.js with Express, Connect, and other middleware systems
+Free SSL and Automatic HTTPS for node.js with Express, Connect, and other middleware systems.
+
+## How Automatic?
+
+**Extremely**.
+
+* **renewals** are *fully automatic* and happen in the *background*, with **no downtime**
+* **registrations** are automatic in *testing*, but require a **approval callback** in *production*
+
+**testing mode**
+
+All you have to do is start the webserver and then visit it at it's domain name.
+The certificate will be retrieved automatically. Renewals and Registrations are automatic.
+
+**production mode**
+
+You can run **registration** manually:
+
+```bash
+npm install -g letsencrypt-cli
+
+letsencrypt certonly --standalone --agree-tos --domains example.com --email user@example.com
+```
+
+(note that the `--webrootPath` option is also available if you don't want to shut down your webserver to get the cert)
+
+Or you can approve registrations with the `opts.approveRegistration(domain, cb)`callback:
+
+```javascript
+{ configDir: '...'
+// ...
+, approveRegistration: function (hostname, cb) {
+    // check a database or something, get the user
+    // show them the agreement that you've already downloaded
+    cb(null, {
+      domains: [hostname]
+    , email: 'user@example.com'
+    , agreeTos: true
+    });
+  }
+}
+```
+
+In  you would need to provide a handler 
+to approve a registration (otherwise an attacker could send bad SNI packets and cause you to be
+rate-limited on the ACME server).
+
+In **production** I recommend running the commandline client with the same directory as the webserver.
+After the **one time** setup, it will renew automatically.
 
 ## Install
 
@@ -35,7 +83,7 @@ Let's Encrypt in 128 characters, with spaces!
 node -e 'require("letsencrypt-express").testing().create( require('express')().use(function (_, r) { r.end("Hi!") }) ).listen()'
 ```
 
-### Slightly more verbose
+### More realistic
 
 ```javascript
 'use strict';
@@ -49,7 +97,25 @@ app.use('/', function (req, res) {
   res.send({ success: true });
 });
 
-lex.create('./letsencrypt.config', app).listen([80], [443, 5001], function () {
+lex.create({
+  configDir: './letsencrypt.config'                 // ~/letsencrypt, /etc/letsencrypt, whatever you want
+  
+, onRequest: app                                    // your express app (or plain node http app)
+
+, letsencrypt: null                                 // you can provide you own instance of letsencrypt
+                                                    // if you need to configure it (with an agreeToTerms
+                                                    // callback, for example)
+                                                    
+, approveRegistration: function (hostname, cb) {    // PRODUCTION MODE needs this function, but only if you want
+                                                    // automatic registration (usually not necessary)
+                                                    // renewals for registered domains will still be automatic
+    cb(null, {
+      domains: [hostname]
+    , email: 'user@example.com'
+    , agreeTos: true              // you 
+    });
+  }
+}).listen([80], [443, 5001], function () {
   console.log("ENCRYPT __ALL__ THE DOMAINS!");
 });
 ```
