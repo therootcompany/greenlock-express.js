@@ -24,7 +24,7 @@ npm install --save letsencrypt-express
 'use strict';
 
 // Note: using staging server url, remove .testing() for production
-var le = require('letsencrypt-express').testing();
+var lex = require('letsencrypt-express').testing();
 var express = require('express');
 var app = express();
 
@@ -32,7 +32,7 @@ app.use('/', function (req, res) {
   res.send({ success: true });
 });
 
-le.create('/etc/letsencrypt', app).listen([80], [443, 5001], function () {
+lex.create('/etc/letsencrypt', app).listen([80], [443, 5001], function () {
   console.log("ENCRYPT __ALL__ THE DOMAINS!");
 });
 ```
@@ -42,7 +42,7 @@ le.create('/etc/letsencrypt', app).listen([80], [443, 5001], function () {
 ```javascript
 'use strict';
 
-var le = require('letsencrypt-express');
+var lex = require('letsencrypt-express');
 var express = require('express');
 var app = express();
 
@@ -50,7 +50,7 @@ app.use('/', function (req, res) {
   res.send({ success: true });
 });
 
-var results = le.create({
+var results = lex.create({
   configDir: '/etc/letsencrypt'
 , onRequest: app
 , server: require('letsencrypt').productionServerUrl
@@ -82,6 +82,21 @@ Note: you don't need to create websockets for the plain ports.
 ```
 results.tlsServers.forEach(function (server) {
 });
+```
+
+## API
+
+```
+LEX.create(options)             // checks options and sets up defaults. returns object with `listen`
+                                // (it was really just done this way to appeal to what people are used to seeing)
+
+  lex.listen(plain, tls, fn)    // actually creates the servers and causes them to listen
+
+LEX.createSniCallback(le)       // receives an instance of letsencrypt, returns an SNICallback handler for https.createServer()
+
+
+LEX.getChallenge(opts, hostname, key cb)  // uses `opts.webrootPath` to read from the filesystem
+
 ```
 
 ## Options
