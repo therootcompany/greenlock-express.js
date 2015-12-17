@@ -87,16 +87,26 @@ results.tlsServers.forEach(function (server) {
 ## API
 
 ```
-LEX.create(options)             // checks options and sets up defaults. returns object with `listen`
-                                // (it was really just done this way to appeal to what people are used to seeing)
+                                // checks options and sets up defaults. returns object with `listen`
+LEX.create(options)             // (it was really just done this way to appeal to what people are used to seeing)
 
   lex.listen(plain, tls, fn)    // actually creates the servers and causes them to listen
 
-LEX.createSniCallback(le)       // receives an instance of letsencrypt, returns an SNICallback handler for https.createServer()
+
+                                // receives an instance of letsencrypt, returns an SNICallback handler for https.createServer()
+LEX.createSniCallback(opts)     // this will call letsencrypt.renew and letsencrypt.register as appropriate
+                                // it will randomly stagger renewals such that they don't all happen at once on boot
+                                // or at any other time. registrations will be handled as per `handleRegistration`
+  opts = {
+    letsencrypt: <obj>          // letsencrypt instance
+  , memorizeFor: <1 day>        // how long to wait before checking the disk for updated certificates
+  , renewWithin: <3 days>       // the first possible moment the certificate staggering should begin
+  , failedWait:  <5 minutes>    // how long to wait before trying again if the certificate registration failed
+  }
 
 
-LEX.getChallenge(opts, hostname, key cb)  // uses `opts.webrootPath` to read from the filesystem
-
+                                // uses `opts.webrootPath` to read from the filesystem
+LEX.getChallenge(opts, hostname, key cb)  
 ```
 
 ## Options
