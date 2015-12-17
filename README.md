@@ -1,6 +1,6 @@
 # LetsEncrypt Express
 
-Free SSL and Automatic HTTPS for node.js with Express, Connect, and other middleware systems.
+Free SSL and managed or automatic HTTPS for node.js with Express, Connect, and other middleware systems.
 
 
 ## Install
