@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Welcome to :hostname!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self';">
+    <link rel="stylesheet" type="text/css" href="./bootstrap.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron">
+        <h1>Add a Site</h1>
+        <form class="js-add-site">
+          <label>Domain</label>: <input type="text" class="js-domains" placeholder="ex: example.com,www.example.com">
+          <br/>
+          <label>Email</label>: <input type="email" class="js-email" placeholder="ex: user@example.com">
+          <br/>
+          <label>LE Server</label>: <input type="text" class="js-server" placeholder="ex: https://acme-staging.api.letsencrypt.org/directory" value="https://acme-v01.api.letsencrypt.org/directory">
+          <br/>
+          <label><input type="checkbox" class="js-agree-tos"> Agree to Let's Encrypt Terms of Service?</label>
+          <br/>
+          <button class="btn btn-primary" type="submit">Add Site</button>
+        </form>
+      </div>
+      <div class="row">
+        <p>Sites:
+        <div class="js-hostnames-container">
+          <ul class="js-hostnames">
+            <li class="js-hostname"></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <script src="./jquery.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
