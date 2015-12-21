@@ -52,6 +52,6 @@
   },
   "dependencies": {
     "homedir": "^0.6.0",
-    "letsencrypt": "^1.3.0"
+    "letsencrypt": "^1.4.0"
   }
 }
