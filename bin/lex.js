@@ -105,6 +105,10 @@ cli.main(function(_, options) {
     }
 
     function configureForHttps() {
+      if (args.debug) {
+        console.log('[LEX] configureForHttps');
+        console.log(args);
+      }
       le.setConfig(args, cb);
     }
   }
@@ -155,6 +159,8 @@ cli.main(function(_, options) {
     , fullchainPath: LE.fullchainPath
     , certPath: LE.certPath
     , chainPath: LE.chainPath
+    , renewalPath: LE.renewalPath
+    , accountsDir: LE.accountsDir
     }, {
       setChallenge: challengeStore.set
     , removeChallenge: challengeStore.remove
@@ -166,7 +172,7 @@ cli.main(function(_, options) {
     vhosts['localhost.daplie.com'] = createConfigurator(le, vhosts);
 
     app.use('/', function (req, res, next) {
-      var hostname = req.hostname.replace(/^www\./, '');
+      var hostname = (req.hostname||req.headers.host||'').replace(/^www\./, '');
       var pubDir = path.join(vhostDir, hostname);
 
       if (vhosts[hostname]) {
@@ -205,9 +211,7 @@ cli.main(function(_, options) {
           });
         });
       }
-    }).listen([80], [443, 5001], function () {
-      console.log("ENCRYPT __ALL__ THE DOMAINS!");
-    });
+    }).listen([80], [443, 5001]);
   }
 
   /*
