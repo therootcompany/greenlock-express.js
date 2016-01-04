@@ -86,7 +86,7 @@ and that will cause you to be rate-limited and or blocked from the ACME server)
 Let's Encrypt in 128 characters, with spaces!
 
 ```
-node -e 'require("letsencrypt-express").testing().create( require('express')().use(function (_, r) { r.end("Hi!") }) ).listen()'
+node -e 'require("letsencrypt-express").testing().create( require("express")().use(function (_, r) { r.end("Hi!") }) ).listen()'
 ```
 
 ### More realistic
