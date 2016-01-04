@@ -1,6 +1,6 @@
 {
   "name": "letsencrypt-express",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Free SSL and Automatic HTTPS for node.js with Express, Connect, and other middleware systems",
   "main": "index.js",
   "bin": {
