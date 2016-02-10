@@ -135,6 +135,7 @@ cli.main(function(_, options) {
 
       configure(le, data, function (err, configs) {
         if (err) {
+          console.error("[LEX/bin] configure");
           console.error(err.stack);
           next(err);
           return;
