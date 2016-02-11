@@ -50,7 +50,7 @@
   },
   "dependencies": {
     "homedir": "^0.6.0",
-    "letsencrypt": "^1.4.1",
+    "letsencrypt": "^1.4.2",
     "localhost.daplie.com-certificates": "^1.1.2",
     "mkdirp": "^0.5.1"
   }
