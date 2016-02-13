@@ -2,7 +2,6 @@
 
 Free SSL and managed or automatic HTTPS for node.js with Express, Connect, and other middleware systems.
 
-
 ## Install
 
 ```
@@ -95,7 +94,7 @@ node -e 'require("letsencrypt-express").testing().create( require("express")().u
 'use strict';
 
 // Note: using staging server url, remove .testing() for production
-var lex = require('letsencrypt-express').testing();
+var LEX = require('letsencrypt-express').testing();
 var express = require('express');
 var app = express();
 
@@ -103,22 +102,22 @@ app.use('/', function (req, res) {
   res.send({ success: true });
 });
 
-lex.create({
+LEX.create({
   configDir: './letsencrypt.config'                 // ~/letsencrypt, /etc/letsencrypt, whatever you want
-  
+
 , onRequest: app                                    // your express app (or plain node http app)
 
 , letsencrypt: null                                 // you can provide you own instance of letsencrypt
                                                     // if you need to configure it (with an agreeToTerms
                                                     // callback, for example)
-                                                    
+
 , approveRegistration: function (hostname, cb) {    // PRODUCTION MODE needs this function, but only if you want
                                                     // automatic registration (usually not necessary)
                                                     // renewals for registered domains will still be automatic
     cb(null, {
       domains: [hostname]
     , email: 'user@example.com'
-    , agreeTos: true              // you 
+    , agreeTos: true              // you
     });
   }
 }).listen([80], [443, 5001], function () {
@@ -164,6 +163,42 @@ console.log(results.plainServers);
 console.log(results.tlsServers);
 ```
 
+### Use with raw http / https modules
+
+Let's say you want to redirect all http to https.
+
+```
+var http = require('http');
+var https = require('https');
+var LEX = require('letsencrypt-express');
+var LE = require('letsencrypt');
+
+var lex = LEX.create({
+  configDir: __dirname + '/letsencrypt.config'
+, approveRegistration: function (hostname, cb) {
+    cb(null, {
+      domains: [hostname]
+    , email: 'user@example.com'
+    , agreeTos: true
+    });
+  }
+});
+
+http.createServer(LEX.createAcmeResponder(lex, function redirectHttps(req, res) {
+  res.setHeader('Location', 'https://' + req.headers.host + req.url);
+  res.end('<!-- Hello Mr Developer! Please use HTTPS instead -->');
+}));
+
+
+var app = require('express')();
+
+app.use('/', function (req, res) {
+  res.end('Hello!');
+});
+
+https.createServer(lex.httpsOptions, LEX.createAcmeResponder(lex, app));
+```
+
 ### WebSockets with Let's Encrypt
 
 Note: you don't need to create websockets for the plain ports.
@@ -180,7 +215,7 @@ function onConnection(ws) {
   var location = url.parse(ws.upgradeReq.url, true);
   // you might use location.query.access_token to authenticate or share sessions
   // or ws.upgradeReq.headers.cookie (see http://stackoverflow.com/a/16395220/151312)
-  
+
   ws.on('message', function incoming(message) {
     console.log('received: %s', message);
   });
@@ -229,7 +264,20 @@ LEX.createSniCallback(opts)     // this will call letsencrypt.renew and letsencr
 
 
                                 // uses `opts.webrootPath` to read from the filesystem
-LEX.getChallenge(opts, hostname, key cb)  
+LEX.getChallenge(opts, hostname, key cb)
+
+LEX.createAcmeResponder(opts, fn)  // this will return the necessary request handler for /.well-known/acme-challenges
+                                   // which then calls `fn` (such as express app) to complete the request
+                                   //
+                                   // opts     lex instance created with LEX.create(opts)
+                                   //         more generally, any object with a compatible `getChallenge` will work:
+                                   //         `lex.getChallenge(opts, domain, key, function (err, val) {})`
+                                   //
+                                   // fn       function (req, res) {
+                                   //            console.log(req.method, req.url);
+                                   //
+                                   //            res.end('Hello!');
+                                   //          }
 ```
 
 ## Options
@@ -284,6 +332,77 @@ server: url                     // url        use letsencrypt.productionServerUr
                                 //            or letsencrypt.stagingServerUrl     (i.e. https://acme-staging.api.letsencrypt.org/directory)
                                 //
                                 // default    production
+```
+
+### Fullest Example Ever
+
+Here's absolutely every option and function exposed
+
+```
+var http = require('http');
+var https = require('https');
+var LEX = require('letsencrypt-express');
+var LE = require('letsencrypt');
+var lex;
+
+lex = LEX.create({
+  webrootPath: '/tmp/.well-known/acme-challenge'
+
+, lifetime: 90 * 24 * 60 * 60 * 1000    // expect certificates to last 90 days
+, failedWait: 5 * 60 * 1000             // if registering fails wait 5 minutes before trying again
+, renewWithin: 3 * 24 * 60 * 60 * 1000  // renew at least 3 days before expiration
+, memorizeFor: 1 * 24 * 60 * 60 * 1000  // keep certificates in memory for 1 day
+
+, approveRegistration: function (hostname, cb) {
+    cb(null, {
+      domains: [hostname]
+    , email: 'user@example.com'
+    , agreeTos: true
+    });
+  }
+
+, handleRenewFailure: function (err, hostname, certInfo) {
+    console.error("ERROR: Failed to renew domain '", hostname, "':");
+    if (err) {
+      console.error(err.stack || err);
+    }
+    if (certInfo) {
+      console.error(certInfo);
+    }
+  }
+
+, letsencrypt: LE.create(
+    // options
+    { configDir: './letsencrypt.config'
+
+    , server: LE.productionServerUrl
+    , privkeyPath: LE.privkeyPath
+    , fullchainPath: LE.fullchainPath
+    , certPath: LE.certPath
+    , chainPath: LE.chainPath
+    , renewalPath: LE.renewalPath
+    , accountsDir: LE.accountsDir
+
+    , debug: false
+    }
+
+    // handlers
+  , { setChallenge: LEX.setChallenge
+    , removeChallenge: LEX.removeChallenge
+    }
+  )
+
+, debug: false
+});
+
+http.createServer(LEX.createAcmeResponder(lex, function (req, res) {
+  res.setHeader('Location', 'https://' + req.headers.host + req.url);
+  res.end('<!-- Hello Mr Developer! Please use HTTPS instead -->');
+}));
+
+https.createServer(lex.httpsOptions, LEX.createAcmeResponder(lex, function (req, res) {
+  res.end('Hello!');
+}));
 ```
 
 ## Heroku?

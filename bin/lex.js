@@ -151,7 +151,7 @@ cli.main(function(_, options) {
   function startServers() {
     // Note: using staging server url, remove .testing() for production
     var LE = require('letsencrypt');
-    var challengeStore = require('../lib/challenge-handlers');
+    var LEX = require('../');
     var le = LE.create({
       configDir: configDir
     , manual: true
@@ -163,10 +163,9 @@ cli.main(function(_, options) {
     , renewalPath: LE.renewalPath
     , accountsDir: LE.accountsDir
     }, {
-      setChallenge: challengeStore.set
-    , removeChallenge: challengeStore.remove
+      setChallenge: LEX.setChallenge
+    , removeChallenge: LEX.removeChallenge
     });
-    var lex = require('../');
     var app = express();
     var vhosts = {};
 
@@ -192,7 +191,7 @@ cli.main(function(_, options) {
     });
     app.use('/', express.static(path.join(__dirname, '..', 'lib', 'public')));
 
-    lex.create({
+    LEX.create({
       onRequest: app
     , configDir: configDir
     , letsencrypt: le
