@@ -171,7 +171,6 @@ Let's say you want to redirect all http to https.
 var http = require('http');
 var https = require('https');
 var LEX = require('letsencrypt-express');
-var LE = require('letsencrypt');
 
 var lex = LEX.create({
   configDir: __dirname + '/letsencrypt.config'
@@ -183,6 +182,7 @@ var lex = LEX.create({
     });
   }
 });
+
 
 http.createServer(LEX.createAcmeResponder(lex, function redirectHttps(req, res) {
   res.setHeader('Location', 'https://' + req.headers.host + req.url);
@@ -198,6 +198,12 @@ app.use('/', function (req, res) {
 
 https.createServer(lex.httpsOptions, LEX.createAcmeResponder(lex, app));
 ```
+
+In short these are the only functions you need to be aware of:
+
+* `LEX.create(opts)`
+  * `{ configDir: pathname, approveRegistration: func }`
+* `LEX.createAcmeResponder(lex, onRequest)`
 
 ### WebSockets with Let's Encrypt
 
@@ -374,6 +380,7 @@ lex = LEX.create({
 , letsencrypt: LE.create(
     // options
     { configDir: './letsencrypt.config'
+    , manual: true
 
     , server: LE.productionServerUrl
     , privkeyPath: LE.privkeyPath
