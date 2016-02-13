@@ -125,6 +125,47 @@ LEX.create({
 });
 ```
 
+### Use with raw http / https modules
+
+Let's say you want to redirect all http to https.
+
+```
+var LEX = require('letsencrypt-express');
+var lex = LEX.create({
+  configDir: __dirname + '/letsencrypt.config'
+, approveRegistration: function (hostname, cb) {
+    cb(null, {
+      domains: [hostname]
+    , email: 'CHANGE_ME' // 'user@example.com'
+    , agreeTos: true
+    });
+  }
+});
+
+
+var http = require('http');
+http.createServer(LEX.createAcmeResponder(lex, function redirectHttps(req, res) {
+  res.setHeader('Location', 'https://' + req.headers.host + req.url);
+  res.end('<!-- Hello Developer Person! Please use HTTPS instead -->');
+})).listen(80);
+
+
+var app = require('express')();
+app.use('/', function (req, res) {
+  res.end('Hello!');
+});
+
+var https = require('https');
+https.createServer(lex.httpsOptions, LEX.createAcmeResponder(lex, app)).listen(443);
+```
+
+In short these are the only functions you need to be aware of:
+
+* `LEX.create(opts)`
+  * `{ configDir: pathname, approveRegistration: func }`
+* `LEX.createAcmeResponder(lex, onRequest)`
+
+
 ### More Options Exposed
 
 ```javascript
@@ -162,48 +203,6 @@ var results = lex.create({
 console.log(results.plainServers);
 console.log(results.tlsServers);
 ```
-
-### Use with raw http / https modules
-
-Let's say you want to redirect all http to https.
-
-```
-var http = require('http');
-var https = require('https');
-var LEX = require('letsencrypt-express');
-
-var lex = LEX.create({
-  configDir: __dirname + '/letsencrypt.config'
-, approveRegistration: function (hostname, cb) {
-    cb(null, {
-      domains: [hostname]
-    , email: 'user@example.com'
-    , agreeTos: true
-    });
-  }
-});
-
-
-http.createServer(LEX.createAcmeResponder(lex, function redirectHttps(req, res) {
-  res.setHeader('Location', 'https://' + req.headers.host + req.url);
-  res.end('<!-- Hello Mr Developer! Please use HTTPS instead -->');
-}));
-
-
-var app = require('express')();
-
-app.use('/', function (req, res) {
-  res.end('Hello!');
-});
-
-https.createServer(lex.httpsOptions, LEX.createAcmeResponder(lex, app));
-```
-
-In short these are the only functions you need to be aware of:
-
-* `LEX.create(opts)`
-  * `{ configDir: pathname, approveRegistration: func }`
-* `LEX.createAcmeResponder(lex, onRequest)`
 
 ### WebSockets with Let's Encrypt
 
