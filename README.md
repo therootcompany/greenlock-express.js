@@ -110,7 +110,7 @@ app.use('/', function (req, res) {
   res.end('Hello!');
 });
 
-var https = require('https');
+var https = require('http2');
 https.createServer(lex.httpsOptions, LEX.createAcmeResponder(lex, app)).listen(443);
 ```
 
