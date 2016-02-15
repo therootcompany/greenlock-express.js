@@ -86,6 +86,10 @@ Let's say you want to redirect all http to https.
 
 ```javascript
 var LEX = require('letsencrypt-express');
+var http = require('http');
+var https = require('http2');
+// NOTE: you could use the old https module if for some reason you don't want to support modern browsers
+
 var lex = LEX.create({
   configDir: __dirname + '/letsencrypt.config'
 , approveRegistration: function (hostname, cb) {
@@ -97,21 +101,25 @@ var lex = LEX.create({
   }
 });
 
+function redirectHttp() {
+  http.createServer(LEX.createAcmeResponder(lex, function redirectHttps(req, res) {
+    res.setHeader('Location', 'https://' + req.headers.host + req.url);
+    res.end('<!-- Hello Developer Person! Please use HTTPS instead -->');
+  })).listen(80);
+}
 
-var http = require('http');
-http.createServer(LEX.createAcmeResponder(lex, function redirectHttps(req, res) {
-  res.setHeader('Location', 'https://' + req.headers.host + req.url);
-  res.end('<!-- Hello Developer Person! Please use HTTPS instead -->');
-})).listen(80);
+function serveHttps() {
+  var app = require('express')();
+  
+  app.use('/', function (req, res) {
+    res.end('Hello!');
+  });
+  
+  https.createServer(lex.httpsOptions, LEX.createAcmeResponder(lex, app)).listen(443);
+}
 
-
-var app = require('express')();
-app.use('/', function (req, res) {
-  res.end('Hello!');
-});
-
-var https = require('http2');
-https.createServer(lex.httpsOptions, LEX.createAcmeResponder(lex, app)).listen(443);
+redirectHttp();
+serveHttps();
 ```
 
 In short these are the only functions you need to be aware of:
