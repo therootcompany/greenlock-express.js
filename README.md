@@ -6,6 +6,7 @@ Free SSL and managed or automatic HTTPS for node.js with Express, Koa, Connect, 
   * **registrations** require an **approval callback** in *production*
 * Automatic Renewal (around 80 days)
   * **renewals** are *fully automatic* and happen in the *background*, with **no downtime**
+* Automatic vhost / virtual hosting
 
 All you have to do is start the webserver and then visit it at it's domain name.
 
@@ -17,17 +18,19 @@ npm install --save letsencrypt-express
 
 ## Usage
 
+* standalone
+* express
+* http / https
+* http / http2
+* koa
+
+### Setup
+
 ```javascript
 'use strict';
 
 // Note: using staging server url, remove .testing() for production
-var lex = require('letsencrypt-express').testing();
-
-// A happy little express app
-var app = require('express')();
-app.use(function (req, res) {
-  res.send({ success: true });
-});
+var LEX = require('letsencrypt-express').testing();
 
 function approveRegistration(hostname, cb) {
   // Note: this is the place to check your database to get the user associated with this domain
@@ -38,17 +41,10 @@ function approveRegistration(hostname, cb) {
   });
 }
 
-lex.create({
-  configDir: '/etc/letsencrypt'
-, onRequest: app
+var lex = LEX.create({
+  configDir: require('os').homedir() + '/letsencrypt/etc'
 , approveRegistration: approveRegistration                  // leave `null` to disable automatic registration
-}).listen([80], [443, 5001], function () {
-  console.log("ENCRYPT __ALL__ THE DOMAINS!");
 });
-
-// NOTE:
-// `~/letsencrypt/etc` is the default `configDir`
-// ports 80, 443, and 5001 are the default ports to listen on.
 ```
 
 **WARNING**: If you don't do any checks and simply complete `approveRegistration` callback, an attacker will spoof SNI packets with bad hostnames and that will cause you to be rate-limited and or blocked from the ACME server.
@@ -65,32 +61,48 @@ letsencrypt certonly --standalone \
 
 Note: the `--webrootPath` option is also available if you don't want to shut down your webserver to get the cert.
 
-## Examples
+### Standalone
 
-* https / express
-* http2 / express
-* koa
+```javascript
+lex.onRequest = function (req, res) {
+  res.end('Hello, World!');
+};
+
+lex.listen([80], [443, 5001], function () {
+  console.log("ENCRYPT __ALL__ THE DOMAINS!");
+});
+
+// NOTE:
+// `~/letsencrypt/etc` is the default `configDir`
+// ports 80, 443, and 5001 are the default ports to listen on.
+```
+
+## Express
+
+```javascript
+// A happy little express app
+var app = require('express')();
+
+app.use(function (req, res) {
+  res.send({ success: true });
+});
+
+lex.onRequest = app;
+
+lex.listen([80], [443, 5001], function () {
+  var protocol = ('requestCert' in this) ? 'https': 'http';
+  console.log("Listening at " + protocol + '://localhost:' + this.address().port);
+});
+```
 
 ### Use with raw http / https modules
 
 Let's say you want to redirect all http to https.
 
 ```javascript
-var LEX = require('letsencrypt-express');
 var http = require('http');
 var https = require('http2');
 // NOTE: you could use the old https module if for some reason you don't want to support modern browsers
-
-var lex = LEX.create({
-  configDir: __dirname + '/letsencrypt.config'
-, approveRegistration: function (hostname, cb) {
-    cb(null, {
-      domains: [hostname]
-    , email: 'CHANGE_ME' // 'user@example.com'
-    , agreeTos: true
-    });
-  }
-});
 
 function redirectHttp() {
   http.createServer(LEX.createAcmeResponder(lex, function redirectHttps(req, res) {
@@ -113,49 +125,19 @@ redirectHttp();
 serveHttps();
 ```
 
-In short these are the only functions you need to be aware of:
-
-* `LEX.create(opts)`
-  * `{ configDir: pathname, approveRegistration: func }`
-* `LEX.createAcmeResponder(lex, onRequest)`
-
-### Using with Koa
+### Let's Encrypt with Koa
 
 ```javascript
-'use strict';
-
-// Note: using staging server url, remove .testing() for production
-var lex = require('letsencrypt-express').testing();
 var koa = require('koa');
 var app = koa();
 
-
-app.use(function *(){
+app.use(function *() {
   this.body = 'Hello World';
 });
 
-lex.create({
-  configDir: './letsencrypt.config'                 // ~/letsencrypt, /etc/letsencrypt, whatever you want
-
-, onRequest: app.callback()                         // your koa app callback
-
-, letsencrypt: null                                 // you can provide you own instance of letsencrypt
-                                                    // if you need to configure it (with an agreeToTerms
-                                                    // callback, for example)
-
-, approveRegistration: function (hostname, cb) {    // PRODUCTION MODE needs this function, but only if you want
-                                                    // automatic registration (usually not necessary)
-                                                    // renewals for registered domains will still be automatic
-    cb(null, {
-      domains: [hostname]
-    , email: 'user@example.com'
-    , agreeTos: true              // you
-    });
-  }
-}).listen([], [4443], function () {
-  var server = this;
-  var protocol = ('requestCert' in server) ? 'https': 'http';
-  console.log("Listening at " + protocol + '://localhost:' + this.address().port);
+var server = require('http2').createServer(lex.httpsOptions, LEX.createAcmeResponder(lex, app.callback()));
+server.listen(443, function () {
+ console.log('Listening at https://localhost:' + this.address().port);
 });
 ```
 
@@ -165,11 +147,12 @@ Note: you don't need to create websockets for the plain ports.
 
 ```javascript
 var WebSocketServer = require('ws').Server;
+var https = require('http2');
+var server = https.createServer(lex.httpsOptions, LEX.createAcmeResponder(lex, app));
+var wss = new WebSocketServer({ server: server });
 
-results.tlsServers.forEach(function (server) {
-  var wss = new WebSocketServer({ server: server });
-  wss.on('connection', onConnection);
-});
+wss.on('connection', onConnection);
+server.listen(443);
 
 function onConnection(ws) {
   var location = url.parse(ws.upgradeReq.url, true);
