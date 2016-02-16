@@ -361,13 +361,13 @@ console.log(results.tlsServers);
 ```
 
 
-### Fullest Example Ever
+### All Options Exposed
 
 Here's absolutely every option and function exposed
 
-```
+```javascript
 var http = require('http');
-var https = require('https');
+var https = require('http2');
 var LEX = require('letsencrypt-express');
 var LE = require('letsencrypt');
 var lex;
