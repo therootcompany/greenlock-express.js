@@ -24,7 +24,7 @@ npm install --save letsencrypt-express
 * http / http2
 * koa
 
-### Setup
+### Setup (same for all examples) 
 
 ```javascript
 'use strict';
@@ -47,9 +47,7 @@ var lex = LEX.create({
 });
 ```
 
-**WARNING**: If you don't do any checks and simply complete `approveRegistration` callback, an attacker will spoof SNI packets with bad hostnames and that will cause you to be rate-limited and or blocked from the ACME server.
-
-Alternatively, You can run **registration** manually:
+WARNING: If you don't do any checks and simply complete `approveRegistration` callback, an attacker will spoof SNI packets with bad hostnames and that will cause you to be rate-limited and or blocked from the ACME server. Alternatively, You can run registration *manually*:
 
 ```bash
 npm install -g letsencrypt-cli
@@ -57,9 +55,9 @@ npm install -g letsencrypt-cli
 letsencrypt certonly --standalone \
   --config-dir ~/letsencrypt/etc \
   --agree-tos --domains example.com --email user@example.com
+  
+# Note: the '--webrootPath' option is also available if you don't want to shut down your webserver to get the cert.
 ```
-
-Note: the `--webrootPath` option is also available if you don't want to shut down your webserver to get the cert.
 
 ### Standalone
 
