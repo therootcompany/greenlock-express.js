@@ -32,18 +32,16 @@ npm install --save letsencrypt-express
 // Note: using staging server url, remove .testing() for production
 var LEX = require('letsencrypt-express').testing();
 
-function approveRegistration(hostname, cb) {
-  // Note: this is the place to check your database to get the user associated with this domain
-  cb(null, {
-    domains: [hostname]
-  , email: 'CHANGE_ME' // user@example.com
-  , agreeTos: true
-  });
-}
-
 var lex = LEX.create({
   configDir: require('os').homedir() + '/letsencrypt/etc'
-, approveRegistration: approveRegistration                  // leave `null` to disable automatic registration
+, approveRegistration: function (hostname, cb) { // leave `null` to disable automatic registration
+    // Note: this is the place to check your database to get the user associated with this domain
+    cb(null, {
+      domains: [hostname]
+    , email: 'CHANGE_ME' // user@example.com
+    , agreeTos: true
+    });
+  }
 });
 ```
 
