@@ -80,6 +80,10 @@ and that will cause you to be rate-limited and or blocked from the ACME server)
 
 ## Examples
 
+* https / express
+* http2 / express
+* koa
+
 ### Use with raw http / https modules
 
 Let's say you want to redirect all http to https.
@@ -128,6 +132,46 @@ In short these are the only functions you need to be aware of:
   * `{ configDir: pathname, approveRegistration: func }`
 * `LEX.createAcmeResponder(lex, onRequest)`
 
+### Using with Koa
+
+```javascript
+'use strict';
+
+// Note: using staging server url, remove .testing() for production
+var lex = require('letsencrypt-express').testing();
+var koa = require('koa');
+var app = koa();
+
+
+app.use(function *(){
+  this.body = 'Hello World';
+});
+
+lex.create({
+  configDir: './letsencrypt.config'                 // ~/letsencrypt, /etc/letsencrypt, whatever you want
+
+, onRequest: app.callback()                         // your koa app callback
+
+, letsencrypt: null                                 // you can provide you own instance of letsencrypt
+                                                    // if you need to configure it (with an agreeToTerms
+                                                    // callback, for example)
+
+, approveRegistration: function (hostname, cb) {    // PRODUCTION MODE needs this function, but only if you want
+                                                    // automatic registration (usually not necessary)
+                                                    // renewals for registered domains will still be automatic
+    cb(null, {
+      domains: [hostname]
+    , email: 'user@example.com'
+    , agreeTos: true              // you
+    });
+  }
+}).listen([], [4443], function () {
+  var server = this;
+  var protocol = ('requestCert' in server) ? 'https': 'http';
+  console.log("Listening at " + protocol + '://localhost:' + this.address().port);
+});
+```
+
 ### < 140 Characters
 
 Let's Encrypt in 128 characters, with spaces!
@@ -170,46 +214,6 @@ LEX.create({
   }
 }).listen([80], [443, 5001], function () {
   console.log("ENCRYPT __ALL__ THE DOMAINS!");
-});
-```
-
-### Using with Koa
-
-```javascript
-'use strict';
-
-// Note: using staging server url, remove .testing() for production
-var lex = require('letsencrypt-express').testing();
-var koa = require('koa');
-var app = koa();
-
-
-app.use(function *(){
-  this.body = 'Hello World';
-});
-
-lex.create({
-  configDir: './letsencrypt.config'                 // ~/letsencrypt, /etc/letsencrypt, whatever you want
-
-, onRequest: app.callback()                         // your koa app callback
-
-, letsencrypt: null                                 // you can provide you own instance of letsencrypt
-                                                    // if you need to configure it (with an agreeToTerms
-                                                    // callback, for example)
-
-, approveRegistration: function (hostname, cb) {    // PRODUCTION MODE needs this function, but only if you want
-                                                    // automatic registration (usually not necessary)
-                                                    // renewals for registered domains will still be automatic
-    cb(null, {
-      domains: [hostname]
-    , email: 'user@example.com'
-    , agreeTos: true              // you
-    });
-  }
-}).listen([], [4443], function () {
-  var server = this;
-  var protocol = ('requestCert' in server) ? 'https': 'http';
-  console.log("Listening at " + protocol + '://localhost:' + this.address().port);
 });
 ```
 
