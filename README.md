@@ -1,6 +1,6 @@
 # LetsEncrypt Express
 
-Free SSL and managed or automatic HTTPS for node.js with Express, Connect, and other middleware systems.
+Free SSL and managed or automatic HTTPS for node.js with Express, Koa, Connect, and other middleware systems.
 
 ## Install
 
@@ -170,6 +170,46 @@ LEX.create({
   }
 }).listen([80], [443, 5001], function () {
   console.log("ENCRYPT __ALL__ THE DOMAINS!");
+});
+```
+
+### Using with Koa
+
+```javascript
+'use strict';
+
+// Note: using staging server url, remove .testing() for production
+var lex = require('letsencrypt-express').testing();
+var koa = require('koa');
+var app = koa();
+
+
+app.use(function *(){
+  this.body = 'Hello World';
+});
+
+lex.create({
+  configDir: './letsencrypt.config'                 // ~/letsencrypt, /etc/letsencrypt, whatever you want
+
+, onRequest: app.callback()                         // your koa app callback
+
+, letsencrypt: null                                 // you can provide you own instance of letsencrypt
+                                                    // if you need to configure it (with an agreeToTerms
+                                                    // callback, for example)
+
+, approveRegistration: function (hostname, cb) {    // PRODUCTION MODE needs this function, but only if you want
+                                                    // automatic registration (usually not necessary)
+                                                    // renewals for registered domains will still be automatic
+    cb(null, {
+      domains: [hostname]
+    , email: 'user@example.com'
+    , agreeTos: true              // you
+    });
+  }
+}).listen([], [4443], function () {
+  var server = this;
+  var protocol = ('requestCert' in server) ? 'https': 'http';
+  console.log("Listening at " + protocol + '://localhost:' + this.address().port);
 });
 ```
 
