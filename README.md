@@ -1,6 +1,13 @@
 # LetsEncrypt Express
 
-Free SSL and managed or automatic HTTPS for node.js with Express, Koa, Connect, and other middleware systems.
+Free SSL and managed or automatic HTTPS for node.js with Express, Koa, Connect, Hapi, and all other middleware systems.
+
+* Automatic Registration via SNI (`httpsOptions.SNICallback`)
+  * **registrations** require an **approval callback** in *production*
+* Automatic Renewal (around 80 days)
+  * **renewals** are *fully automatic* and happen in the *background*, with **no downtime**
+
+All you have to do is start the webserver and then visit it at it's domain name.
 
 ## Install
 
@@ -10,43 +17,43 @@ npm install --save letsencrypt-express
 
 ## Usage
 
-**Minimal**
-
 ```javascript
 'use strict';
 
 // Note: using staging server url, remove .testing() for production
 var lex = require('letsencrypt-express').testing();
 
-var express = require('express');
-var app = express();
-
-
 // A happy little express app
+var app = require('express')();
 app.use(function (req, res) {
   res.send({ success: true });
 });
 
+function approveRegistration(hostname, cb) {
+  // Note: this is the place to check your database to get the user associated with this domain
+  cb(null, {
+    domains: [hostname]
+  , email: 'CHANGE_ME' // user@example.com
+  , agreeTos: true
+  });
+}
 
-// assumes ~/letsencrypt/etc as the configDir and ports 80, 443, and 5001 by default
-lex.create(app).listen();
+lex.create({
+  configDir: '/etc/letsencrypt'
+, onRequest: app
+, approveRegistration: approveRegistration                  // leave `null` to disable automatic registration
+}).listen([80], [443, 5001], function () {
+  console.log("ENCRYPT __ALL__ THE DOMAINS!");
+});
+
+// NOTE:
+// `~/letsencrypt/etc` is the default `configDir`
+// ports 80, 443, and 5001 are the default ports to listen on.
 ```
 
-## How Automatic?
+**WARNING**: If you don't do any checks and simply complete `approveRegistration` callback, an attacker will spoof SNI packets with bad hostnames and that will cause you to be rate-limited and or blocked from the ACME server.
 
-**Extremely**.
-
-* **renewals** are *fully automatic* and happen in the *background*, with **no downtime**
-* **registrations** are automatic in *testing*, but require a **approval callback** in *production*
-
-**testing mode**
-
-All you have to do is start the webserver and then visit it at it's domain name.
-The certificate will be retrieved automatically. Renewals and Registrations are automatic.
-
-**production mode**
-
-You can run **registration** manually:
+Alternatively, You can run **registration** manually:
 
 ```bash
 npm install -g letsencrypt-cli
@@ -56,27 +63,7 @@ letsencrypt certonly --standalone \
   --agree-tos --domains example.com --email user@example.com
 ```
 
-(note that the `--webrootPath` option is also available if you don't want to shut down your webserver to get the cert)
-
-Or you can approve registrations with the `opts.approveRegistration(domain, cb)`callback:
-
-```javascript
-{ configDir: '...'
-// ...
-, approveRegistration: function (hostname, cb) {
-    // check a database or something, get the user
-    // show them the agreement that you've already downloaded
-    cb(null, {
-      domains: [hostname]
-    , email: 'user@example.com'
-    , agreeTos: true
-    });
-  }
-}
-```
-
-(if you don't check and simply complete the callback, an attacker will spoof SNI packets with bad hostnames
-and that will cause you to be rate-limited and or blocked from the ACME server)
+Note: the `--webrootPath` option is also available if you don't want to shut down your webserver to get the cert.
 
 ## Examples
 
@@ -170,89 +157,6 @@ lex.create({
   var protocol = ('requestCert' in server) ? 'https': 'http';
   console.log("Listening at " + protocol + '://localhost:' + this.address().port);
 });
-```
-
-### < 140 Characters
-
-Let's Encrypt in 128 characters, with spaces!
-
-```
-node -e 'require("letsencrypt-express").testing().create( require("express")().use(function (_, r) { r.end("Hi!") }) ).listen()'
-```
-
-### More realistic
-
-```javascript
-'use strict';
-
-// Note: using staging server url, remove .testing() for production
-var LEX = require('letsencrypt-express').testing();
-var express = require('express');
-var app = express();
-
-app.use('/', function (req, res) {
-  res.send({ success: true });
-});
-
-LEX.create({
-  configDir: './letsencrypt.config'                 // ~/letsencrypt, /etc/letsencrypt, whatever you want
-
-, onRequest: app                                    // your express app (or plain node http app)
-
-, letsencrypt: null                                 // you can provide you own instance of letsencrypt
-                                                    // if you need to configure it (with an agreeToTerms
-                                                    // callback, for example)
-
-, approveRegistration: function (hostname, cb) {    // PRODUCTION MODE needs this function, but only if you want
-                                                    // automatic registration (usually not necessary)
-                                                    // renewals for registered domains will still be automatic
-    cb(null, {
-      domains: [hostname]
-    , email: 'user@example.com'
-    , agreeTos: true              // you
-    });
-  }
-}).listen([80], [443, 5001], function () {
-  console.log("ENCRYPT __ALL__ THE DOMAINS!");
-});
-```
-
-### More Options Exposed
-
-```javascript
-'use strict';
-
-var lex = require('letsencrypt-express');
-var express = require('express');
-var app = express();
-
-app.use('/', function (req, res) {
-  res.send({ success: true });
-});
-
-var results = lex.create({
-  configDir: '/etc/letsencrypt'
-, onRequest: app
-, server: require('letsencrypt').productionServerUrl
-}).listen(
-
-  // you can give just the port, or expand out to the full options
-  [80, { port: 8080, address: 'localhost', onListening: function () { console.log('http://localhost'); } }]
-
-  // you can give just the port, or expand out to the full options
-, [443, 5001, { port: 8443, address: 'localhost' }]
-
-  // this is pretty much the default onListening handler
-, function onListening() {
-    var server = this;
-    var protocol = ('requestCert' in server) ? 'https': 'http';
-    console.log("Listening at " + protocol + '://localhost:' + this.address().port);
-  }
-);
-
-// In case you need access to the raw servers (i.e. using websockets)
-console.log(results.plainServers);
-console.log(results.tlsServers);
 ```
 
 ### WebSockets with Let's Encrypt
@@ -389,6 +293,92 @@ server: url                     // url        use letsencrypt.productionServerUr
                                 //
                                 // default    production
 ```
+
+## More Examples
+
+### < 140 Characters
+
+Let's Encrypt in 128 characters, with spaces!
+
+```
+node -e 'require("letsencrypt-express").testing().create( require("express")().use(function (_, r) { r.end("Hi!") }) ).listen()'
+```
+
+### More realistic
+
+```javascript
+'use strict';
+
+// Note: using staging server url, remove .testing() for production
+var LEX = require('letsencrypt-express').testing();
+var express = require('express');
+var app = express();
+
+app.use('/', function (req, res) {
+  res.send({ success: true });
+});
+
+LEX.create({
+  configDir: './letsencrypt.config'                 // ~/letsencrypt, /etc/letsencrypt, whatever you want
+
+, onRequest: app                                    // your express app (or plain node http app)
+
+, letsencrypt: null                                 // you can provide you own instance of letsencrypt
+                                                    // if you need to configure it (with an agreeToTerms
+                                                    // callback, for example)
+
+, approveRegistration: function (hostname, cb) {    // PRODUCTION MODE needs this function, but only if you want
+                                                    // automatic registration (usually not necessary)
+                                                    // renewals for registered domains will still be automatic
+    cb(null, {
+      domains: [hostname]
+    , email: 'user@example.com'
+    , agreeTos: true              // you
+    });
+  }
+}).listen([80], [443, 5001], function () {
+  console.log("ENCRYPT __ALL__ THE DOMAINS!");
+});
+```
+
+### More Options Exposed
+
+```javascript
+'use strict';
+
+var lex = require('letsencrypt-express');
+var express = require('express');
+var app = express();
+
+app.use('/', function (req, res) {
+  res.send({ success: true });
+});
+
+var results = lex.create({
+  configDir: '/etc/letsencrypt'
+, onRequest: app
+, server: require('letsencrypt').productionServerUrl
+}).listen(
+
+  // you can give just the port, or expand out to the full options
+  [80, { port: 8080, address: 'localhost', onListening: function () { console.log('http://localhost'); } }]
+
+  // you can give just the port, or expand out to the full options
+, [443, 5001, { port: 8443, address: 'localhost' }]
+
+  // this is pretty much the default onListening handler
+, function onListening() {
+    var server = this;
+    var protocol = ('requestCert' in server) ? 'https': 'http';
+    console.log("Listening at " + protocol + '://localhost:' + this.address().port);
+  }
+);
+
+// In case you need access to the raw servers (i.e. using websockets)
+console.log(results.plainServers);
+console.log(results.tlsServers);
+```
+
 
 ### Fullest Example Ever
 
