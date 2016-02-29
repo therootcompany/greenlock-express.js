@@ -60,6 +60,10 @@ letsencrypt certonly --standalone \
 
 ### Standalone
 
+```bash
+npm install --save http2
+```
+
 ```javascript
 lex.onRequest = function (req, res) {
   res.end('Hello, World!');
@@ -75,6 +79,10 @@ lex.listen([80], [443, 5001], function () {
 ```
 
 ## Express
+
+```bash
+npm install --save http2
+```
 
 ```javascript
 // A happy little express app
