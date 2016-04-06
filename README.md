@@ -21,7 +21,7 @@ npm install --save letsencrypt-express
 * standalone
 * express
 * http / https
-* http / http2
+* http / http2 / spdy
 * koa
 
 ### Setup (same for all examples) 
@@ -60,10 +60,6 @@ letsencrypt certonly --standalone \
 
 ### Standalone
 
-```bash
-npm install --save http2
-```
-
 ```javascript
 lex.onRequest = function (req, res) {
   res.end('Hello, World!');
@@ -81,7 +77,7 @@ lex.listen([80], [443, 5001], function () {
 ## Express
 
 ```bash
-npm install --save http2
+npm install --save spdy
 ```
 
 ```javascript
@@ -106,7 +102,7 @@ Let's say you want to redirect all http to https.
 
 ```javascript
 var http = require('http');
-var https = require('http2');
+var https = require('spdy');
 // NOTE: you could use the old https module if for some reason you don't want to support modern browsers
 
 function redirectHttp() {
@@ -161,7 +157,7 @@ Note: you don't need to create websockets for the plain ports.
 
 ```javascript
 var WebSocketServer = require('ws').Server;
-var https = require('http2');
+var https = require('spdy');
 var server = https.createServer(lex.httpsOptions, LEX.createAcmeResponder(lex, app));
 var wss = new WebSocketServer({ server: server });
 
@@ -383,7 +379,7 @@ Here's absolutely every option and function exposed
 
 ```javascript
 var http = require('http');
-var https = require('http2');
+var https = require('spdy');
 var LEX = require('letsencrypt-express');
 var LE = require('letsencrypt');
 var lex;
