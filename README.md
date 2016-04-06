@@ -133,16 +133,25 @@ serveHttps();
 ### Let's Encrypt with Koa
 
 ```javascript
+var http = require('http');
+var https = require('spdy');       // Note: some have reported trouble with `http2` and success with `spdy`
 var koa = require('koa');
 var app = koa();
+var redirectHttps = koa().use(require('koa-force-ssl').callback();
 
 app.use(function *() {
   this.body = 'Hello World';
 });
 
-var server = require('http2').createServer(lex.httpsOptions, LEX.createAcmeResponder(lex, app.callback()));
+var server = https.createServer(lex.httpsOptions, LEX.createAcmeResponder(lex, app.callback()));
+var redirectServer = http.createServer(LEX.createAcmeResponder(lex, redirectHttps)));
+
 server.listen(443, function () {
  console.log('Listening at https://localhost:' + this.address().port);
+});
+
+redirectServer.listen(80, function () {
+  console.log('Redirecting insecure traffic from http://localhost:' + this.address().port + ' to https');
 });
 ```
 
