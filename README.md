@@ -143,7 +143,7 @@ var http = require('http');
 var https = require('spdy');       // Note: some have reported trouble with `http2` and success with `spdy`
 var koa = require('koa');
 var app = koa();
-var redirectHttps = koa().use(require('koa-sslify').callback();
+var redirectHttps = koa().use(require('koa-sslify')()).callback();
 
 app.use(function *() {
   this.body = 'Hello World';
