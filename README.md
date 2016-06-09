@@ -91,7 +91,8 @@ npm install --save spdy
 
 ```javascript
 // A happy little express app
-var app = require('express')();
+var express = require('express');
+var app = express();
 
 app.use(function (req, res) {
   res.send({ success: true });
