@@ -42,15 +42,20 @@ npm install --save letsencrypt-express
 Using .testing() will overwrite the debug flag with true */ 
 var LEX = require('letsencrypt-express').testing();
 
+// Change these two lines!
+var DOMAIN = 'myservice.example.com';
+var EMAIL = 'user@example.com';
+
 var lex = LEX.create({
   configDir: require('os').homedir() + '/letsencrypt/etc'
-, approveRegistration: function (hostname, cb) { // leave `null` to disable automatic registration
-    // Note: this is the place to check your database to get the user associated with this domain
-    cb(null, {
-      domains: [hostname]
-    , email: 'CHANGE_ME' // user@example.com
-    , agreeTos: true
-    });
+, approveRegistration: function (hostname, approve) { // leave `null` to disable automatic registration
+    if (hostname === DOMAIN) { // Or check a database or list of allowed domains
+      approve(null, {
+        domains: [DOMAIN]
+      , email: EMAIL
+      , agreeTos: true
+      });
+    }
   }
 });
 ```
