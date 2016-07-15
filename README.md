@@ -7,6 +7,14 @@
 | [letsencrypt-hapi](https://github.com/Daplie/letsencrypt-hapi)
 |
 
+# HELP WANTED
+
+There are a number of easy to fix bugs (the most important of which is basically requires tracing some functions, doing some console.log-ing and returning the right type of object).
+
+If you've got some free cycles to help, I can guide you through the process, I'm just still too busy to fix them right now and the workarounds work mentioned in the comments work.
+
+Email me coolaj86@gmail.com if you want to help.
+
 # LetsEncrypt Express
 
 Free SSL and managed or automatic HTTPS for node.js with Express, Koa, Connect, Hapi, and all other middleware systems.
