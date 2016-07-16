@@ -131,7 +131,7 @@ var https = require('spdy');
 function redirectHttp() {
   http.createServer(LEX.createAcmeResponder(lex, function redirectHttps(req, res) {
     res.setHeader('Location', 'https://' + req.headers.host + req.url);
-    res.statusCode = 302;
+    res.statusCode = 302; // use 307 if you want to redirect requests with POST, DELETE or PUT action.
     res.end('<!-- Hello Developer Person! Please use HTTPS instead -->');
   })).listen(80);
 }
