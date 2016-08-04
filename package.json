@@ -1,6 +1,6 @@
 {
   "name": "letsencrypt-express",
-  "version": "1.1.5",
+  "version": "1.2.0",
   "description": "Free SSL and Automatic HTTPS for node.js with Express, Connect, and other middleware systems",
   "main": "index.js",
   "bin": {
@@ -50,7 +50,7 @@
   },
   "dependencies": {
     "homedir": "^0.6.0",
-    "letsencrypt": "^1.4.2",
+    "letsencrypt": "^1.5.0",
     "localhost.daplie.com-certificates": "^1.1.2",
     "mkdirp": "^0.5.1"
   }
