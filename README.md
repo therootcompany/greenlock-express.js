@@ -17,6 +17,8 @@ Email me coolaj86@gmail.com if you want to help.
 
 # LetsEncrypt Express
 
+[![Join the chat at https://gitter.im/Daplie/letsencrypt-express](https://badges.gitter.im/Daplie/letsencrypt-express.svg)](https://gitter.im/Daplie/letsencrypt-express?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Free SSL and managed or automatic HTTPS for node.js with Express, Koa, Connect, Hapi, and all other middleware systems.
 
 * Automatic Registration via SNI (`httpsOptions.SNICallback`)
