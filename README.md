@@ -17,6 +17,8 @@ Email me coolaj86@gmail.com if you want to help.
 
 # LetsEncrypt Express
 
+[![Join the chat at https://gitter.im/Daplie/letsencrypt-express](https://badges.gitter.im/Daplie/letsencrypt-express.svg)](https://gitter.im/Daplie/letsencrypt-express?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Free SSL and managed or automatic HTTPS for node.js with Express, Koa, Connect, Hapi, and all other middleware systems.
 
 * Automatic Registration via SNI (`httpsOptions.SNICallback`)
@@ -131,7 +133,7 @@ var https = require('spdy');
 function redirectHttp() {
   http.createServer(LEX.createAcmeResponder(lex, function redirectHttps(req, res) {
     res.setHeader('Location', 'https://' + req.headers.host + req.url);
-    res.statusCode = 302;
+    res.statusCode = 302; // use 307 if you want to redirect requests with POST, DELETE or PUT action.
     res.end('<!-- Hello Developer Person! Please use HTTPS instead -->');
   })).listen(80);
 }
