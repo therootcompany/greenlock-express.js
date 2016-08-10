@@ -1,12 +1,11 @@
 'use strict';
 
 var cluster = require('cluster');
-var master;
-var numCores = 2; // // Math.max(2, require('os').cpus().length)
-var i;
 
-if (cluster.isMaster) {
-  master = require('./master').create({
+function runMaster() {
+  var numCores = 2; // // Math.max(2, require('os').cpus().length)
+  var i;
+  var master = require('./master').create({
     debug: true
 
 
@@ -32,8 +31,9 @@ if (cluster.isMaster) {
     master.addWorker(cluster.fork());
   }
 }
-else {
-  require('./worker').create({
+
+function runWorker() {
+  var worker = require('./worker').create({
     debug: true
 
     // We want both to renew well before the expiration date
@@ -42,6 +42,13 @@ else {
   , notBefore: 15 * 24 * 60 * 60 * 1000
   , notAfter: 10 * 24 * 60 * 60 * 1000 // optional
 
+    /*
+  , getChallenge: function (domain, token, cb) {
+      // the default behavior is to pass a message to master,
+      // but if needed for performance, that can be overwritten here
+      cb(null, );
+    }
+    */
   , approveDomains: function (opts, certs, cb) {
       // opts = { domains, email, agreeTos, tosUrl }
       // certs = { subject, altnames, expiresAt, issuedAt }
@@ -68,4 +75,20 @@ else {
       cb(null, { options: opts });
     }
   });
+
+  function app(req, res) {
+    res.end("Hello, World!");
+  }
+
+  var plainServer = require('http').createServer(worker.handleAcmeAndRedirectToHttps);
+  var server = require('https').createServer(worker.httpsOptions, worker.handleAcmeAndUse(app));
+  plainServer.listen(80);
+  server.listen(443);
+}
+
+if (cluster.isMaster) {
+  runMaster();
+}
+else {
+  runWorker();
 }
