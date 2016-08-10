@@ -1,0 +1,71 @@
+'use strict';
+
+var cluster = require('cluster');
+var master;
+var numCores = 2; // // Math.max(2, require('os').cpus().length)
+var i;
+
+if (cluster.isMaster) {
+  master = require('./master').create({
+    debug: true
+
+
+
+  , server: 'staging'
+
+
+
+  , approveDomains: function (options, certs, cb) {
+      // Depending on your setup it may be more efficient
+      // for you to implement the approveDomains function
+      // in your master or in your workers.
+      //
+      // Since we implement it in the worker (below) in this example
+      // we'll give it an immediate approval here in the master
+      cb(null, { options: options, certs: certs });
+    }
+  });
+
+
+
+  for (i = 0; i < numCores; i += 1) {
+    master.addWorker(cluster.fork());
+  }
+}
+else {
+  require('./worker').create({
+    debug: true
+
+    // We want both to renew well before the expiration date
+    // and also to stagger the renewals, just a touch
+    // here we specify to renew between 10 and 15 days
+  , notBefore: 15 * 24 * 60 * 60 * 1000
+  , notAfter: 10 * 24 * 60 * 60 * 1000 // optional
+
+  , approveDomains: function (opts, certs, cb) {
+      // opts = { domains, email, agreeTos, tosUrl }
+      // certs = { subject, altnames, expiresAt, issuedAt }
+
+
+
+      // We might want to do a check to make sure that all of the domains
+      // specified in altnames are still approved to be renewed and have
+      // the correct dns entries, but generally speaking it's probably okay
+      // for renewals to be automatic
+      if (certs) {
+        // modify opts.domains to overwrite certs.altnames in renewal
+        cb(null, { options: opts, certs: certs });
+        return;
+      }
+
+
+
+
+      // This is where we would check our database to make sure that
+      // this user (specified by email address) has agreed to the terms
+      // and do some check that they have access to this domain
+      opts.agreeTos = true;
+      cb(null, { options: opts });
+    }
+  });
+}
