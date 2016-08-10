@@ -2,8 +2,8 @@
 
 module.exports.create = function (opts) {
   if (!opts.letsencrypt) { opts.letsencrypt = require('letsencrypt').create({ server: opts.server }); }
-  if ('function' === typeof opts.approve) {
-    throw new Error("You must provide opts.approve(options, certs, callback) to approve certificates");
+  if ('function' !== typeof opts.approveDomains) {
+    throw new Error("You must provide opts.approveDomains(options, certs, callback) to approve certificates");
   }
 
   function log(debug) {
@@ -17,7 +17,6 @@ module.exports.create = function (opts) {
     console.log.apply(console, args);
   }
 
-  opts._pending = {};
   opts._le = opts.letsencrypt;
   opts.addWorker = function (worker) {
 
