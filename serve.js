@@ -43,6 +43,7 @@ function runWorker() {
   , notBefore: 15 * 24 * 60 * 60 * 1000
   , notAfter: 10 * 24 * 60 * 60 * 1000 // optional
 
+  , webrootPath: require('os').tmpdir() + require('path').sep + 'acme-challenge'
     /*
   , getChallenge: function (domain, token, cb) {
       // the default behavior is to pass a message to master,
