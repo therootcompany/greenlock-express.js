@@ -5,7 +5,7 @@ var cluster = require('cluster');
 function runMaster() {
   var numCores = 2; // // Math.max(2, require('os').cpus().length)
   var i;
-  var master = require('./master').create({
+  var master = require('./lib/master').create({
     debug: true
 
 
@@ -14,14 +14,15 @@ function runMaster() {
 
 
 
-  , approveDomains: function (options, certs, cb) {
+  , approveDomains: function (domain, certs, cb) {
       // Depending on your setup it may be more efficient
       // for you to implement the approveDomains function
       // in your master or in your workers.
       //
       // Since we implement it in the worker (below) in this example
       // we'll give it an immediate approval here in the master
-      cb(null, { options: options, certs: certs });
+      var results = { options: { domains: [domain] }, certs: certs };
+      cb(null, results);
     }
   });
 
@@ -33,7 +34,7 @@ function runMaster() {
 }
 
 function runWorker() {
-  var worker = require('./worker').create({
+  var worker = require('./lib/worker').create({
     debug: true
 
     // We want both to renew well before the expiration date
@@ -49,9 +50,10 @@ function runWorker() {
       cb(null, );
     }
     */
-  , approveDomains: function (opts, certs, cb) {
+  , approveDomains: function (domain, certs, cb) {
       // opts = { domains, email, agreeTos, tosUrl }
       // certs = { subject, altnames, expiresAt, issuedAt }
+      var results = { options: { domains: [domain] }, certs: certs };
 
 
 
@@ -61,7 +63,7 @@ function runWorker() {
       // for renewals to be automatic
       if (certs) {
         // modify opts.domains to overwrite certs.altnames in renewal
-        cb(null, { options: opts, certs: certs });
+        cb(null, results);
         return;
       }
 
@@ -71,8 +73,7 @@ function runWorker() {
       // This is where we would check our database to make sure that
       // this user (specified by email address) has agreed to the terms
       // and do some check that they have access to this domain
-      opts.agreeTos = true;
-      cb(null, { options: opts });
+      cb(null, results);
     }
   });
 
@@ -80,8 +81,8 @@ function runWorker() {
     res.end("Hello, World!");
   }
 
-  var plainServer = require('http').createServer(worker.handleAcmeAndRedirectToHttps);
-  var server = require('https').createServer(worker.httpsOptions, worker.handleAcmeAndUse(app));
+  var plainServer = require('http').createServer(worker.handleAcmeOrRedirectToHttps());
+  var server = require('https').createServer(worker.httpsOptions, worker.handleAcmeOrUse(app));
   plainServer.listen(80);
   server.listen(443);
 }
