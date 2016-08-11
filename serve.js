@@ -1,6 +1,8 @@
 'use strict';
 
 var cluster = require('cluster');
+// TODO the le-challenge-<<strategy>> should be shared between worker and server
+var webrootPath = require('os').tmpdir() + require('path').sep + 'acme-challenge';
 
 function runMaster() {
   var numCores = 2; // // Math.max(2, require('os').cpus().length)
@@ -11,17 +13,18 @@ function runMaster() {
 
 
   , server: 'staging'
+  , webrootPath: webrootPath
 
 
 
-  , approveDomains: function (domain, certs, cb) {
+  , approveDomains: function (masterOptions, certs, cb) {
       // Depending on your setup it may be more efficient
       // for you to implement the approveDomains function
       // in your master or in your workers.
       //
       // Since we implement it in the worker (below) in this example
       // we'll give it an immediate approval here in the master
-      var results = { domain: domain, options: { domains: [domain] }, certs: certs };
+      var results = { domain: masterOptions.domain, options: masterOptions, certs: certs };
       cb(null, results);
     }
   });
@@ -37,24 +40,51 @@ function runWorker() {
   var worker = require('./lib/worker').create({
     debug: true
 
+
+
     // We want both to renew well before the expiration date
     // and also to stagger the renewals, just a touch
     // here we specify to renew between 10 and 15 days
   , notBefore: 15 * 24 * 60 * 60 * 1000
   , notAfter: 10 * 24 * 60 * 60 * 1000 // optional
 
-  , webrootPath: require('os').tmpdir() + require('path').sep + 'acme-challenge'
+
+
+  , webrootPath: webrootPath
+
+
+
     /*
+    challenge: {
+      get: function (ignored, domain, token, cb) {
+        cb(null, keyAuthorization);
+      }
+    }
   , getChallenge: function (domain, token, cb) {
-      // the default behavior is to pass a message to master,
+      // the default behavior is to use le-challenge-fs
+      // TODO maybe provide a built-in option to pass a message to master to use its
+      // but you could overwrite that with a function to pass a message to master or,
       // but if needed for performance, that can be overwritten here
       cb(null, );
     }
     */
-  , approveDomains: function (domain, certs, cb) {
+
+
+    // There are two approval processes:
+    // 1. emails are tied to private keys (accounts) which must agree to the tos url
+    // 2. domains are tied to accounts (and should be verifiable via loopback)
+  , approveDomains: function (workerOptions, certs, cb) {
       // opts = { domains, email, agreeTos, tosUrl }
       // certs = { subject, altnames, expiresAt, issuedAt }
-      var results = { domain: domain, options: { domains: [domain] }, certs: certs };
+      var results = {
+        domain: workerOptions.domains[0]
+      , options: {
+          domains: certs && certs.altnames || workerOptions.domains
+        , email: 'aj@daplie.com'
+        , agreeTos: true
+        }
+      , certs: certs
+      };
 
 
 
