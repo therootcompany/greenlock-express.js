@@ -21,7 +21,7 @@ function runMaster() {
       //
       // Since we implement it in the worker (below) in this example
       // we'll give it an immediate approval here in the master
-      var results = { options: { domains: [domain] }, certs: certs };
+      var results = { domain: domain, options: { domains: [domain] }, certs: certs };
       cb(null, results);
     }
   });
@@ -53,7 +53,7 @@ function runWorker() {
   , approveDomains: function (domain, certs, cb) {
       // opts = { domains, email, agreeTos, tosUrl }
       // certs = { subject, altnames, expiresAt, issuedAt }
-      var results = { options: { domains: [domain] }, certs: certs };
+      var results = { domain: domain, options: { domains: [domain] }, certs: certs };
 
 
 
@@ -81,8 +81,12 @@ function runWorker() {
     res.end("Hello, World!");
   }
 
-  var plainServer = require('http').createServer(worker.handleAcmeOrRedirectToHttps());
-  var server = require('https').createServer(worker.httpsOptions, worker.handleAcmeOrUse(app));
+
+  // worker.handleAcmeOrRedirectToHttps()
+  // worker.handleAcmeOrUse(app)
+  var redirectHttps = require('redirect-https')();
+  var plainServer = require('http').createServer(worker.middleware(redirectHttps));
+  var server = require('https').createServer(worker.httpsOptions, worker.middleware(app));
   plainServer.listen(80);
   server.listen(443);
 }
