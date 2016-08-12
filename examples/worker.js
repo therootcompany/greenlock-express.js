@@ -1,43 +1,7 @@
 'use strict';
 
-var cluster = require('cluster');
-// TODO the le-challenge-<<strategy>> should be shared between worker and server
-var webrootPath = require('os').tmpdir() + require('path').sep + 'acme-challenge';
-
-function runMaster() {
-  var numCores = 2; // // Math.max(2, require('os').cpus().length)
-  var i;
-  var master = require('./lib/master').create({
-    debug: true
-
-
-
-  , server: 'staging'
-  , webrootPath: webrootPath
-
-
-
-  , approveDomains: function (masterOptions, certs, cb) {
-      // Depending on your setup it may be more efficient
-      // for you to implement the approveDomains function
-      // in your master or in your workers.
-      //
-      // Since we implement it in the worker (below) in this example
-      // we'll give it an immediate approval here in the master
-      var results = { domain: masterOptions.domain, options: masterOptions, certs: certs };
-      cb(null, results);
-    }
-  });
-
-
-
-  for (i = 0; i < numCores; i += 1) {
-    master.addWorker(cluster.fork());
-  }
-}
-
-function runWorker() {
-  var worker = require('./lib/worker').create({
+module.exports.init = function (sharedOpts) {
+  var worker = require('../worker').create({
     debug: true
 
 
@@ -50,7 +14,7 @@ function runWorker() {
 
 
 
-  , webrootPath: webrootPath
+  , webrootPath: sharedOpts.webrootPath
 
 
 
@@ -120,11 +84,4 @@ function runWorker() {
   var server = require('https').createServer(worker.httpsOptions, worker.middleware(app));
   plainServer.listen(80);
   server.listen(443);
-}
-
-if (cluster.isMaster) {
-  runMaster();
-}
-else {
-  runWorker();
-}
+};
