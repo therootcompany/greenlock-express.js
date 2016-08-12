@@ -22,7 +22,6 @@ module.exports.create = function (opts) {
     console.log.apply(console, args);
   }
 
-  opts._le = opts.letsencrypt;
   opts.addWorker = function (worker) {
     opts._workers.push(worker);
 
@@ -68,10 +67,10 @@ module.exports.create = function (opts) {
         // */
 
         if (results.certs) {
-          promise = opts._le.renew(results.options, results.certs);
+          promise = opts.letsencrypt.renew(results.options, results.certs);
         }
         else {
-          promise = opts._le.register(results.options);
+          promise = opts.letsencrypt.register(results.options);
         }
 
         promise.then(function (certs) {
