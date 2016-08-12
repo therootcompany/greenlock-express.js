@@ -107,7 +107,7 @@ All options are passed directly to `node-letsencrypt`
 (in other works, `leMaster` is a `letsencrypt` instance),
 but a few are only actually used by `letsencrypt-cluster`.
 
-* `leMaster.approveDomains(options, certs, cb)` is special for `letsencrypt-cluster`, but will probably be included in `node-letsencrypt` in the future (no API change).
+* `leOptions.approveDomains(options, certs, cb)` is special for `letsencrypt-cluster`, but will probably be included in `node-letsencrypt` in the future (no API change).
 
 * `leMaster.addWorker(worker)` is added by `letsencrypt-cluster` and **must be called** for each new worker.
 
@@ -178,6 +178,19 @@ module.exports.init = function (sharedOpts) {
   server.listen(443);
 };
 ```
+
+### API
+
+`node-letsencrypt` is **not used** directly by the worker,
+but certain options are shared because certain logic is duplicated.
+
+* `leOptions.renewWithin` is shared so that the worker knows how earlier to request a new cert
+* `leOptions.renewBy` is passed to `le-sni-auto` so that it staggers renewals between `renewWithin` (latest) and `renewBy` (earlier)
+* `leWorker.middleware(nextApp)` uses `letsencrypt/middleware` for GET-ing `http-01`, hence `sharedOptions.webrootPath`
+* `leWorker.httpsOptions` has a default localhost certificate and the `SNICallback`.
+
+There are a few options that aren't shown in these examples, so if you need to change something
+that isn't shown here, look at the code (it's not that much) or open an issue.
 
 Message Passing
 ---------------
