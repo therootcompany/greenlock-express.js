@@ -1,0 +1,42 @@
+{
+  "name": "letsencrypt-cluster",
+  "version": "2.0.0",
+  "description": "Use automatic letsencrypt (free ssl certs) on multiple cores or even multiple machines",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "dependencies": {
+    "le-sni-auto": "^2.0.1",
+    "letsencrypt": "^2.0.4",
+    "localhost.daplie.com-certificates": "^1.2.3",
+    "redirect-https": "^1.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node examples/serve.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Daplie/letsencrypt-cluster.git"
+  },
+  "keywords": [
+    "cluster",
+    "multi-core",
+    "cloud",
+    "scale",
+    "free",
+    "ssl",
+    "https",
+    "tls",
+    "letsencrypt",
+    "node",
+    "node.js"
+  ],
+  "author": "AJ ONeal <coolaj86@gmail.com> (https://coolaj86.com/)",
+  "license": "(MIT OR Apache-2.0)",
+  "bugs": {
+    "url": "https://github.com/Daplie/letsencrypt-cluster/issues"
+  },
+  "homepage": "https://github.com/Daplie/letsencrypt-cluster#readme"
+}
