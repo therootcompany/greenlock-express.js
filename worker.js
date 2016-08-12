@@ -25,8 +25,8 @@ module.exports.create = function (opts) {
   });
 
   opts.sni = require('le-sni-auto').create({
-    notBefore: opts.notBefore || (10 * 24 * 60 * 60 * 1000)
-  , notAfter: opts.notAfter || (5 * 24 * 60 * 60 * 1000)
+    renewWithin: opts.renewWithin || (10 * 24 * 60 * 60 * 1000)
+  , renewBy: opts.renewBy || (5 * 24 * 60 * 60 * 1000)
   , getCertificates: function (domain, certs, cb) {
       var workerOptions = { domains: [ domain ] };
       opts.approveDomains(workerOptions, certs, function (_err, results) {

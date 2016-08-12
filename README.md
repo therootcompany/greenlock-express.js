@@ -74,7 +74,7 @@ var cluster = require('cluster');
 
 module.exports.init = function (sharedOpts) {
   var cores = require('os').cpus();
-  var master = require('letsencrypt-cluster/master').create({
+  var leMaster = require('letsencrypt-cluster/master').create({
     debug: sharedOpts.debug
 
   , server: 'staging'                                                       // CHANGE TO PRODUCTION
@@ -96,10 +96,20 @@ module.exports.init = function (sharedOpts) {
 
   cores.forEach(function () {
     var worker = cluster.fork();
-    master.addWorker(worker);
+    leMaster.addWorker(worker);
   });
 };
 ```
+
+### API
+
+All options are passed directly to `node-letsencrypt`
+(in other works, `leMaster` is a `letsencrypt` instance),
+but a few are only actually used by `letsencrypt-cluster`.
+
+* `leMaster.approveDomains(options, certs, cb)` is special for `letsencrypt-cluster`, but will probably be included in `node-letsencrypt` in the future (no API change).
+
+* `leMaster.addWorker(worker)` is added by `letsencrypt-cluster` and **must be called** for each new worker.
 
 Worker
 ------
@@ -115,7 +125,7 @@ If you want to  a non-default `le.challenge`
 'use strict';
 
 module.exports.init = function (sharedOpts) {
-  var worker = require('../worker').create({
+  var leWorker = require('letsencrypt-cluster/worker').create({
     debug: sharedOpts.debug
 
   , renewWithin: sharedOpts.renewWithin
@@ -161,10 +171,10 @@ module.exports.init = function (sharedOpts) {
   }
 
   var redirectHttps = require('redirect-https')();
-  var plainServer = require('http').createServer(worker.middleware(redirectHttps));
+  var plainServer = require('http').createServer(leWorker.middleware(redirectHttps));
   plainServer.listen(80);
 
-  var server = require('https').createServer(worker.httpsOptions, worker.middleware(app));
+  var server = require('https').createServer(leWorker.httpsOptions, leWorker.middleware(app));
   server.listen(443);
 };
 ```
