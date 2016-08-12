@@ -66,7 +66,7 @@ and potentially `agreeToTerms(opts, cb)` for new accounts.
 The master takes **the same arguments** as `node-letsencrypt`, plus a few extra:
 
 `master.js`:
-```
+```javascript
 'use strict';
 
 var cluster = require('cluster');
@@ -110,7 +110,7 @@ renewal and for `le.challenge.get`.
 If you want to  a non-default `le.challenge`
 
 `worker.js`:
-```
+```javascript
 'use strict';
 
 module.exports.init = function (sharedOpts) {
