@@ -63,7 +63,8 @@ as only one process is writing the to file system or database at a time.
 The main implementation detail here is `approveDomains(options, certs, cb)` for new domain certificates
 and potentially `agreeToTerms(opts, cb)` for new accounts.
 
-The master takes **the same arguments** as `node-letsencrypt`, plus a few extra:
+The master takes **the same arguments** as `node-letsencrypt` (`challenge`, `store`, etc),
+plus a few extra (`approveDomains`... okay, just one extra):
 
 `master.js`:
 ```javascript
