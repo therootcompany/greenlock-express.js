@@ -1,7 +1,7 @@
 {
-  "name": "letsencrypt-cluster",
+  "name": "letsencrypt-express",
   "version": "2.0.0",
-  "description": "Use automatic letsencrypt (free ssl certs) on multiple cores or even multiple machines",
+  "description": "Use automatic letsencrypt (free ssl certs) with node http frameworks such as express",
   "main": "index.js",
   "directories": {
     "example": "examples"

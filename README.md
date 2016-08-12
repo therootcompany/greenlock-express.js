@@ -1,18 +1,13 @@
-letsencrypt-cluster
+letsencrypt-express
 ===================
 
-Use automatic letsencrypt with node on multiple cores or even multiple machines.
-
-* Take advantage of multi-core computing
-* Process certificates in master
-* Serve https from multiple workers
-* Can work with any clustering strategy [#1](https://github.com/Daplie/letsencrypt-cluster/issues/1)
+Use automatic letsencrypt with express and other node http frameworks.
 
 Install
 =======
 
 ```bash
-npm install --save letsencrypt-cluster@2.x
+npm install --save letsencrypt-express@2.x
 ```
 
 Usage
