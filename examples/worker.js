@@ -44,7 +44,7 @@ module.exports.init = function (sharedOpts) {
         domain: workerOptions.domains[0]
       , options: {
           domains: certs && certs.altnames || workerOptions.domains
-        , email: 'aj@daplie.com'
+        , email: 'john.doe@example.com'
         , agreeTos: true
         }
       , certs: certs
