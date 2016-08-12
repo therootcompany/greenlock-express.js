@@ -15,7 +15,14 @@ function log(debug) {
 
 module.exports.create = function (opts) {
 
-
+  // if another worker updates the certs,
+  // receive a copy from master here as well
+  // and update the sni cache manually
+  process.on('message', function (msg) {
+    if ('LE_RESPONSE' === msg.type && msg.certs) {
+      opts.sni.cacheCerts(msg.certs);
+    }
+  });
 
   opts.sni = require('le-sni-auto').create({
     notBefore: opts.notBefore || (10 * 24 * 60 * 60 * 1000)

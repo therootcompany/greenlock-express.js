@@ -4,6 +4,7 @@
 // opts.approveDomains(options, certs, cb)
 module.exports.create = function (opts) {
   opts = opts || { };
+  opts._workers = [];
   opts.webrootPath = opts.webrootPath || require('os').tmpdir() + require('path').sep + 'acme-challenge';
   if (!opts.letsencrypt) { opts.letsencrypt = require('letsencrypt').create(opts); }
   if ('function' !== typeof opts.approveDomains) {
@@ -23,6 +24,7 @@ module.exports.create = function (opts) {
 
   opts._le = opts.letsencrypt;
   opts.addWorker = function (worker) {
+    opts._workers.push(worker);
 
     worker.on('online', function () {
       log(opts.debug, 'worker is up');
@@ -75,7 +77,9 @@ module.exports.create = function (opts) {
         promise.then(function (certs) {
           log(opts.debug, 'Approval got certs', certs);
           // certs = { subject, domains, issuedAt, expiresAt, privkey, cert, chain };
-          worker.send({ type: 'LE_RESPONSE', domain: msg.domain, certs: certs });
+          opts._workers.forEach(function (w) {
+            w.send({ type: 'LE_RESPONSE', domain: msg.domain, certs: certs });
+          });
         }, function (err) {
           log(opts.debug, 'Approval got ERROR', err.stack || err);
           worker.send({ type: 'LE_RESPONSE', domain: msg.domain, error: err });
