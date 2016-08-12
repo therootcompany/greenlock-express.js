@@ -9,8 +9,8 @@ module.exports.init = function (sharedOpts) {
     // We want both to renew well before the expiration date
     // and also to stagger the renewals, just a touch
     // here we specify to renew between 10 and 15 days
-  , notBefore: 15 * 24 * 60 * 60 * 1000
-  , notAfter: 10 * 24 * 60 * 60 * 1000 // optional
+  , renewWithin: sharedOpts.renewWithin
+  , renewBy: 10 * 24 * 60 * 60 * 1000 // optional
 
 
 

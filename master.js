@@ -1,10 +1,11 @@
 'use strict';
 
+// opts.addWorker(worker)
+// opts.approveDomains(options, certs, cb)
 module.exports.create = function (opts) {
-  if (!opts.letsencrypt) { opts.letsencrypt = require('letsencrypt').create({
-    server: opts.server
-  , webrootPath: require('os').tmpdir() + require('path').sep + 'acme-challenge'
-  }); }
+  opts = opts || { };
+  opts.webrootPath = opts.webrootPath || require('os').tmpdir() + require('path').sep + 'acme-challenge';
+  if (!opts.letsencrypt) { opts.letsencrypt = require('letsencrypt').create(opts); }
   if ('function' !== typeof opts.approveDomains) {
     throw new Error("You must provide opts.approveDomains(domain, certs, callback) to approve certificates");
   }
