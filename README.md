@@ -42,11 +42,8 @@ Install
 npm install --save letsencrypt-express@2.x
 ```
 
-Usage
-=====
-
 QuickStart
-----------
+==========
 
 Here's a completely working (but terribly oversimplified) example that will get you started:
 
@@ -93,8 +90,8 @@ In order to avoid being blocked by hitting rate limits with bad requests,
 you should always test against the `'staging'` server
 (`https://acme-staging.api.letsencrypt.org/directory`) first.
 
-A more typical example
-----------------------
+Usage
+=====
 
 The oversimplified example was the bait
 (because everyone seems to want an example that fits in 3 lines, even if it's terribly bad practices),
@@ -153,7 +150,8 @@ require('https').createServer(lex.httpsOptions, lex.middleware(app)).listen(443,
 });
 ```
 
-### API
+API
+===
 
 All options are passed directly to `node-letsencrypt`,
 so `lex` is an instance of `letsencrypt`, but has a few
