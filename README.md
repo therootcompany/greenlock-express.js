@@ -163,6 +163,7 @@ See [node-letsencrypt options](https://github.com/Daplie/node-letsencrypt)
 * `lexOptions.approveDomains(options, certs, cb)` is special for `letsencrypt-express`, but will probably be included in `node-letsencrypt` in the future (no API change).
 
 * `lexOptions.app` is just an elaborate ruse used for the Quickstart. It's sole purpose is to trim out 5 lines of code for setting http and https servers so that whiners won't whine. Real programmers don't use this.
+* `leOptions.server` set to https://acme-v01.api.letsencrypt.org/directory in production
 * `leOptions.email` useful for simple sites where there is only one owner. Leave this `null` and use `approveDomains` otherwise.
 * `leOptions.agreeTos` useful for simple sites where there is only one owner. Leave this `null` and use `approveDomains` otherwise.
 * `leOptions.renewWithin` is shared so that the worker knows how earlier to request a new cert
