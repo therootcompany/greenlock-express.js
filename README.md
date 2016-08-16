@@ -5,6 +5,7 @@
 | **letsencrypt-express**
 | [letsencrypt-koa](https://github.com/Daplie/letsencrypt-koa)
 | [letsencrypt-hapi](https://github.com/Daplie/letsencrypt-hapi)
+| [letsencrypt-cluster](https://github.com/Daplie/letsencrypt-cluster)
 |
 
 letsencrypt-express
