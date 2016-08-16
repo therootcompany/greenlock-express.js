@@ -59,6 +59,8 @@ require('letsencrypt-express').create({
 
 , agreeTos: true
 
+, approvedDomains: [ 'example.com' ]
+
 , app: require('express')().use('/', function (req, res) {
     res.end('Hello, World!');
   })
@@ -134,7 +136,7 @@ var lex = require('letsencrypt-express').create({
 
 
 // handles acme-challenge and redirects to https
-require('http').createServer(lex.middleware()).listen(80, function () {
+require('http').createServer(le.middleware()).listen(80, function () {
   console.log("Listening for ACME http-01 challenges on", this.address());
 });
 
@@ -146,7 +148,7 @@ app.use('/', function (req, res) {
 });
 
 // handles your app
-require('https').createServer(lex.httpsOptions, lex.middleware(app)).listen(443, function () {
+require('https').createServer(le.httpsOptions, le.middleware(app)).listen(443, function () {
   console.log("Listening for ACME tls-sni-01 challenges and serve app on", this.address());
 });
 ```
@@ -154,22 +156,22 @@ require('https').createServer(lex.httpsOptions, lex.middleware(app)).listen(443,
 API
 ===
 
-All options are passed directly to `node-letsencrypt`,
-so `lex` is an instance of `letsencrypt`, but has a few
-extra helper methods and options.
+This module is an elaborate ruse (to provide an oversimplified example and to nab some SEO).
 
-See [node-letsencrypt options](https://github.com/Daplie/node-letsencrypt)
+The API is actually located at [node-letsencrypt options](https://github.com/Daplie/node-letsencrypt)
+(because all options are simply passed through to `node-letsencrypt` proper without modification).
 
-* `lexOptions.approveDomains(options, certs, cb)` is special for `letsencrypt-express`, but will probably be included in `node-letsencrypt` in the future (no API change).
+The only "API" consists of two options, the rest is just a wrapper around `node-letsencrypt` to take LOC from 15 to 5:
 
-* `lexOptions.app` is just an elaborate ruse used for the Quickstart. It's sole purpose is to trim out 5 lines of code for setting http and https servers so that whiners won't whine. Real programmers don't use this.
-* `leOptions.server` set to https://acme-v01.api.letsencrypt.org/directory in production
-* `leOptions.email` useful for simple sites where there is only one owner. Leave this `null` and use `approveDomains` otherwise.
-* `leOptions.agreeTos` useful for simple sites where there is only one owner. Leave this `null` and use `approveDomains` otherwise.
-* `leOptions.renewWithin` is shared so that the worker knows how earlier to request a new cert
-* `leOptions.renewBy` is passed to `le-sni-auto` so that it staggers renewals between `renewWithin` (latest) and `renewBy` (earlier)
-* `lex.middleware(nextApp)` uses `letsencrypt/middleware` for GET-ing `http-01`, hence `sharedOptions.webrootPath`
-* `lex.httpsOptions` has a default localhost certificate and the `SNICallback`.
+* `opts.app` An express app in the format `function (req, res) { ... }` (no `next`).
+* `lex.listen(plainPort, tlsPort)` Accepts port numbers (or arrays of port numbers) to listen on.
 
-There are a few options that aren't shown in these examples, so if you need to change something
-that isn't shown here, look at the code (it's not that much) or open an issue.
+Brief overview of some simple options for `node-letsencrypt`:
+
+* `opts.server` set to https://acme-v01.api.letsencrypt.org/directory in production
+* `opts.email` The default email to use to accept agreements.
+* `opts.agreeTos` When set to `true`, this always accepts the LetsEncrypt TOS. When a string it checks the agreement url first.
+* `opts.approvedDomains` An explicit array of The allowed domains (can be used instead of `approveDomains`).
+* `opts.approveDomains` A callback for checking your database before allowing a domain `function (opts, certs, cb) { }`
+* `opts.renewWithin` is the **maximum** number of days (in ms) before expiration to renew a certificate.
+* `opts.renewBy` is the **minimum** number of days (in ms) before expiration to renew a certificate.
