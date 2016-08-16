@@ -45,7 +45,7 @@ npm install --save letsencrypt-express@2.x
 QuickStart
 ==========
 
-Here's a completely working (but terribly oversimplified) example that will get you started:
+Here's a completely working example that will get you started:
 
 `app.js`:
 ```javascript
@@ -129,7 +129,7 @@ var lex = require('letsencrypt-express').create({
       opts.agreeTos = true;
     }
 
-    cb(null, opts);
+    cb(null, { options: opts, certs: certs });
   }
 });
 

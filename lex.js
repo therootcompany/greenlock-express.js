@@ -28,7 +28,8 @@ module.exports.create = function (opts) {
 
     plainPorts.forEach(function (p) {
       promises.push(new PromiseA(function (resolve, reject) {
-        require('http').createServer(le.middleware(require('https-redirect').create())).listen(p, function () {
+        require('http').createServer(le.middleware(require('redirect-https')())).listen(p, function () {
+          console.log("Handling ACME challenges and redirecting to https on plain port " + p);
           resolve();
         }).on('error', reject);
       }));
@@ -37,6 +38,7 @@ module.exports.create = function (opts) {
     ports.forEach(function (p) {
       promises.push(new PromiseA(function (resolve, reject) {
         var server = require('https').createServer(le.httpsOptions, le.middleware(le.app)).listen(p, function () {
+          console.log("Handling ACME challenges and serving https " + p);
           resolve();
         }).on('error', reject);
         servers.push(server);
