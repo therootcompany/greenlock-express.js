@@ -1,5 +1,5 @@
 {
-  "name": "letsencrypt-encrypt",
+  "name": "letsencrypt-express",
   "version": "2.0.1",
   "description": "Free SSL and managed or automatic HTTPS for node.js with Express, Koa, Connect, Hapi, and all other middleware systems.",
   "main": "lex.js",
