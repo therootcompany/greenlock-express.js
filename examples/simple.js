@@ -5,11 +5,11 @@ require('../').create({
 
   server: 'staging'
 
-, email: 'aj@daplie.com'
+, email: 'john.doe@example.com'
 
 , agreeTos: true
 
-, approvedDomains: [ 'pokemap.hellabit.com', 'www.pokemap.hellabit.com' ]
+, approvedDomains: [ 'example.com', 'www.example.com' ]
 
 , app: require('express')().use('/', function (req, res) {
     res.end('Hello, World!');
