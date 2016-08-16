@@ -1,13 +1,15 @@
 {
-  "name": "letsencrypt-cluster",
+  "name": "letsencrypt-encrypt",
   "version": "2.0.0",
-  "description": "Use automatic letsencrypt (free ssl certs) on multiple cores or even multiple machines",
-  "main": "index.js",
+  "description": "Free SSL and managed or automatic HTTPS for node.js with Express, Koa, Connect, Hapi, and all other middleware systems.",
+  "main": "lex.js",
   "directories": {
     "example": "examples"
   },
   "dependencies": {
+    "le-challenge-fs": "^2.0.4",
     "le-sni-auto": "^2.0.1",
+    "le-store-certbot": "^2.0.3",
     "letsencrypt": "^2.0.4",
     "localhost.daplie.com-certificates": "^1.2.3",
     "redirect-https": "^1.1.0"
