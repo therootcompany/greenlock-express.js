@@ -60,7 +60,7 @@ require('letsencrypt-express').create({
 
 , agreeTos: true
 
-, approvedDomains: [ 'example.com' ]
+, approveDomains: [ 'example.com' ]
 
 , app: require('express')().use('/', function (req, res) {
     res.end('Hello, World!');
@@ -76,12 +76,6 @@ Certificates will be stored in `~/letsencrypt`.
 You must set `server` to `https://acme-v01.api.letsencrypt.org/directory` **after**
 you have tested that your setup works.
 
-**Security Warning**:
-
-If you don't do proper checks in `approveDomains(opts, certs, cb)`
-an attacker will spoof SNI packets with bad hostnames and that will
-cause you to be rate-limited and or blocked from the ACME server.
-
 Why You Must Use 'staging' First
 --------------------------------
 
@@ -92,6 +86,12 @@ when using letsencrypt for your first time.
 In order to avoid being blocked by hitting rate limits with bad requests,
 you should always test against the `'staging'` server
 (`https://acme-staging.api.letsencrypt.org/directory`) first.
+
+Migrating from v1.x
+===================
+
+Whereas v1.x had a few hundred lines of code, v2.x is a single small file of about 50 lines.
+Now All of the behavior has moved to the various plugins, which each have their own options, respectively.
 
 Usage
 =====
@@ -159,6 +159,13 @@ require('https').createServer(lex.httpsOptions, lex.middleware(app)).listen(443,
 });
 ```
 
+**Security Warning**:
+
+If you don't do proper checks in `approveDomains(opts, certs, cb)`
+an attacker will spoof SNI packets with bad hostnames and that will
+cause you to be rate-limited and or blocked from the ACME server.
+
+
 API
 ===
 
@@ -177,7 +184,8 @@ Brief overview of some simple options for `node-letsencrypt`:
 * `opts.server` set to https://acme-v01.api.letsencrypt.org/directory in production
 * `opts.email` The default email to use to accept agreements.
 * `opts.agreeTos` When set to `true`, this always accepts the LetsEncrypt TOS. When a string it checks the agreement url first.
-* `opts.approvedDomains` An explicit array of The allowed domains (can be used instead of `approveDomains`).
-* `opts.approveDomains` A callback for checking your database before allowing a domain `function (opts, certs, cb) { }`
+* `opts.approveDomains` can be either of:
+  * An explicit array of allowed domains such as `[ 'example.com', 'www.example.com' ]`
+  * A callback `function (opts, certs, cb) { cb(null, { options: opts, certs: certs }); }` for setting `email`, `agreeTos`, `domains`, etc (as shown in usage example above)
 * `opts.renewWithin` is the **maximum** number of days (in ms) before expiration to renew a certificate.
 * `opts.renewBy` is the **minimum** number of days (in ms) before expiration to renew a certificate.
