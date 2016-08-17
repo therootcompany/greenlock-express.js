@@ -115,24 +115,28 @@ var lex = require('letsencrypt-express').create({
 //, store: require('le-store-certbot').create({})
 //, sni: require('le-sni-auto').create({})
 
-, approveDomains: function (opts, certs, cb) {
-    // This is where you check your database and associated
-    // email addresses with domains and agreements and such
-
-
-    // The domains being approved for the first time are listed in opts.domains
-    // Certs being renewed are listed in certs.altnames
-    if (certs) {
-      opts.domains = certs.altnames;
-    }
-    else {
-      opts.email = 'john.doe@example.com';
-      opts.agreeTos = true;
-    }
-
-    cb(null, { options: opts, certs: certs });
-  }
+, approveDomains: approveDomains
 });
+```
+
+```javascript
+function approveDomains(opts, certs, cb) {
+  // This is where you check your database and associated
+  // email addresses with domains and agreements and such
+
+
+  // The domains being approved for the first time are listed in opts.domains
+  // Certs being renewed are listed in certs.altnames
+  if (certs) {
+    opts.domains = certs.altnames;
+  }
+  else {
+    opts.email = 'john.doe@example.com';
+    opts.agreeTos = true;
+  }
+
+  cb(null, { options: opts, certs: certs });
+}
 ```
 
 
