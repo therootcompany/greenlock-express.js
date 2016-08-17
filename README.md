@@ -137,7 +137,7 @@ var lex = require('letsencrypt-express').create({
 
 
 // handles acme-challenge and redirects to https
-require('http').createServer(le.middleware()).listen(80, function () {
+require('http').createServer(lex.middleware()).listen(80, function () {
   console.log("Listening for ACME http-01 challenges on", this.address());
 });
 
@@ -149,7 +149,7 @@ app.use('/', function (req, res) {
 });
 
 // handles your app
-require('https').createServer(le.httpsOptions, le.middleware(app)).listen(443, function () {
+require('https').createServer(lex.httpsOptions, lex.middleware(app)).listen(443, function () {
   console.log("Listening for ACME tls-sni-01 challenges and serve app on", this.address());
 });
 ```
