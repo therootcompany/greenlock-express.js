@@ -91,7 +91,14 @@ Migrating from v1.x
 ===================
 
 Whereas v1.x had a few hundred lines of code, v2.x is a single small file of about 50 lines.
-Now All of the behavior has moved to the various plugins, which each have their own options, respectively.
+
+A few important things to note:
+
+* Delete your v1.x `~/letsencrypt` directory
+  * (otherwise you get `{ type: 'urn:acme:error:malformed', detail: 'Parse error reading JWS', status: 400 }`)
+* `approveRegistration` has been replaced by `approveDomains`
+* All of the behavior has moved to the various plugins, which each have their own options
+* Use https and http directly, don't rely on the silly `.listen()` helper. It's just there for looks.
 
 Usage
 =====
