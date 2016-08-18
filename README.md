@@ -113,7 +113,10 @@ var lex = require('letsencrypt-express').create({
 //
 , challenges: { 'http-01:' require('le-challenge-fs').create({ webrootPath: '/tmp/acme-challenges' }) }
 , store: require('le-store-certbot').create({ webrootPath: '/tmp/acme-challenges' })
-, sni: require('le-sni-auto').create({})
+
+// You probably wouldn't need to replace the default sni handler
+// See https://github.com/Daplie/le-sni-auto if you think you do
+//, sni: require('le-sni-auto').create({})
 
 , approveDomains: approveDomains
 });
