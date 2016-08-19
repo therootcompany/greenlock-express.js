@@ -152,7 +152,7 @@ function approveDomains(opts, certs, cb) {
 
 ```javascript
 // handles acme-challenge and redirects to https
-require('http').createServer(lex.middleware()).listen(80, function () {
+require('http').createServer(lex.middleware(require('redirect-https')())).listen(80, function () {
   console.log("Listening for ACME http-01 challenges on", this.address());
 });
 
