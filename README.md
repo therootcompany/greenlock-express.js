@@ -118,7 +118,7 @@ var lex = require('letsencrypt-express').create({
 
 // If you wish to replace the default plugins, you may do so here
 //
-, challenges: { 'http-01:' require('le-challenge-fs').create({ webrootPath: '/tmp/acme-challenges' }) }
+, challenges: { 'http-01': require('le-challenge-fs').create({ webrootPath: '/tmp/acme-challenges' }) }
 , store: require('le-store-certbot').create({ webrootPath: '/tmp/acme-challenges' })
 
 // You probably wouldn't need to replace the default sni handler
