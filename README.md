@@ -43,6 +43,8 @@ Install
 npm install --save letsencrypt-express@2.x
 ```
 
+**Important**: Use node v4.5+ or v6.x, node <= v4.4 has a [known bug](https://github.com/nodejs/node/issues/8053) in the `Buffer` implementation.
+
 QuickStart
 ==========
 
@@ -91,7 +93,14 @@ Migrating from v1.x
 ===================
 
 Whereas v1.x had a few hundred lines of code, v2.x is a single small file of about 50 lines.
-Now All of the behavior has moved to the various plugins, which each have their own options, respectively.
+
+A few important things to note:
+
+* Delete your v1.x `~/letsencrypt` directory, otherwise you get this:
+  * `{ type: 'urn:acme:error:malformed', detail: 'Parse error reading JWS', status: 400 }`
+* `approveRegistration` has been replaced by `approveDomains`
+* All of the behavior has moved to the various plugins, which each have their own options
+* Use https and http directly, don't rely on the silly `.listen()` helper. It's just there for looks.
 
 Usage
 =====
@@ -111,7 +120,7 @@ var lex = require('letsencrypt-express').create({
 
 // If you wish to replace the default plugins, you may do so here
 //
-, challenges: { 'http-01:' require('le-challenge-fs').create({ webrootPath: '/tmp/acme-challenges' }) }
+, challenges: { 'http-01': require('le-challenge-fs').create({ webrootPath: '/tmp/acme-challenges' }) }
 , store: require('le-store-certbot').create({ webrootPath: '/tmp/acme-challenges' })
 
 // You probably wouldn't need to replace the default sni handler
@@ -145,7 +154,7 @@ function approveDomains(opts, certs, cb) {
 
 ```javascript
 // handles acme-challenge and redirects to https
-require('http').createServer(lex.middleware()).listen(80, function () {
+require('http').createServer(lex.middleware(require('redirect-https')())).listen(80, function () {
   console.log("Listening for ACME http-01 challenges on", this.address());
 });
 
