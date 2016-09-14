@@ -5,9 +5,9 @@ module.exports.create = function (opts) {
   // accept all defaults for le.challenges, le.store, le.middleware
   var le = require('letsencrypt').create(opts);
 
-  opts.app = opts.app || require('express')().use('/', function (req, res) {
+  opts.app = function (req, res) {
     res.end("Hello, World!\nWith Love,\nLet's Encrypt Express");
-  });
+  };
 
   opts.listen = function (plainPort, port) {
     var PromiseA = require('bluebird');
