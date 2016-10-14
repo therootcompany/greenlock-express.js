@@ -5,7 +5,7 @@ module.exports.create = function (opts) {
   // accept all defaults for le.challenges, le.store, le.middleware
   var le = require('letsencrypt').create(opts);
 
-  opts.app = function (req, res) {
+  opts.app = opts.app || function (req, res) {
     res.end("Hello, World!\nWith Love,\nLet's Encrypt Express");
   };
 
