@@ -101,6 +101,7 @@ A few important things to note:
 * `approveRegistration` has been replaced by `approveDomains`
 * All of the behavior has moved to the various plugins, which each have their own options
 * Use https and http directly, don't rely on the silly `.listen()` helper. It's just there for looks.
+* `lex.createAcmeResponder()` is now `lex.middleware(require('redirect-https')())` or `lex.middleware(app)`
 
 Usage
 =====
