@@ -1,8 +1,12 @@
-Support Daplie
+Daplie is Taking Back the Internet!
 --------------
 
-Like what we're doing?
-You can [invest in Daplie on Wefunder](daplie.com/invest) or [Preorder Cloud](https://daplie.com/preorder), our plug & play home server! :)
+[![](http://i.imgur.com/eG1lUZr.jpg)](https://daplie.com/preorder/)
+
+Stop serving the empire and join the rebel alliance!
+
+* [Invest in Daplie on Wefunder](https://daplie.com/invest/)
+* [Pre-order Cloud](https://daplie.com/preorder/), The World's First Home Server for Everyone
 
 letsencrypt-express
 ===================
