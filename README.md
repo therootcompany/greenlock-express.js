@@ -1,3 +1,12 @@
+Support Daplie
+--------------
+
+Like what we're doing?
+You can [invest in Daplie on Wefunder](daplie.com/invest) or [Preorder Cloud](https://daplie.com/preorder), our plug & play home server! :)
+
+letsencrypt-express
+===================
+
 [![Join the chat at https://gitter.im/Daplie/letsencrypt-express](https://badges.gitter.im/Daplie/letsencrypt-express.svg)](https://gitter.im/Daplie/letsencrypt-express?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 | [letsencrypt (lib)](https://github.com/Daplie/node-letsencrypt)
@@ -8,9 +17,6 @@
 | [letsencrypt-hapi](https://github.com/Daplie/letsencrypt-hapi)
 |
 
-letsencrypt-express
-===================
-
 Free SSL and managed or automatic HTTPS for node.js with Express, Koa, Connect, Hapi, and all other middleware systems.
 
 * Automatic Registration via SNI (`httpsOptions.SNICallback`)
@@ -20,21 +26,6 @@ Free SSL and managed or automatic HTTPS for node.js with Express, Koa, Connect, 
 * Automatic vhost / virtual hosting
 
 All you have to do is start the webserver and then visit it at it's domain name.
-
-Help Wanted
------------
-
-There are a number of easy-to-complete features that are up for grabs.
-
-(mostly requiring either tracing some functions and doing some console.log-ing
-or simply updating docs and getting tests to pass so that certain plugins accept
-and return the right type of objects to complete the implementation
-of certain plugins).
-
-If you've got some free cycles to help, I can guide you through the process,
-I'm just still too busy to do it all myself right now and nothing is breaking.
-
-Email me <aj@daplie.com> if you want to help.
 
 Install
 =======
