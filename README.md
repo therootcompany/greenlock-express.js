@@ -1,7 +1,7 @@
 Daplie is Taking Back the Internet!
 --------------
 
-[![](http://i.imgur.com/eG1lUZr.jpg)](https://daplie.com/preorder/)
+[![](https://daplie.github.com/igg/images/ad-developer-rpi-white-725x275.jpg)](https://daplie.com/preorder/)
 
 Stop serving the empire and join the rebel alliance!
 
