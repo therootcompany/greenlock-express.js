@@ -29,7 +29,7 @@ Free SSL and managed or automatic HTTPS for node.js with Express, Koa, Connect, 
   * **renewals** are *fully automatic* and happen in the *background*, with **no downtime**
 * Automatic vhost / virtual hosting
 
-All you have to do is start the webserver and then visit it at it's domain name.
+All you have to do is start the webserver and then visit it at its domain name.
 
 Install
 =======
