@@ -23,8 +23,10 @@ module.exports.create = function (opts) {
     var ports = port;
     var servers = [];
 
-    if (!plainPorts || !ports) {
+    if (!plainPorts) {
       plainPorts = 80;
+    }
+    if (!ports) {
       ports = 443;
     }
 
