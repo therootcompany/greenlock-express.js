@@ -1,4 +1,4 @@
-<!-- AD_TPL_BEGIN -->
+<!-- BANNER_TPL_BEGIN -->
 
 About Daplie: We're taking back the Internet!
 --------------
@@ -11,7 +11,7 @@ Tired of serving the Empire? Come join the Rebel Alliance:
 
 <a href="mailto:jobs@daplie.com">jobs@daplie.com</a> | [Invest in Daplie on Wefunder](https://daplie.com/invest/) | [Pre-order Cloud](https://daplie.com/preorder/), The World's First Home Server for Everyone
 
-<!-- AD_TPL_END -->
+<!-- BANNER_TPL_END -->
 
 letsencrypt-express
 ===================
