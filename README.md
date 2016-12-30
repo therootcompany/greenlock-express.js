@@ -1,12 +1,17 @@
-Daplie is Taking Back the Internet!
+<!-- AD_TPL_BEGIN -->
+
+About Daplie: We're taking back the Internet!
 --------------
 
-[![](https://daplie.github.com/igg/images/ad-developer-rpi-white-890x275.jpg?v3)](https://daplie.com/preorder/)
+Down with Google, Apple, and Facebook!
 
-Stop serving the empire and join the rebel alliance!
+We're re-decentralizing the web and making it read-write again - one home cloud system at a time.
 
-* [Invest in Daplie on Wefunder](https://daplie.com/invest/)
-* [Pre-order Cloud](https://daplie.com/preorder/), The World's First Home Server for Everyone
+Tired of serving the Empire? Come join the Rebel Alliance:
+
+<a href="mailto:jobs@daplie.com">jobs@daplie.com</a> | [Invest in Daplie on Wefunder](https://daplie.com/invest/) | [Pre-order Cloud](https://daplie.com/preorder/), The World's First Home Server for Everyone
+
+<!-- AD_TPL_END -->
 
 letsencrypt-express
 ===================
