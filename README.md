@@ -13,17 +13,17 @@ Tired of serving the Empire? Come join the Rebel Alliance:
 
 <!-- BANNER_TPL_END -->
 
-letsencrypt-express
-===================
+greenlock-express (letsencrypt-express)
+=================
 
 [![Join the chat at https://gitter.im/Daplie/letsencrypt-express](https://badges.gitter.im/Daplie/letsencrypt-express.svg)](https://gitter.im/Daplie/letsencrypt-express?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-| [letsencrypt (lib)](https://github.com/Daplie/node-letsencrypt)
-| [letsencrypt-cli](https://github.com/Daplie/letsencrypt-cli)
+| [letsencrypt (lib)](https://git.daplie.com/Daplie/node-greenlock)
+| [letsencrypt-cli](https://git.daplie.com/Daplie/greenlock-cli)
 | **letsencrypt-express**
-| [letsencrypt-cluster](https://github.com/Daplie/letsencrypt-cluster)
-| [letsencrypt-koa](https://github.com/Daplie/letsencrypt-koa)
-| [letsencrypt-hapi](https://github.com/Daplie/letsencrypt-hapi)
+| [letsencrypt-cluster](https://git.daplie.com/Daplie/greenlock-cluster)
+| [letsencrypt-koa](https://git.daplie.com/Daplie/greenlock-koa)
+| [letsencrypt-hapi](https://git.daplie.com/Daplie/greenlock-hapi)
 |
 
 Free SSL and managed or automatic HTTPS for node.js with Express, Koa, Connect, Hapi, and all other middleware systems.
