@@ -20,25 +20,28 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Daplie/letsencrypt-cluster.git"
+    "url": "git+https://git.daplie.com/Daplie/greenlock-cluster.git"
   },
   "keywords": [
-    "cluster",
-    "multi-core",
+    "acme",
     "cloud",
-    "scale",
+    "cluster",
     "free",
-    "ssl",
+    "greenlock",
     "https",
-    "tls",
+    "le",
     "letsencrypt",
+    "multi-core",
     "node",
-    "node.js"
+    "node.js",
+    "scale",
+    "ssl",
+    "tls"
   ],
-  "author": "AJ ONeal <coolaj86@gmail.com> (https://coolaj86.com/)",
+  "author": "AJ ONeal <aj@daplie.com> (https://daplie.com/)",
   "license": "(MIT OR Apache-2.0)",
   "bugs": {
-    "url": "https://github.com/Daplie/letsencrypt-cluster/issues"
+    "url": "https://git.daplie.com/Daplie/greenlock-cluster/issues"
   },
-  "homepage": "https://github.com/Daplie/letsencrypt-cluster#readme"
+  "homepage": "https://git.daplie.com/Daplie/greenlock-cluster#readme"
 }

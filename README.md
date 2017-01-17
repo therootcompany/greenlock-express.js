@@ -125,7 +125,7 @@ var lex = require('letsencrypt-express').create({
 , store: require('le-store-certbot').create({ webrootPath: '/tmp/acme-challenges' })
 
 // You probably wouldn't need to replace the default sni handler
-// See https://github.com/Daplie/le-sni-auto if you think you do
+// See https://git.daplie.com/Daplie/le-sni-auto if you think you do
 //, sni: require('le-sni-auto').create({})
 
 , approveDomains: approveDomains
@@ -188,7 +188,7 @@ API
 
 This module is an elaborate ruse (to provide an oversimplified example and to nab some SEO).
 
-The API is actually located at [node-letsencrypt options](https://github.com/Daplie/node-letsencrypt)
+The API is actually located at [node-letsencrypt options](https://git.daplie.com/Daplie/node-greenlock)
 (because all options are simply passed through to `node-letsencrypt` proper without modification).
 
 The only "API" consists of two options, the rest is just a wrapper around `node-letsencrypt` to take LOC from 15 to 5:
