@@ -1,5 +1,5 @@
 {
-  "name": "letsencrypt-express",
+  "name": "greenlock-express",
   "version": "2.0.6",
   "description": "Free SSL and managed or automatic HTTPS for node.js with Express, Koa, Connect, Hapi, and all other middleware systems.",
   "main": "lex.js",
@@ -10,7 +10,7 @@
     "le-challenge-fs": "^2.0.4",
     "le-sni-auto": "^2.0.1",
     "le-store-certbot": "^2.0.3",
-    "letsencrypt": "^2.1.0",
+    "greenlock": "^2.1.9",
     "localhost.daplie.com-certificates": "^1.2.3",
     "redirect-https": "^1.1.0"
   },
