@@ -3,7 +3,7 @@
 // opts.approveDomains(options, certs, cb)
 module.exports.create = function (opts) {
   // accept all defaults for le.challenges, le.store, le.middleware
-  var le = require('letsencrypt').create(opts);
+  var le = require('greenlock').create(opts);
 
   opts.app = opts.app || function (req, res) {
     res.end("Hello, World!\nWith Love,\nLet's Encrypt Express");

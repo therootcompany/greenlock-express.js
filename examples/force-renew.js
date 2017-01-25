@@ -1,6 +1,6 @@
 'use strict';
 
-//require('letsencrypt-express')
+//require('greenlock-express')
 require('../').create({
 
   server: 'staging'

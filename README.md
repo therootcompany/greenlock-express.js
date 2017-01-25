@@ -18,12 +18,12 @@ greenlock-express (letsencrypt-express)
 
 [![Join the chat at https://gitter.im/Daplie/letsencrypt-express](https://badges.gitter.im/Daplie/letsencrypt-express.svg)](https://gitter.im/Daplie/letsencrypt-express?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-| [letsencrypt (lib)](https://git.daplie.com/Daplie/node-greenlock)
-| [letsencrypt-cli](https://git.daplie.com/Daplie/greenlock-cli)
-| **letsencrypt-express**
-| [letsencrypt-cluster](https://git.daplie.com/Daplie/greenlock-cluster)
-| [letsencrypt-koa](https://git.daplie.com/Daplie/greenlock-koa)
-| [letsencrypt-hapi](https://git.daplie.com/Daplie/greenlock-hapi)
+| [greenlock (lib)](https://git.daplie.com/Daplie/node-greenlock)
+| [greenlock-cli](https://git.daplie.com/Daplie/greenlock-cli)
+| **greenlock-express**
+| [greenlock-cluster](https://git.daplie.com/Daplie/greenlock-cluster)
+| [greenlock-koa](https://git.daplie.com/Daplie/greenlock-koa)
+| [greenlock-hapi](https://git.daplie.com/Daplie/greenlock-hapi)
 |
 
 Free SSL and managed or automatic HTTPS for node.js with Express, Koa, Connect, Hapi, and all other middleware systems.
@@ -40,7 +40,7 @@ Install
 =======
 
 ```bash
-npm install --save letsencrypt-express@2.x
+npm install --save greenlock-express@2.x
 ```
 
 **Important**: Use node v4.5+ or v6.x, node <= v4.4 has a [known bug](https://github.com/nodejs/node/issues/8053) in the `Buffer` implementation.
@@ -54,7 +54,7 @@ Here's a completely working example that will get you started:
 ```javascript
 'use strict';
 
-require('letsencrypt-express').create({
+require('greenlock-express').create({
 
   server: 'staging'
 
@@ -83,7 +83,7 @@ Why You Must Use 'staging' First
 
 There are a number of common problems related to system configuration -
 firewalls, ports, permissions, etc - that you are likely to run up against
-when using letsencrypt for your first time.
+when using greenlock for your first time.
 
 In order to avoid being blocked by hitting rate limits with bad requests,
 you should always test against the `'staging'` server
@@ -114,8 +114,8 @@ now here's the switch:
 ```javascript
 'use strict';
 
-// returns an instance of node-letsencrypt with additional helper methods
-var lex = require('letsencrypt-express').create({
+// returns an instance of node-greenlock with additional helper methods
+var lex = require('greenlock-express').create({
   // set to https://acme-v01.api.letsencrypt.org/directory in production
   server: 'staging'
 
@@ -188,15 +188,15 @@ API
 
 This module is an elaborate ruse (to provide an oversimplified example and to nab some SEO).
 
-The API is actually located at [node-letsencrypt options](https://git.daplie.com/Daplie/node-greenlock)
-(because all options are simply passed through to `node-letsencrypt` proper without modification).
+The API is actually located at [node-greenlock options](https://git.daplie.com/Daplie/node-greenlock)
+(because all options are simply passed through to `node-greenlock` proper without modification).
 
-The only "API" consists of two options, the rest is just a wrapper around `node-letsencrypt` to take LOC from 15 to 5:
+The only "API" consists of two options, the rest is just a wrapper around `node-greenlock` to take LOC from 15 to 5:
 
 * `opts.app` An express app in the format `function (req, res) { ... }` (no `next`).
 * `lex.listen(plainPort, tlsPort)` Accepts port numbers (or arrays of port numbers) to listen on.
 
-Brief overview of some simple options for `node-letsencrypt`:
+Brief overview of some simple options for `node-greenlock`:
 
 * `opts.server` set to https://acme-v01.api.letsencrypt.org/directory in production
 * `opts.email` The default email to use to accept agreements.
