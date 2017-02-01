@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://git.daplie.com/Daplie/greenlock-cluster.git"
+    "url": "https://git.daplie.com/Daplie/greenlock-express"
   },
   "keywords": [
     "acme",
@@ -41,7 +41,7 @@
   "author": "AJ ONeal <aj@daplie.com> (https://daplie.com/)",
   "license": "(MIT OR Apache-2.0)",
   "bugs": {
-    "url": "https://git.daplie.com/Daplie/greenlock-cluster/issues"
+    "url": "https://git.daplie.com/Daplie/greenlock-express/issues"
   },
-  "homepage": "https://git.daplie.com/Daplie/greenlock-cluster#readme"
+  "homepage": "https://git.daplie.com/Daplie/greenlock-express#readme"
 }
