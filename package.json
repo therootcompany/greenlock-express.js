@@ -1,6 +1,6 @@
 {
   "name": "greenlock-express",
-  "version": "2.0.9",
+  "version": "2.0.10",
   "description": "Free SSL and managed or automatic HTTPS for node.js with Express, Koa, Connect, Hapi, and all other middleware systems.",
   "main": "lex.js",
   "directories": {
