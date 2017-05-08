@@ -11,7 +11,7 @@
     "le-sni-auto": "^2.0.1",
     "le-store-certbot": "^2.0.3",
     "greenlock": "^2.1.9",
-    "localhost.daplie.com-certificates": "^1.2.3",
+    "localhost.daplie.me-certificates": "^1.2.3",
     "redirect-https": "^1.1.0"
   },
   "devDependencies": {},
