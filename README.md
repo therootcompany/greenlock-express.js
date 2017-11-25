@@ -1,29 +1,12 @@
-<!-- BANNER_TPL_BEGIN -->
-
-About Daplie: We're taking back the Internet!
---------------
-
-Down with Google, Apple, and Facebook!
-
-We're re-decentralizing the web and making it read-write again - one home cloud system at a time.
-
-Tired of serving the Empire? Come join the Rebel Alliance:
-
-<a href="mailto:jobs@daplie.com">jobs@daplie.com</a> | [Invest in Daplie on Wefunder](https://daplie.com/invest/) | [Pre-order Cloud](https://daplie.com/preorder/), The World's First Home Server for Everyone
-
-<!-- BANNER_TPL_END -->
-
 greenlock-express (letsencrypt-express)
 =================
 
-[![Join the chat at https://gitter.im/Daplie/letsencrypt-express](https://badges.gitter.im/Daplie/letsencrypt-express.svg)](https://gitter.im/Daplie/letsencrypt-express?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-| [greenlock (lib)](https://git.daplie.com/Daplie/node-greenlock)
-| [greenlock-cli](https://git.daplie.com/Daplie/greenlock-cli)
+| [greenlock (lib)](https://git.coolaj86.com/coolaj86/greenlock.js)
+| [greenlock-cli](https://git.coolaj86.com/coolaj86/greenlock-cli.js)
 | **greenlock-express**
-| [greenlock-cluster](https://git.daplie.com/Daplie/greenlock-cluster)
-| [greenlock-koa](https://git.daplie.com/Daplie/greenlock-koa)
-| [greenlock-hapi](https://git.daplie.com/Daplie/greenlock-hapi)
+| [greenlock-cluster](https://git.coolaj86.com/coolaj86/greenlock-cluster.js)
+| [greenlock-koa](https://git.coolaj86.com/coolaj86/greenlock-koa.js)
+| [greenlock-hapi](https://git.coolaj86.com/coolaj86/greenlock-hapi.js)
 |
 
 Free SSL and managed or automatic HTTPS for node.js with Express, Koa, Connect, Hapi, and all other middleware systems.
@@ -125,7 +108,7 @@ var lex = require('greenlock-express').create({
 , store: require('le-store-certbot').create({ webrootPath: '/tmp/acme-challenges' })
 
 // You probably wouldn't need to replace the default sni handler
-// See https://git.daplie.com/Daplie/le-sni-auto if you think you do
+// See https://git.coolaj86.com/coolaj86/le-sni-auto if you think you do
 //, sni: require('le-sni-auto').create({})
 
 , approveDomains: approveDomains
@@ -188,7 +171,7 @@ API
 
 This module is an elaborate ruse (to provide an oversimplified example and to nab some SEO).
 
-The API is actually located at [node-greenlock options](https://git.daplie.com/Daplie/node-greenlock)
+The API is actually located at [node-greenlock options](https://git.coolaj86.com/coolaj86/greenlock.js)
 (because all options are simply passed through to `node-greenlock` proper without modification).
 
 The only "API" consists of two options, the rest is just a wrapper around `node-greenlock` to take LOC from 15 to 5:
