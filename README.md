@@ -124,7 +124,7 @@ now here's the switch:
 ```javascript
 'use strict';
 
-// returns an instance of node-greenlock with additional helper methods
+// returns an instance of greenlock.js with additional helper methods
 var lex = require('greenlock-express').create({
   // set to https://acme-v02.api.letsencrypt.org/directory in production
   server: 'https://acme-staging-v02.api.letsencrypt.org/directory'
@@ -199,17 +199,17 @@ API
 
 This module is an elaborate ruse (to provide an oversimplified example and to nab some SEO).
 
-The API is actually located at [node-greenlock options](https://git.coolaj86.com/coolaj86/greenlock.js)
-(because all options are simply passed through to `node-greenlock` proper without modification).
+The API is actually located at [greenlock.js options](https://git.coolaj86.com/coolaj86/greenlock.js)
+(because all options are simply passed through to `greenlock.js` proper without modification).
 
-The only "API" consists of two options, the rest is just a wrapper around `node-greenlock` to take LOC from 15 to 5:
+The only "API" consists of two options, the rest is just a wrapper around `greenlock.js` to take LOC from 15 to 5:
 
 * `opts.app` An express app in the format `function (req, res) { ... }` (no `next`).
 * `lex.listen(plainPort, tlsPort)` Accepts port numbers (or arrays of port numbers) to listen on.
 
-Brief overview of some simple options for `node-greenlock`:
+Brief overview of some simple options for `greenlock.js`:
 
-* `opts.server` set to https://acme-v01.api.letsencrypt.org/directory in production
+* `opts.server` set to https://acme-v02.api.letsencrypt.org/directory in production
 * `opts.version` set to `v01` for Let's Encrypt v1 or `draft-11` for Let's Encrypt v2 (mistakenly called ACME v2)
 * `opts.email` The default email to use to accept agreements.
 * `opts.agreeTos` When set to `true`, this always accepts the LetsEncrypt TOS. When a string it checks the agreement url first.
