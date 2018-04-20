@@ -83,6 +83,12 @@ require('greenlock-express').create({
 
 ### What if the example didn't work?
 
+First and foremost:
+
+* You MUST run this on the public-facing webserver, *as the webserver*
+
+Exception: using 'dns-01' (i.e. `le-challenge-route53`) you can validate domains set to private addresses (10.x, 192.168.x, etc).
+
 Double check each of the following:
 
 * Let's Encrypt **v2** uses `version: 'draft-11'`, but v1 uses `version: 'v01'`
