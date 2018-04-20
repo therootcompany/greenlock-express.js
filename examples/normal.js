@@ -24,13 +24,18 @@ require('../').create({
   // You MUST change 'acme-staging-v02' to 'acme-v02' in production
 , server: 'https://acme-staging-v02.api.letsencrypt.org/directory'  // staging
 
+// The previous 'simple' example set these values statically,
+// but this example uses approveDomains() to set them dynamically 
+//, email: 'none@see.note.above'
+//, agreeTos: false
+
   // approveDomains is the right place to check a database for
   // email addresses with domains and agreements and such
 , approveDomains: approveDomains 
 
   // You MUST have access to write to directory where certs are saved
-  // ex: /home/foouser/acme/etc
-, configDir: require('path').join(require('os').homedir(), 'acme', 'etc')
+  // ex: /etc/greenlock/
+, configDir: '/tmp/etc/greenlock'
 
 , app: app
 
