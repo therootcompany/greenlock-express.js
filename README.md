@@ -39,6 +39,18 @@ QuickStart
 
 Here's a completely working example that will get you started.
 
+```
+git clone https://git.coolaj86.com/coolaj86/greenlock-express.js.git
+pushd greenlock-express.js
+  npm install
+popd
+
+# edit 'email' and 'approveDomains' in
+# greenlock-express.js/examples/simple.js
+
+node greenlock-express.js/examples/simple.js
+```
+
 All you have to do is start the webserver and then visit it at its domain name.
 
 `app.js`:
@@ -117,10 +129,25 @@ you should always test against the `staging` server
 
 Usage
 =====
-
 The oversimplified example was the bait
 (because everyone seems to want an example that fits in 3 lines, even if it's terribly bad practices),
-now here's the switch:
+now here's the switch.
+
+We have another completely working example that will provides a little more to build off of.
+
+```
+git clone https://git.coolaj86.com/coolaj86/greenlock-express.js.git
+pushd greenlock-express.js
+  npm install
+popd
+
+# replace 'fooCheckDb' in
+# greenlock-express.js/examples/normal.js
+
+node greenlock-express.js/examples/normal.js
+```
+
+It looks a little more like this:
 
 `serve.js`:
 ```javascript
