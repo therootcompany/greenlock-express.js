@@ -36,8 +36,6 @@ Install
 npm install --save greenlock-express@2.x
 ```
 
-**Important**: Use node v4.5+ or v6.x, node <= v4.4 has a [known bug](https://github.com/nodejs/node/issues/8053) in the `Buffer` implementation.
-
 QuickStart
 ==========
 
