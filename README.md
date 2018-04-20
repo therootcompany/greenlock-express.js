@@ -12,13 +12,12 @@ greenlock-express.js
 
 (formerly letsencrypt-express.js)
 
-Free SSL and managed or automatic HTTPS for node.js with Express, Koa, Connect, Hapi, and all other middleware systems.
+Free SSL and automatic (or managed) HTTPS for node.js and Express
+(and all other middleware systems - Koa, Happy, Connect, Rill).
 
-* Automatic Registration via SNI (`httpsOptions.SNICallback`)
-  * **registrations** require an **approval callback** in *production*
-* Automatic Renewal (around 80 days)
-  * **renewals** are *fully automatic* and happen in the *background*, with **no downtime**
-* Automatic vhost / virtual hosting
+Certificate renewals are **fully automatic** background tasks that happen within 14 days of expiry (about every 78 days).
+
+Supports automatic vhosts (virtual hosting) automatically as well.
 
 All you have to do is start the webserver and then visit it at its domain name.
 
@@ -84,9 +83,7 @@ require('greenlock-express').create({
 
 First and foremost:
 
-* You MUST run this on the public-facing webserver, *as the webserver*
-
-Exception: using 'dns-01' (i.e. `le-challenge-route53`) you can validate domains set to private addresses (10.x, 192.168.x, etc).
+* You MUST run this on the public-facing webserver, *as the webserver* (exception: using a 'dns-01' challenge, such as `le-challenge-route53`, you can validate domains set to private addresses - 10.x, 192.168.x, etc)
 
 Double check each of the following:
 
@@ -95,14 +92,13 @@ Double check each of the following:
 * You MUST set `approveDomains` to domains with **valid DNS records** (test with `dig +trace A example.com; dig +trace www.example.com` for `[ 'example.com', 'www.example.com' ]`)
 * You MUST have **write access** to `configDir` so that certs can be saved (test with `touch ~/acme/etc/tmp.tmp`)
 * You MUST have **bind privileges** to ports 80 and 44 via `sudo` or [`setcap`](https://gist.github.com/firstdoit/6389682)
+* You MUST NOT exceed the API [**usage limits**](https://letsencrypt.org/docs/staging-environment/) per domain, certificate, IP address, etc
 
 If you get a **red** lock instead of a green lock:
 
 * You MUST change the `server` value **in production**. Just shorten the 'acme-staging-v02' part to 'acme-v02'
 
-Get it working in staging first!
-
-* You MUST NOT exceed the API [**usage limits**](https://letsencrypt.org/docs/staging-environment/) per domain, certificate, IP address, etc
+### Get it working in staging first!
 
 There are a number of common problems related to system configuration -
 firewalls, ports, permissions, etc - that you are likely to run up against
@@ -141,6 +137,9 @@ var lex = require('greenlock-express').create({
 , approveDomains: approveDomains
 });
 ```
+
+The Automatic Certificate Issuance is initiated via SNI (`httpsOptions.SNICallback`).
+For security, domain validation MUST have an approval callback in *production*.
 
 ```javascript
 function approveDomains(opts, certs, cb) {
