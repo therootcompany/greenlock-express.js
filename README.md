@@ -12,7 +12,7 @@ greenlock-express.js
 
 (formerly letsencrypt-express.js)
 
-Free SSL and automatic (or managed) HTTPS for node.js and Express
+Free SSL for node.js. Fully automatic HTTPS with Express.js.
 (and all other middleware systems - Koa, Happy, Connect, Rill).
 
 Certificate renewals are **fully automatic** background tasks that happen within 14 days of expiry (about every 78 days).
