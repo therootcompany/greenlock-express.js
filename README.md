@@ -101,34 +101,17 @@ If you get a **red** lock instead of a green lock:
 
 * You MUST change the `server` value **in production**. Just shorten the 'acme-staging-v02' part to 'acme-v02'
 
-Other:
+Get it working in staging first!
 
 * You MUST NOT exceed the API [**usage limits**](https://letsencrypt.org/docs/staging-environment/) per domain, certificate, IP address, etc
-
-Why You Must Use 'staging' First
---------------------------------
 
 There are a number of common problems related to system configuration -
 firewalls, ports, permissions, etc - that you are likely to run up against
 when using greenlock for your first time.
 
 In order to avoid being blocked by hitting rate limits with bad requests,
-you should always test against the `'staging'` server
+you should always test against the `staging` server
 (`https://acme-staging-v02.api.letsencrypt.org/directory`) first.
-
-Migrating from v1.x
-===================
-
-Whereas v1.x had a few hundred lines of code, v2.x is a single small file of about 50 lines.
-
-A few important things to note:
-
-* Delete your v1.x `~/acme` directory, otherwise you get this:
-  * `{ type: 'urn:acme:error:malformed', detail: 'Parse error reading JWS', status: 400 }`
-* `approveRegistration` has been replaced by `approveDomains`
-* All of the behavior has moved to the various plugins, which each have their own options
-* Use https and http directly, don't rely on the silly `.listen()` helper. It's just there for looks.
-* `lex.createAcmeResponder()` is now `lex.middleware(require('redirect-https')())` or `lex.middleware(app)`
 
 Usage
 =====
