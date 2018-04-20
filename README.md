@@ -1,5 +1,7 @@
-greenlock-express (letsencrypt-express)
+greenlock-express.js
 =================
+
+(formerly letsencrypt-express.js)
 
 | [greenlock (lib)](https://git.coolaj86.com/coolaj86/greenlock.js)
 | [greenlock-cli](https://git.coolaj86.com/coolaj86/greenlock-cli.js)
@@ -11,8 +13,6 @@ greenlock-express (letsencrypt-express)
 
 | Sponsored by [ppl](https://ppl.family)
 
-## Now supports Let's Encrypt v2!!
-
 Free SSL and managed or automatic HTTPS for node.js with Express, Koa, Connect, Hapi, and all other middleware systems.
 
 * Automatic Registration via SNI (`httpsOptions.SNICallback`)
@@ -22,6 +22,12 @@ Free SSL and managed or automatic HTTPS for node.js with Express, Koa, Connect, 
 * Automatic vhost / virtual hosting
 
 All you have to do is start the webserver and then visit it at its domain name.
+
+## Now supports Let's Encrypt v2!!
+
+* Let's Encrypt v1 (aka v01)
+* Let's Encrypt v2 (aka v02 or ACME draft 11)
+* ACME draft 11 (ACME v2 is a misnomer)
 
 Install
 =======
@@ -43,7 +49,9 @@ Here's a completely working example that will get you started:
 
 require('greenlock-express').create({
 
-  server: 'staging'
+  version: 'draft-11' // Let's Encrypt v2
+, server: 'https://acme-staging-v02.api.letsencrypt.org/directory'  // staging
+//, server: 'https://acme-v02.api.letsencrypt.org/directory'        // production
 
 , email: 'john.doe@example.com'
 
@@ -58,11 +66,11 @@ require('greenlock-express').create({
 }).listen(80, 443);
 ```
 
-Certificates will be stored in `~/letsencrypt`.
+Certificates will be stored in `~/acme`.
 
 **Important**:
 
-You must set `server` to `https://acme-v01.api.letsencrypt.org/directory` **after**
+You must set `server` to `https://acme-v02.api.letsencrypt.org/directory` **after**
 you have tested that your setup works.
 
 Why You Must Use 'staging' First
@@ -74,7 +82,7 @@ when using greenlock for your first time.
 
 In order to avoid being blocked by hitting rate limits with bad requests,
 you should always test against the `'staging'` server
-(`https://acme-staging.api.letsencrypt.org/directory`) first.
+(`https://acme-staging-v02.api.letsencrypt.org/directory`) first.
 
 Migrating from v1.x
 ===================
@@ -83,7 +91,7 @@ Whereas v1.x had a few hundred lines of code, v2.x is a single small file of abo
 
 A few important things to note:
 
-* Delete your v1.x `~/letsencrypt` directory, otherwise you get this:
+* Delete your v1.x `~/acme` directory, otherwise you get this:
   * `{ type: 'urn:acme:error:malformed', detail: 'Parse error reading JWS', status: 400 }`
 * `approveRegistration` has been replaced by `approveDomains`
 * All of the behavior has moved to the various plugins, which each have their own options
@@ -103,8 +111,9 @@ now here's the switch:
 
 // returns an instance of node-greenlock with additional helper methods
 var lex = require('greenlock-express').create({
-  // set to https://acme-v01.api.letsencrypt.org/directory in production
-  server: 'staging'
+  // set to https://acme-v02.api.letsencrypt.org/directory in production
+  server: 'https://acme-staging-v02.api.letsencrypt.org/directory'
+, version: 'draft-11' // Let's Encrypt v2 (ACME v2)
 
 // If you wish to replace the default plugins, you may do so here
 //
@@ -186,6 +195,7 @@ The only "API" consists of two options, the rest is just a wrapper around `node-
 Brief overview of some simple options for `node-greenlock`:
 
 * `opts.server` set to https://acme-v01.api.letsencrypt.org/directory in production
+* `opts.version` set to `v01` for Let's Encrypt v1 or `draft-11` for Let's Encrypt v2 (mistakenly called ACME v2)
 * `opts.email` The default email to use to accept agreements.
 * `opts.agreeTos` When set to `true`, this always accepts the LetsEncrypt TOS. When a string it checks the agreement url first.
 * `opts.approveDomains` can be either of:
