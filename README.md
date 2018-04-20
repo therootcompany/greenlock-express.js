@@ -10,7 +10,7 @@
 greenlock-express.js
 =================
 
-(formerly letsencrypt-express.js)
+(formerly letsencrypt-express)
 
 Free SSL for node.js.
 
