@@ -81,20 +81,33 @@ require('greenlock-express').create({
 
 First and foremost:
 
-* You MUST run this on the public-facing webserver, *as the webserver* (exception: using a 'dns-01' challenge, such as `le-challenge-route53`, you can validate domains set to private addresses - 10.x, 192.168.x, etc)
+* You MUST run this on the public-facing webserver, *as the webserver* (exception: using a 'dns-01' challenge, such as `le-challenge-route53`, you can validate domains set to private addresses )
 
-Double check each of the following:
+Double check the following:
 
-* Let's Encrypt **v2** uses `version: 'draft-11'`, but v1 uses `version: 'v01'`
-* You MUST set `email` to a **valid address** with **valid MX** records (`dig MX example.com` for `'john@example.com'`)
-* You MUST set `approveDomains` to domains with **valid DNS records** (test with `dig +trace A example.com; dig +trace www.example.com` for `[ 'example.com', 'www.example.com' ]`)
-* You MUST have **write access** to `configDir` so that certs can be saved (test with `touch ~/acme/etc/tmp.tmp`)
-* You MUST have **bind privileges** to ports 80 and 44 via `sudo` or [`setcap`](https://gist.github.com/firstdoit/6389682)
-* You MUST NOT exceed the API [**usage limits**](https://letsencrypt.org/docs/staging-environment/) per domain, certificate, IP address, etc
-
-If you get a **red** lock instead of a green lock:
-
-* You MUST change the `server` value **in production**. Just shorten the 'acme-staging-v02' part to 'acme-v02'
+* **Public Facing IP** for `http-01` challenges
+  * Are you running this *as* a public-facing webserver (good)? or localhost (bad)?
+  * Does `ifconfig` show a public address (good)? or a private one - 10.x, 192.168.x, etc (bad)?
+  * If you're on a non-public server, are you using the `dns-01` challenge?
+* **correct ACME version**
+  * Let's Encrypt **v2** (ACME v2) must use `version: 'draft-11'`
+  * Let's Encrypt v1 must use `version: 'v01'`
+* **valid email**
+  * You MUST set `email` to a **valid address**
+  * MX records must validate (`dig MX example.com` for `'john@example.com'`)
+* **valid DNS records**
+  * You MUST set `approveDomains` to real domains
+  * Must have public DNS records (test with `dig +trace A example.com; dig +trace www.example.com` for `[ 'example.com', 'www.example.com' ]`)
+* **write access**
+  * You MUST set `configDir` to a writeable location (test with `touch ~/acme/etc/tmp.tmp`)
+* **port binding privileges**
+  * You MUST be able to bind to ports 80 and 44
+  * You can do this via `sudo` or [`setcap`](https://gist.github.com/firstdoit/6389682)
+* **API limits**
+  * You MUST NOT exceed the API [**usage limits**](https://letsencrypt.org/docs/staging-environment/) per domain, certificate, IP address, etc
+* **Red Lock, Untrusted**
+  * You MUST change the `server` value **in production**
+  * Shorten the 'acme-staging-v02' part of the server URL to 'acme-v02'
 
 ### Get it working in staging first!
 
