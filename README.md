@@ -51,29 +51,53 @@ Here's a completely working example that will get you started:
 
 require('greenlock-express').create({
 
-  version: 'draft-11' // Let's Encrypt v2
-, server: 'https://acme-staging-v02.api.letsencrypt.org/directory'  // staging
-//, server: 'https://acme-v02.api.letsencrypt.org/directory'        // production
+  // Let's Encrypt v2 is ACME draft 11
+  version: 'draft-11'
 
+  // You MUST change 'acme-staging-v02' to 'acme-v02' in production
+, server: 'https://acme-staging-v02.api.letsencrypt.org/directory'  // staging
+
+  // You MUST change this to a valid email address
 , email: 'john.doe@example.com'
 
+  // You MUST NOT build clients that accept the ToS without asking the user
 , agreeTos: true
 
-, approveDomains: [ 'example.com' ]
+  // You MUST change these to valid domains
+  // NOTE: all domains will validated and listed on the certificate
+, approveDomains: [ 'example.com', 'www.example.com' ]
+
+  // You MUST have access to write to directory where certs are saved
+  // ex: /home/foouser/acme/etc
+, configDir: require('path').join(require('os').homedir(), 'acme', 'etc')
 
 , app: require('express')().use('/', function (req, res) {
-    res.end('Hello, World!');
+    res.setHeader('Content-Type', 'text/html; charset=utf-8')
+    res.end('Hello, World!\n\n💚 🔒.js');
   })
+
+//, debug: true
 
 }).listen(80, 443);
 ```
 
-Certificates will be stored in `~/acme`.
+### What if the example didn't work?
 
-**Important**:
+Double check each of the following:
 
-You must set `server` to `https://acme-v02.api.letsencrypt.org/directory` **after**
-you have tested that your setup works.
+* Let's Encrypt **v2** uses `version: 'draft-11'`, but v1 uses `version: 'v01'`
+* You MUST set `email` to a **valid address** with **valid MX** records (`dig MX example.com` for `'john@example.com'`)
+* You MUST set `approveDomains` to domains with **valid DNS records** (test with `dig +trace A example.com; dig +trace www.example.com` for `[ 'example.com', 'www.example.com' ]`)
+* You MUST have **write access** to `configDir` so that certs can be saved (test with `touch ~/acme/etc/tmp.tmp`)
+* You MUST have **bind privileges** to ports 80 and 44 via `sudo` or [`setcap`](https://gist.github.com/firstdoit/6389682)
+
+If you get a **red** lock instead of a green lock:
+
+* You MUST change the `server` value **in production**. Just shorten the 'acme-staging-v02' part to 'acme-v02'
+
+Other:
+
+* You MUST NOT exceed the API [**usage limits**](https://letsencrypt.org/docs/staging-environment/) per domain, certificate, IP address, etc
 
 Why You Must Use 'staging' First
 --------------------------------
