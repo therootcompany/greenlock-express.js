@@ -79,10 +79,6 @@ require('greenlock-express').create({
 
 ### What if the example didn't work?
 
-First and foremost:
-
-* You MUST run this on the public-facing webserver, *as the webserver* (exception: using a 'dns-01' challenge, such as `le-challenge-route53`, you can validate domains set to private addresses )
-
 Double check the following:
 
 * **Public Facing IP** for `http-01` challenges
