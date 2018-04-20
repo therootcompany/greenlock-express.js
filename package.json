@@ -7,12 +7,12 @@
     "example": "examples"
   },
   "dependencies": {
-    "le-challenge-fs": "^2.0.4",
-    "le-sni-auto": "^2.0.1",
-    "le-store-certbot": "^2.0.3",
     "greenlock": "^2.2.3",
+    "le-challenge-fs": "^2.0.8",
+    "le-sni-auto": "^2.1.4",
+    "le-store-certbot": "^2.0.5",
     "localhost.daplie.me-certificates": "^1.2.3",
-    "redirect-https": "^1.1.0"
+    "redirect-https": "^1.1.5"
   },
   "devDependencies": {},
   "scripts": {

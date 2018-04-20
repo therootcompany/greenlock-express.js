@@ -28,6 +28,8 @@ All you have to do is start the webserver and then visit it at its domain name.
 * Let's Encrypt v1 (aka v01)
 * Let's Encrypt v2 (aka v02 or ACME draft 11)
 * ACME draft 11 (ACME v2 is a misnomer)
+* Wildcard domains!! (via dns-01 challenges)
+  * `*.example.com`
 
 Install
 =======
