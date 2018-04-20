@@ -9,6 +9,10 @@ greenlock-express (letsencrypt-express)
 | [greenlock-hapi](https://git.coolaj86.com/coolaj86/greenlock-hapi.js)
 |
 
+| Sponsored by [ppl](https://ppl.family)
+
+## Now supports Let's Encrypt v2!!
+
 Free SSL and managed or automatic HTTPS for node.js with Express, Koa, Connect, Hapi, and all other middleware systems.
 
 * Automatic Registration via SNI (`httpsOptions.SNICallback`)
