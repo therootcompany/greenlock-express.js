@@ -1,8 +1,4 @@
-greenlock-express.js
-=================
-
-(formerly letsencrypt-express.js)
-
+| Sponsored by [ppl](https://ppl.family)
 | [greenlock (lib)](https://git.coolaj86.com/coolaj86/greenlock.js)
 | [greenlock-cli](https://git.coolaj86.com/coolaj86/greenlock-cli.js)
 | **greenlock-express**
@@ -11,7 +7,10 @@ greenlock-express.js
 | [greenlock-hapi](https://git.coolaj86.com/coolaj86/greenlock-hapi.js)
 |
 
-| Sponsored by [ppl](https://ppl.family)
+greenlock-express.js
+=================
+
+(formerly letsencrypt-express.js)
 
 Free SSL and managed or automatic HTTPS for node.js with Express, Koa, Connect, Hapi, and all other middleware systems.
 
