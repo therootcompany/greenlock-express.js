@@ -12,14 +12,12 @@ greenlock-express.js
 
 (formerly letsencrypt-express.js)
 
-Free SSL for node.js. Fully automatic HTTPS with Express.js.
-(and all other middleware systems - Koa, Happy, Connect, Rill).
+Free SSL for node.js.
 
-Certificate renewals are **fully automatic** background tasks that happen within 14 days of expiry (about every 78 days).
+Fully automatic HTTPS with Express.js
+(and all other middleware systems), including virtual hosting (vhost) support with multiple domains.
 
-Supports automatic vhosts (virtual hosting) automatically as well.
-
-All you have to do is start the webserver and then visit it at its domain name.
+Certificate renewals happen in the background between 10 and 14 days before expiration (~78 days).
 
 ## Now supports Let's Encrypt v2!!
 
@@ -39,7 +37,9 @@ npm install --save greenlock-express@2.x
 QuickStart
 ==========
 
-Here's a completely working example that will get you started:
+Here's a completely working example that will get you started.
+
+All you have to do is start the webserver and then visit it at its domain name.
 
 `app.js`:
 ```javascript
