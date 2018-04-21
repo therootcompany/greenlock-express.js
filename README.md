@@ -109,7 +109,7 @@ Double check the following:
 * **write access**
   * You MUST set `configDir` to a writeable location (test with `touch ~/acme/etc/tmp.tmp`)
 * **port binding privileges**
-  * You MUST be able to bind to ports 80 and 44
+  * You MUST be able to bind to ports 80 and 443
   * You can do this via `sudo` or [`setcap`](https://gist.github.com/firstdoit/6389682)
 * **API limits**
   * You MUST NOT exceed the API [**usage limits**](https://letsencrypt.org/docs/staging-environment/) per domain, certificate, IP address, etc
