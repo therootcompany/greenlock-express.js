@@ -36,8 +36,9 @@ npm install --save greenlock-express@2.x
 
 QuickStart
 ==========
-
+<!--
 [![Free SSL with Greenlock.js](https://i.imgur.com/Y8ix6Ts.png)](https://youtu.be/e8vaR4CEZ5s)
+-->
 
 ### Screencast
 
