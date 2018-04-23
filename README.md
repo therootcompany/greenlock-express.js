@@ -39,6 +39,16 @@ QuickStart
 
 [![Free SSL with Greenlock.js](https://i.imgur.com/Y8ix6Ts.png)](https://youtu.be/e8vaR4CEZ5s)
 
+### Screencast
+
+Watch the QuickStart demonstration: https://youtu.be/e8vaR4CEZ5s
+
+* [0:00](https://youtu.be/e8vaR4CEZ5s#t=0) - Intro
+* [2:22](https://youtu.be/e8vaR4CEZ5s#t=142) - Demonstrating QuickStart Example
+* [6:37](https://youtu.be/e8vaR4CEZ5s?t=397) - Troubleshooting / Gotchas
+
+### Working Example Code
+
 Here's a completely working example that will get you started.
 
 ```
