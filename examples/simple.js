@@ -7,7 +7,7 @@ require('../').create({
   version: 'draft-11'
 
   // You MUST change 'acme-staging-v02' to 'acme-v02' in production
-, server: 'https://acme-staging-v02.api.letsencrypt.org/directory'  // staging
+, server: 'https://acme-staging-v02.api.letsencrypt.org/directory'
 
   // You MUST change this to a valid email address
 , email: 'john.doe@example.com'
@@ -24,7 +24,7 @@ require('../').create({
 , configDir: require('path').join(require('os').homedir(), 'acme', 'etc')
 
 , app: require('express')().use('/', function (req, res) {
-    res.setHeader('Content-Type', 'text/html; charset=utf-8')
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.end('Hello, World!\n\n💚 🔒.js');
   })
 
