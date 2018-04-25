@@ -9,12 +9,11 @@
 // This demo is used with tunnel-server.js and tunnel-client.js
 //
 
-var crypto = require('crypto');
-
 var email = 'john.doe@gmail.com';
 var domains = [ 'example.com' ];
 var agreeLeTos = true;
-var secret = crypto.randomBytes(16).toString('hex');
+//var secret = "My Little Brony";
+var secret = require('crypto').randomBytes(16).toString('hex');
 
 require('../').create({
   version: 'draft-11'
