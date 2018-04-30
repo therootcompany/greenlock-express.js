@@ -142,6 +142,7 @@ you should always test against the `staging` server
 
 Plugins
 =====
+**IMPORTANT**: Community plugins may or may not be maintained and working. Please try with the defaults before switching to community plugins.
 
 |                | challenge | store |
 |:--------------:|:---------:|:-----:|
@@ -153,6 +154,8 @@ Plugins
 | AWS S3         | [llun/le-challenge-s3](https://github.com/llun/le-challenge-s3) | [llun/le-store-s3](https://github.com/llun/le-store-s3) |
 | json           | - | [paulgrove/le-store-simple-fs](https://github.com/paulgrove/le-store-simple-fs)
 | Redis          | - | [digitalbazaar/le-store-redis](https://github.com/digitalbazaar/le-store-redis) |
+
+Bugs: Please report bugs with the community plugins to the appropriate owner first, then here if you don't get a response.
 
 Usage
 =====
