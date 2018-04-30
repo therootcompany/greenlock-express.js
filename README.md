@@ -1,12 +1,10 @@
 | Sponsored by [ppl](https://ppl.family)
 | [greenlock (lib)](https://git.coolaj86.com/coolaj86/greenlock.js)
-| [greenlock-cli](https://git.coolaj86.com/coolaj86/greenlock-cli.js)
-| [greenlock-cluster](https://git.coolaj86.com/coolaj86/greenlock-cluster.js)
-|
-
-| **greenlock-express**
-| [greenlock-koa](https://git.coolaj86.com/coolaj86/greenlock-koa.js)
-| [greenlock-hapi](https://git.coolaj86.com/coolaj86/greenlock-hapi.js)
+| [gl-cli](https://git.coolaj86.com/coolaj86/greenlock-cli.js)
+| [gl-cluster](https://git.coolaj86.com/coolaj86/greenlock-cluster.js)
+| **gl-express**
+| [gl-koa](https://git.coolaj86.com/coolaj86/greenlock-koa.js)
+| [gl-hapi](https://git.coolaj86.com/coolaj86/greenlock-hapi.js)
 |
 
 greenlock-express.js
