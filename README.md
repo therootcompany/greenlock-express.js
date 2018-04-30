@@ -1,8 +1,10 @@
 | Sponsored by [ppl](https://ppl.family)
 | [greenlock (lib)](https://git.coolaj86.com/coolaj86/greenlock.js)
 | [greenlock-cli](https://git.coolaj86.com/coolaj86/greenlock-cli.js)
-| **greenlock-express**
 | [greenlock-cluster](https://git.coolaj86.com/coolaj86/greenlock-cluster.js)
+|
+
+| **greenlock-express**
 | [greenlock-koa](https://git.coolaj86.com/coolaj86/greenlock-koa.js)
 | [greenlock-hapi](https://git.coolaj86.com/coolaj86/greenlock-hapi.js)
 |
@@ -139,6 +141,20 @@ when using greenlock for your first time.
 In order to avoid being blocked by hitting rate limits with bad requests,
 you should always test against the `staging` server
 (`https://acme-staging-v02.api.letsencrypt.org/directory`) first.
+
+Plugins
+=====
+
+|                | challenge | store |
+|:--------------:|:---------:|:-----:|
+| Build Your Own | [le-challenge-SPEC](https://git.coolaj86.com/coolaj86/le-challenge-manual.js.git) | [le-store-SPEC](https://git.coolaj86.com/coolaj86/le-store-SPEC.js.git) |
+| Defaults (fs)  | [le-challenge-fs](https://git.coolaj86.com/coolaj86/le-challenge-fs.js.git) | [le-store-certbot](https://git.coolaj86.com/coolaj86/le-store-certbot.js.git) |
+| Full List      | [Search le-store- on npm](https://www.npmjs.com/search?q=le-store-) | [Search le-challenge- on npm](https://www.npmjs.com/search?q=le-challenge-) |
+| AWS Route 53   | [thadeetrompetter/le-challenge-route53](https://github.com/thadeetrompetter/le-challenge-route53) | - |
+| AWS S3         |  | [paco3346/le-store-awss3](https://github.com/paco3346/le-store-awss3) |
+| AWS S3         | [llun/le-challenge-s3](https://github.com/llun/le-challenge-s3) | [llun/le-store-s3](https://github.com/llun/le-store-s3) |
+| json           | - | [paulgrove/le-store-simple-fs](https://github.com/paulgrove/le-store-simple-fs)
+| Redis          | - | [digitalbazaar/le-store-redis](https://github.com/digitalbazaar/le-store-redis) |
 
 Usage
 =====
