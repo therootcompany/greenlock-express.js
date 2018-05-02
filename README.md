@@ -7,7 +7,7 @@
 | [gl-hapi](https://git.coolaj86.com/coolaj86/greenlock-hapi.js)
 |
 
-greenlock-express.js
+Greenlock&trade; for Express.js
 =================
 
 (formerly letsencrypt-express)
