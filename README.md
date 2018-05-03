@@ -1,7 +1,6 @@
-| Sponsored by [ppl](https://ppl.family)|
-
 Greenlock&trade; for Express.js
 =================
+| Sponsored by [ppl](https://ppl.family) |
 [Greenlock&trade;](https://git.coolaj86.com/coolaj86/greenlock.js) for
 [cli](https://git.coolaj86.com/coolaj86/greenlock-cli.js),
 [cluster](https://git.coolaj86.com/coolaj86/greenlock-cluster.js),
