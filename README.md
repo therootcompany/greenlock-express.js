@@ -1,31 +1,20 @@
-| Sponsored by [ppl](https://ppl.family)
-| [greenlock (lib)](https://git.coolaj86.com/coolaj86/greenlock.js)
-| [gl-cli](https://git.coolaj86.com/coolaj86/greenlock-cli.js)
-| [gl-cluster](https://git.coolaj86.com/coolaj86/greenlock-cluster.js)
-| **gl-express**
-| [gl-koa](https://git.coolaj86.com/coolaj86/greenlock-koa.js)
-| [gl-hapi](https://git.coolaj86.com/coolaj86/greenlock-hapi.js)
-|
+| Sponsored by [ppl](https://ppl.family)|
 
 Greenlock&trade; for Express.js
 =================
+[Greenlock&trade;](https://git.coolaj86.com/coolaj86/greenlock.js) for
+[cli](https://git.coolaj86.com/coolaj86/greenlock-cli.js),
+[cluster](https://git.coolaj86.com/coolaj86/greenlock-cluster.js),
+**Express.js**,
+[Koa](https://git.coolaj86.com/coolaj86/greenlock-koa.js),
+[hapi](https://git.coolaj86.com/coolaj86/greenlock-hapi.js)
 
-(formerly letsencrypt-express)
-
-Free SSL for node.js.
+Free SSL for node.js, now with **Let's Encrypt v2** and **wildcard** domain support)
 
 Fully automatic HTTPS with Express.js
 (and all other middleware systems), including virtual hosting (vhost) support with multiple domains.
 
 Certificate renewals happen in the background between 10 and 14 days before expiration (~78 days).
-
-## Now supports Let's Encrypt v2!!
-
-* Let's Encrypt v1 (aka v01)
-* Let's Encrypt v2 (aka v02 or ACME draft 11)
-* ACME draft 11 (ACME v2 is a misnomer)
-* Wildcard domains!! (via dns-01 challenges)
-  * `*.example.com`
 
 Install
 =======
@@ -280,3 +269,11 @@ Brief overview of some simple options for `greenlock.js`:
   * A callback `function (opts, certs, cb) { cb(null, { options: opts, certs: certs }); }` for setting `email`, `agreeTos`, `domains`, etc (as shown in usage example above)
 * `opts.renewWithin` is the **maximum** number of days (in ms) before expiration to renew a certificate.
 * `opts.renewBy` is the **minimum** number of days (in ms) before expiration to renew a certificate.
+
+## Supported ACME versions
+
+* Let's Encrypt v1 (aka v01)
+* Let's Encrypt v2 (aka v02 or ACME draft 11)
+* ACME draft 11 (ACME v2 is a misnomer)
+* Wildcard domains!! (via dns-01 challenges)
+  * `*.example.com`
