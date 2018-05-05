@@ -41,7 +41,7 @@ require('../').create({
     // TODO could test for www/no-www both in directory and IP
     var e;
     var hostdir = path.join(srv, opts.domains[0]);
-    if (!hosnameRe.test(opts.domains[0])) {
+    if (!hostnameRe.test(opts.domains[0])) {
       e = new Error("rejecting '" + opts.domains[0] + "' because it is not a valid domain name");
       cb(e);
       return;
