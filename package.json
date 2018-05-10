@@ -8,7 +8,7 @@
     "example": "examples"
   },
   "dependencies": {
-    "greenlock": "^2.2.4",
+    "greenlock": "^2.2.8",
     "le-challenge-fs": "^2.0.8",
     "le-sni-auto": "^2.1.4",
     "le-store-certbot": "^2.0.5",
