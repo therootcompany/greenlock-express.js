@@ -7,7 +7,7 @@ module.exports.create = function (opts) {
   var le = require('greenlock').create(opts);
 
   opts.app = opts.app || function (req, res) {
-    res.end("Hello, World!\nWith Love,\nLet's Encrypt Express");
+    res.end("Hello, World!\nWith Love,\nGreenlock for Express.js");
   };
 
   opts.listen = function (plainPort, port) {
