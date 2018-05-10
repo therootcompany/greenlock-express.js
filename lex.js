@@ -3,6 +3,7 @@
 // opts.approveDomains(options, certs, cb)
 module.exports.create = function (opts) {
   // accept all defaults for le.challenges, le.store, le.middleware
+  opts._communityPackage = 'greenlock-express.js';
   var le = require('greenlock').create(opts);
 
   opts.app = opts.app || function (req, res) {
