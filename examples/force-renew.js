@@ -18,5 +18,7 @@ require('../').create({
 , renewWithin: (91 * 24 * 60 * 60 * 1000)
 , renewBy: (90 * 24 * 60 * 60 * 1000)
 
+  // Get notified of important updates and help me make greenlock better
+, communityMember: true
 , debug: true
 }).listen(80, 443);

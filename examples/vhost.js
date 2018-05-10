@@ -30,7 +30,7 @@ require('../').create({
 
 
     // The domains being approved for the first time are listed in opts.domains
-  
+
     // Certs being renewed are listed in certs.altnames
     if (certs) {
       opts.domains = certs.altnames;
@@ -83,12 +83,9 @@ require('../').create({
     var serve = serveStatic(path.join(srv, hostname), { redirect: true });
     serve(req, res, finalhandler(req, res));
   }
-/*
-  require('express')().use('/', function (req, res) {
-    res.setHeader('Content-Type', 'text/html; charset=utf-8')
-    res.end('Hello, World!\n\n💚 🔒.js');
-  })
-*/
+
+  // Get notified of important updates and help me make greenlock better
+, communityMember: true
 
 //, debug: true
 

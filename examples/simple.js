@@ -28,6 +28,9 @@ require('../').create({
     res.end('Hello, World!\n\n💚 🔒.js');
   })
 
+  // Get notified of important updates and help me make greenlock better
+, communityMember: true
+
 //, debug: true
 
 }).listen(80, 443);

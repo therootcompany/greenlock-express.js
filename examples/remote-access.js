@@ -28,6 +28,8 @@ require('../').create({
 , approveDomains: domains
 , configDir: require('path').join(require('os').homedir(), 'acme', 'etc')
 , app: remoteAccess(secret)
+  // Get notified of important updates and help me make greenlock better
+, communityMember: true
 //, debug: true
 }).listen(3000, 8443);
 

@@ -25,19 +25,22 @@ require('../').create({
 , server: 'https://acme-staging-v02.api.letsencrypt.org/directory'  // staging
 
 // The previous 'simple' example set these values statically,
-// but this example uses approveDomains() to set them dynamically 
+// but this example uses approveDomains() to set them dynamically
 //, email: 'none@see.note.above'
 //, agreeTos: false
 
   // approveDomains is the right place to check a database for
   // email addresses with domains and agreements and such
-, approveDomains: approveDomains 
+, approveDomains: approveDomains
 
   // You MUST have access to write to directory where certs are saved
   // ex: /etc/greenlock/
 , configDir: '/tmp/etc/greenlock'
 
 , app: app
+
+  // Get notified of important updates and help me make greenlock better
+, communityMember: true
 
 //, debug: true
 
@@ -47,7 +50,7 @@ require('../').create({
 //
 // My Secure Database Check
 //
-function approveDomains(opts, certs, cb) { 
+function approveDomains(opts, certs, cb) {
 
   // The domains being approved for the first time are listed in opts.domains
   // Certs being renewed are listed in certs.altnames

@@ -1,5 +1,8 @@
 Greenlock&trade; for Express.js
 =================
+
+A high-level ACME client for Free SSL and Automated HTTPS.
+
 | Sponsored by [ppl](https://ppl.family) |
 [Greenlock&trade;](https://git.coolaj86.com/coolaj86/greenlock.js) for
 [cli](https://git.coolaj86.com/coolaj86/greenlock-cli.js),
@@ -8,12 +11,24 @@ Greenlock&trade; for Express.js
 [Koa](https://git.coolaj86.com/coolaj86/greenlock-koa.js),
 [hapi](https://git.coolaj86.com/coolaj86/greenlock-hapi.js)
 
-Free SSL for node.js, now with **Let's Encrypt v2** and **wildcard** domain support)
+Features
+========
 
-Fully automatic HTTPS with Express.js
-(and all other middleware systems), including virtual hosting (vhost) support with multiple domains.
-
-Certificate renewals happen in the background between 10 and 14 days before expiration (~78 days).
+  - [x] Automatic HTTPS
+    - [x] Free SSL
+    - [x] Free Wildcard SSL
+    - [x] Multiple domain support (up to 100 altnames per SAN)
+    - [x] Dynamic Virtual Hosting (vhost)
+    - [x] Automatical renewal (10 to 14 days before expiration)
+  - [x] Great ACME support
+    - [x] ACME draft 11
+    - [x] Let's Encrypt v2
+    - [x] Let's Encrypt v1
+  - [x] Full node.js support
+    - [x] core https module
+    - [x] Express.js
+    - [x] [Koa](https://git.coolaj86.com/coolaj86/greenlock-koa.js),
+    - [x] [hapi](https://git.coolaj86.com/coolaj86/greenlock-hapi.js)
 
 Install
 =======
@@ -21,6 +36,22 @@ Install
 ```bash
 npm install --save greenlock-express@2.x
 ```
+
+become a `communityMember`
+==================
+
+If you're the kind of person that likes the kinds of stuff that I do,
+well, I want to do more of it and I'd like to get you involved.
+
+When you set the `communityMember` option to `true` I save your
+email and I'm able to inform you when there are mandatory updates
+(such as with Let's Encrypt v2), notify you of important security issues,
+give you early access to similar projects, and
+get your feedback from time to time.
+
+I'll also get a hash of domain names that receive and renew certificates,
+which is a metric that has long interested me and may help me in getting
+non-developers involved in this and future projects.
 
 QuickStart
 ==========
@@ -84,6 +115,9 @@ require('greenlock-express').create({
     res.setHeader('Content-Type', 'text/html; charset=utf-8')
     res.end('Hello, World!\n\n💚 🔒.js');
   })
+
+  // Join the community to get notified of important updates and help me make greenlock better
+, communityMember: true
 
 //, debug: true
 
@@ -187,6 +221,9 @@ var lex = require('greenlock-express').create({
 //, sni: require('le-sni-auto').create({})
 
 , approveDomains: approveDomains
+
+  // Join the community to get notified of important updates and help me make greenlock better
+, communityMember: true
 });
 ```
 
@@ -198,6 +235,7 @@ function approveDomains(opts, certs, cb) {
   // This is where you check your database and associated
   // email addresses with domains and agreements and such
 
+  opts.communityMember = true;
 
   // The domains being approved for the first time are listed in opts.domains
   // Certs being renewed are listed in certs.altnames
