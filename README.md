@@ -1,7 +1,7 @@
 Greenlock&trade; for Express.js
 =================
 
-A high-level ACME client for Free SSL and Automated HTTPS.
+An easy-to-use ACME client for Free SSL and Automated HTTPS.
 
 | Sponsored by [ppl](https://ppl.family) |
 [Greenlock&trade;](https://git.coolaj86.com/coolaj86/greenlock.js) for
@@ -27,7 +27,7 @@ Features
   - [x] Full node.js support
     - [x] core https module
     - [x] Express.js
-    - [x] [Koa](https://git.coolaj86.com/coolaj86/greenlock-koa.js),
+    - [x] [Koa](https://git.coolaj86.com/coolaj86/greenlock-koa.js)
     - [x] [hapi](https://git.coolaj86.com/coolaj86/greenlock-hapi.js)
 
 Install
@@ -301,6 +301,7 @@ Brief overview of some simple options for `greenlock.js`:
 * `opts.version` set to `v01` for Let's Encrypt v1 or `draft-11` for Let's Encrypt v2 (mistakenly called ACME v2)
 * `opts.email` The default email to use to accept agreements.
 * `opts.agreeTos` When set to `true`, this always accepts the LetsEncrypt TOS. When a string it checks the agreement url first.
+* `opts.communityMember` Join the community to get notified of important updates and help make greenlock better
 * `opts.approveDomains` can be either of:
   * An explicit array of allowed domains such as `[ 'example.com', 'www.example.com' ]`
   * A callback `function (opts, certs, cb) { cb(null, { options: opts, certs: certs }); }` for setting `email`, `agreeTos`, `domains`, etc (as shown in usage example above)
@@ -312,5 +313,5 @@ Brief overview of some simple options for `greenlock.js`:
 * Let's Encrypt v1 (aka v01)
 * Let's Encrypt v2 (aka v02 or ACME draft 11)
 * ACME draft 11 (ACME v2 is a misnomer)
-* Wildcard domains!! (via dns-01 challenges)
+* Wildcard domains (via dns-01 challenges)
   * `*.example.com`
