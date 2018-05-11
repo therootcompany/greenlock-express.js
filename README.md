@@ -180,7 +180,7 @@ HTTP-01 Challenges
 |:--------------:|:---------:|
 | **Default (fs)** | [le-challenge-fs](https://git.coolaj86.com/coolaj86/le-challenge-fs.js.git) |
 | AWS S3         | [llun/le-challenge-s3](https://github.com/llun/le-challenge-s3) |
-| Digital Ocean  | [bmv437/le-challenge-digitalocean](https://www.npmjs.com/package/le-challenge-digitalocean) |
+| Azure          | [kolarcz/node-le-challenge-azure-storage](https://github.com/kolarcz/node-le-challenge-azure-storage) |
 | - | Build Your Own <br> [le-challenge-http-SPEC](https://git.coolaj86.com/coolaj86/le-challenge-manual.js.git) |
 | Full List      | Search [le-challenge-](https://www.npmjs.com/search?q=le-challenge-) on npm |
 
@@ -207,7 +207,6 @@ Account & Certificate Storage
 | **Defaults (fs)** | [le-store-certbot](https://git.coolaj86.com/coolaj86/le-store-certbot.js.git) |
 | AWS S3         | [paco3346/le-store-awss3](https://github.com/paco3346/le-store-awss3) |
 | AWS S3         | [llun/le-store-s3](https://github.com/llun/le-store-s3) |
-| Azure          | [kolarcz/node-le-challenge-azure-storage](https://github.com/kolarcz/node-le-challenge-azure-storage) |
 | json (fs)      | [paulgrove/le-store-simple-fs](https://github.com/paulgrove/le-store-simple-fs)
 | Redis          | [digitalbazaar/le-store-redis](https://github.com/digitalbazaar/le-store-redis) |
 | - | Build Your Own <br> [le-store-SPEC](https://git.coolaj86.com/coolaj86/le-store-SPEC.js.git) |
