@@ -33,6 +33,7 @@ Features
     - [x] AWS (S3, Route53)
     - [x] Azure
     - [x] CloudFlare
+    - [x] Consul
     - [x] Digital Ocean
     - [x] etcd
     - [x] Redis
@@ -207,6 +208,7 @@ Account & Certificate Storage
 | **Defaults (fs)** | [le-store-certbot](https://git.coolaj86.com/coolaj86/le-store-certbot.js.git) |
 | AWS S3         | [paco3346/le-store-awss3](https://github.com/paco3346/le-store-awss3) |
 | AWS S3         | [llun/le-store-s3](https://github.com/llun/le-store-s3) |
+| Consul         | [sebastian-software/le-store-consul](https://github.com/sebastian-software/le-store-consul) |
 | json (fs)      | [paulgrove/le-store-simple-fs](https://github.com/paulgrove/le-store-simple-fs)
 | Redis          | [digitalbazaar/le-store-redis](https://github.com/digitalbazaar/le-store-redis) |
 | - | Build Your Own <br> [le-store-SPEC](https://git.coolaj86.com/coolaj86/le-store-SPEC.js.git) |
