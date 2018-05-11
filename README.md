@@ -29,6 +29,13 @@ Features
     - [x] Express.js
     - [x] [Koa](https://git.coolaj86.com/coolaj86/greenlock-koa.js)
     - [x] [hapi](https://git.coolaj86.com/coolaj86/greenlock-hapi.js)
+  - [x] Extensible Plugin Support
+    - [x] AWS (S3, Route53)
+    - [x] Azure
+    - [x] CloudFlare
+    - [x] Digital Ocean
+    - [x] etcd
+    - [x] Redis
 
 Install
 =======
@@ -190,6 +197,7 @@ DNS-01 Challenges
 | CloudFlare     | [buschtoens/le-challenge-cloudflare](https://github.com/buschtoens/le-challenge-cloudflare) |
 | CloudFlare     | [llun/le-challenge-cloudflare](https://github.com/llun/le-challenge-cloudflare) |
 | Digital Ocean  | [bmv437/le-challenge-digitalocean](https://github.com/bmv437/le-challenge-digitalocean) |
+| etcd           | [ceecko/le-challenge-etcd](https://github.com/ceecko/le-challenge-etcd) |
 
 Account & Certificate Storage
 -----------
@@ -201,6 +209,7 @@ Account & Certificate Storage
 | Full List      | [Search le-store- on npm](https://www.npmjs.com/search?q=le-store-) |
 | AWS S3         | [paco3346/le-store-awss3](https://github.com/paco3346/le-store-awss3) |
 | AWS S3         | [llun/le-store-s3](https://github.com/llun/le-store-s3) |
+| Azure          | [kolarcz/node-le-challenge-azure-storage](https://github.com/kolarcz/node-le-challenge-azure-storage) |
 | json (fs)      | [paulgrove/le-store-simple-fs](https://github.com/paulgrove/le-store-simple-fs)
 | Redis          | [digitalbazaar/le-store-redis](https://github.com/digitalbazaar/le-store-redis) |
 
