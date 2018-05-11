@@ -179,7 +179,7 @@ HTTP-01 Challenges
 |                | Plugin    |
 |:--------------:|:---------:|
 | Build Your Own | [le-challenge-http-SPEC](https://git.coolaj86.com/coolaj86/le-challenge-manual.js.git) | [le-challenge-dns-SPEC](https://git.coolaj86.com/coolaj86/le-challenge-dns.js.git) |
-| Default (fs)   | [le-challenge-fs](https://git.coolaj86.com/coolaj86/le-challenge-fs.js.git) |
+| **Default (fs)** | [le-challenge-fs](https://git.coolaj86.com/coolaj86/le-challenge-fs.js.git) |
 | Full List      | [Search le-challenge- on npm](https://www.npmjs.com/search?q=le-challenge-) |
 | AWS S3         | [llun/le-challenge-s3](https://github.com/llun/le-challenge-s3) |
 | Digital Ocean  | [bmv437/le-challenge-digitalocean](https://www.npmjs.com/package/le-challenge-digitalocean) |
@@ -191,7 +191,7 @@ DNS-01 Challenges
 |                | Plugin    |
 |:--------------:|:---------:|
 | Build Your Own | [le-challenge-dns-SPEC](https://git.coolaj86.com/coolaj86/le-challenge-dns.js.git) |
-| Manual (cli)   | [le-challenge-fs](https://git.coolaj86.com/coolaj86/le-challenge-fs.js.git) |
+| **Manual (cli)** | [le-challenge-dns](https://git.coolaj86.com/coolaj86/le-challenge-dns.js.git) |
 | Full List      | [Search le-challenge- on npm](https://www.npmjs.com/search?q=le-challenge-) |
 | AWS Route 53   | [thadeetrompetter/le-challenge-route53](https://github.com/thadeetrompetter/le-challenge-route53) |
 | CloudFlare     | [buschtoens/le-challenge-cloudflare](https://github.com/buschtoens/le-challenge-cloudflare) |
