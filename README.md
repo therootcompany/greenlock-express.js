@@ -178,11 +178,11 @@ HTTP-01 Challenges
 
 |                | Plugin    |
 |:--------------:|:---------:|
-| Build Your Own | [le-challenge-http-SPEC](https://git.coolaj86.com/coolaj86/le-challenge-manual.js.git) | [le-challenge-dns-SPEC](https://git.coolaj86.com/coolaj86/le-challenge-dns.js.git) |
 | **Default (fs)** | [le-challenge-fs](https://git.coolaj86.com/coolaj86/le-challenge-fs.js.git) |
-| Full List      | [Search le-challenge- on npm](https://www.npmjs.com/search?q=le-challenge-) |
 | AWS S3         | [llun/le-challenge-s3](https://github.com/llun/le-challenge-s3) |
 | Digital Ocean  | [bmv437/le-challenge-digitalocean](https://www.npmjs.com/package/le-challenge-digitalocean) |
+| - | Build Your Own <br> [le-challenge-http-SPEC](https://git.coolaj86.com/coolaj86/le-challenge-manual.js.git) |
+| Full List      | Search [le-challenge-](https://www.npmjs.com/search?q=le-challenge-) on npm |
 
 
 DNS-01 Challenges
@@ -190,28 +190,28 @@ DNS-01 Challenges
 
 |                | Plugin    |
 |:--------------:|:---------:|
-| Build Your Own | [le-challenge-dns-SPEC](https://git.coolaj86.com/coolaj86/le-challenge-dns.js.git) |
 | **Manual (cli)** | [le-challenge-dns](https://git.coolaj86.com/coolaj86/le-challenge-dns.js.git) |
-| Full List      | [Search le-challenge- on npm](https://www.npmjs.com/search?q=le-challenge-) |
 | AWS Route 53   | [thadeetrompetter/le-challenge-route53](https://github.com/thadeetrompetter/le-challenge-route53) |
 | CloudFlare     | [buschtoens/le-challenge-cloudflare](https://github.com/buschtoens/le-challenge-cloudflare) |
 | CloudFlare     | [llun/le-challenge-cloudflare](https://github.com/llun/le-challenge-cloudflare) |
 | Digital Ocean  | [bmv437/le-challenge-digitalocean](https://github.com/bmv437/le-challenge-digitalocean) |
 | etcd           | [ceecko/le-challenge-etcd](https://github.com/ceecko/le-challenge-etcd) |
+| - | Build Your Own <br> [le-challenge-dns-SPEC](https://git.coolaj86.com/coolaj86/le-challenge-dns.js.git) |
+| Full List      | Search [le-challenge-](https://www.npmjs.com/search?q=le-challenge-) on npm |
 
 Account & Certificate Storage
 -----------
 
 |                | Plugin |
 |:--------------:|:---------:|
-| Build Your Own | [le-store-SPEC](https://git.coolaj86.com/coolaj86/le-store-SPEC.js.git) |
-| Defaults (fs)  | [le-store-certbot](https://git.coolaj86.com/coolaj86/le-store-certbot.js.git) |
-| Full List      | [Search le-store- on npm](https://www.npmjs.com/search?q=le-store-) |
+| **Defaults (fs)** | [le-store-certbot](https://git.coolaj86.com/coolaj86/le-store-certbot.js.git) |
 | AWS S3         | [paco3346/le-store-awss3](https://github.com/paco3346/le-store-awss3) |
 | AWS S3         | [llun/le-store-s3](https://github.com/llun/le-store-s3) |
 | Azure          | [kolarcz/node-le-challenge-azure-storage](https://github.com/kolarcz/node-le-challenge-azure-storage) |
 | json (fs)      | [paulgrove/le-store-simple-fs](https://github.com/paulgrove/le-store-simple-fs)
 | Redis          | [digitalbazaar/le-store-redis](https://github.com/digitalbazaar/le-store-redis) |
+| - | Build Your Own <br> [le-store-SPEC](https://git.coolaj86.com/coolaj86/le-store-SPEC.js.git) |
+| Full List      | Search [le-store-](https://www.npmjs.com/search?q=le-store-) on npm |
 
 Bugs: Please report bugs with the community plugins to the appropriate owner first, then here if you don't get a response.
 
