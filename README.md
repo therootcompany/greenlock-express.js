@@ -261,6 +261,8 @@ var lex = require('greenlock-express').create({
 
   // Join the community to get notified of important updates and help me make greenlock better
 , communityMember: true
+
+, store: require('le-store-certbot').create({ webrootPath: '/tmp/acme-challenges' })
 });
 ```
 
@@ -268,11 +270,15 @@ The Automatic Certificate Issuance is initiated via SNI (`httpsOptions.SNICallba
 For security, domain validation MUST have an approval callback in *production*.
 
 ```javascript
+var http01 = require('le-challenge-fs').create({ webrootPath: '/tmp/acme-challenges' });
 function approveDomains(opts, certs, cb) {
   // This is where you check your database and associated
   // email addresses with domains and agreements and such
 
+  // Opt-in to submit stats and get important updates
   opts.communityMember = true;
+
+  opts.challenges = { 'http-01': http01 };
 
   // The domains being approved for the first time are listed in opts.domains
   // Certs being renewed are listed in certs.altnames
