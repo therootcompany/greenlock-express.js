@@ -248,9 +248,7 @@ var lex = require('greenlock-express').create({
   server: 'https://acme-staging-v02.api.letsencrypt.org/directory'
 , version: 'draft-11' // Let's Encrypt v2 (ACME v2)
 
-// If you wish to replace the default plugins, you may do so here
-//
-, challenges: { 'http-01': require('le-challenge-fs').create({ webrootPath: '/tmp/acme-challenges' }) }
+  // If you wish to replace the default account and domain key storage plugin
 , store: require('le-store-certbot').create({ webrootPath: '/tmp/acme-challenges' })
 
 // You probably wouldn't need to replace the default sni handler
@@ -262,7 +260,6 @@ var lex = require('greenlock-express').create({
   // Join the community to get notified of important updates and help me make greenlock better
 , communityMember: true
 
-, store: require('le-store-certbot').create({ webrootPath: '/tmp/acme-challenges' })
 });
 ```
 
@@ -278,6 +275,7 @@ function approveDomains(opts, certs, cb) {
   // Opt-in to submit stats and get important updates
   opts.communityMember = true;
 
+  // If you wish to replace the default challenge plugin, you may do so here
   opts.challenges = { 'http-01': http01 };
 
   // The domains being approved for the first time are listed in opts.domains
