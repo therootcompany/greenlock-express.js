@@ -1,4 +1,4 @@
-!["Greenlock Logo"](https://git.coolaj86.com/coolaj86/greenlock.js/raw/branch/master/greenlock-850x200.png)
+!["Greenlock Logo"](https://git.coolaj86.com/coolaj86/greenlock.js/raw/branch/master/greenlock-1063x250.png)
 
 Greenlock&trade; for Express.js
 =================
