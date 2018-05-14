@@ -5,9 +5,9 @@ Greenlock&trade; for Express.js
 
 An easy-to-use ACME client for Free SSL and Automated HTTPS.
 
-!["Lifetime Downloads"](https://img.shields.io/npm/dt/greenlock.svg "Lifetime Download Count (can't be shown)")
-!["Monthly Downloads"](https://img.shields.io/npm/dm/greenlock.svg "Monthly Download Count (can't be shown)")
-!["Weekly Downloads"](https://img.shields.io/npm/dw/greenlock.svg "Weekly Download Count (can't be shown)")
+!["Lifetime Downloads"](https://img.shields.io/npm/dt/greenlock.svg "Lifetime Download Count can't be shown")
+!["Monthly Downloads"](https://img.shields.io/npm/dm/greenlock.svg "Monthly Download Count can't be shown")
+!["Weekly Downloads"](https://img.shields.io/npm/dw/greenlock.svg "Weekly Download Count can't be shown")
 
 | Sponsored by [ppl](https://ppl.family) |
 [Greenlock&trade;](https://git.coolaj86.com/coolaj86/greenlock.js) for
