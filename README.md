@@ -2,8 +2,8 @@
 
 Greenlock&trade; for Express.js
 =================
-
-Easy-to-use ACME client for Free SSL and Automated HTTPS.
+Free SSL, Free Wildcard SSL, and Fully Automated HTTPS made dead simple<br>
+<small>certificates issued by Let's Encrypt v2 via [ACME](https://git.coolaj86.com/coolaj86/acme-v2.js)</small>
 
 !["Lifetime Downloads"](https://img.shields.io/npm/dt/greenlock.svg "Lifetime Download Count can't be shown")
 !["Monthly Downloads"](https://img.shields.io/npm/dm/greenlock.svg "Monthly Download Count can't be shown")
