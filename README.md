@@ -3,19 +3,17 @@
 Greenlock&trade; for Express.js
 =================
 
-An easy-to-use ACME client for Free SSL and Automated HTTPS.
+Easy-to-use ACME client for Free SSL and Automated HTTPS.
 
 !["Lifetime Downloads"](https://img.shields.io/npm/dt/greenlock.svg "Lifetime Download Count can't be shown")
 !["Monthly Downloads"](https://img.shields.io/npm/dm/greenlock.svg "Monthly Download Count can't be shown")
 !["Weekly Downloads"](https://img.shields.io/npm/dw/greenlock.svg "Weekly Download Count can't be shown")
 
 | Sponsored by [ppl](https://ppl.family) |
-[Greenlock&trade;](https://git.coolaj86.com/coolaj86/greenlock.js) for
-[cli](https://git.coolaj86.com/coolaj86/greenlock-cli.js),
-[cluster](https://git.coolaj86.com/coolaj86/greenlock-cluster.js),
-**Express.js**,
-[Koa](https://git.coolaj86.com/coolaj86/greenlock-koa.js),
-[hapi](https://git.coolaj86.com/coolaj86/greenlock-hapi.js)
+[Greenlock&trade;](https://git.coolaj86.com/coolaj86/greenlock.js) is for
+[Web Servers](https://git.coolaj86.com/coolaj86/greenlock-cli.js),
+[Web Browsers](https://git.coolaj86.com/coolaj86/greenlock.html),
+and **node.js middleware systems**.
 
 Features
 ========
