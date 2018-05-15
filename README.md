@@ -1,15 +1,19 @@
+![Greenlock Logo](https://git.coolaj86.com/coolaj86/greenlock.js/raw/branch/master/logo/greenlock-1063x250.png "Greenlock Logo")
+
 Greenlock&trade; for Express.js
 =================
+Free SSL, Free Wildcard SSL, and Fully Automated HTTPS made dead simple<br>
+<small>certificates issued by Let's Encrypt v2 via [ACME](https://git.coolaj86.com/coolaj86/acme-v2.js)</small>
 
-An easy-to-use ACME client for Free SSL and Automated HTTPS.
+!["Lifetime Downloads"](https://img.shields.io/npm/dt/greenlock.svg "Lifetime Download Count can't be shown")
+!["Monthly Downloads"](https://img.shields.io/npm/dm/greenlock.svg "Monthly Download Count can't be shown")
+!["Weekly Downloads"](https://img.shields.io/npm/dw/greenlock.svg "Weekly Download Count can't be shown")
 
 | Sponsored by [ppl](https://ppl.family) |
-[Greenlock&trade;](https://git.coolaj86.com/coolaj86/greenlock.js) for
-[cli](https://git.coolaj86.com/coolaj86/greenlock-cli.js),
-[cluster](https://git.coolaj86.com/coolaj86/greenlock-cluster.js),
-**Express.js**,
-[Koa](https://git.coolaj86.com/coolaj86/greenlock-koa.js),
-[hapi](https://git.coolaj86.com/coolaj86/greenlock-hapi.js)
+[Greenlock&trade;](https://git.coolaj86.com/coolaj86/greenlock.js) is for
+[Web Servers](https://git.coolaj86.com/coolaj86/greenlock-cli.js),
+[Web Browsers](https://git.coolaj86.com/coolaj86/greenlock.html),
+and **node.js middleware systems**.
 
 Features
 ========
@@ -179,10 +183,10 @@ HTTP-01 Challenges
 
 |                | Plugin    |
 |:--------------:|:---------:|
-| **Default (fs)** | [le-challenge-fs](https://git.coolaj86.com/coolaj86/le-challenge-fs.js.git) |
+| **Default (fs)** | [le-challenge-fs](https://git.coolaj86.com/coolaj86/le-challenge-fs.js) |
 | AWS S3         | [llun/le-challenge-s3](https://github.com/llun/le-challenge-s3) |
 | Azure          | [kolarcz/node-le-challenge-azure-storage](https://github.com/kolarcz/node-le-challenge-azure-storage) |
-| - | Build Your Own <br> [le-challenge-http-SPEC](https://git.coolaj86.com/coolaj86/le-challenge-manual.js.git) |
+| - | Build Your Own <br> [le-challenge-http-SPEC](https://git.coolaj86.com/coolaj86/le-challenge-manual.js) |
 | Full List      | Search [le-challenge-](https://www.npmjs.com/search?q=le-challenge-) on npm |
 
 
@@ -191,30 +195,40 @@ DNS-01 Challenges
 
 |                | Plugin    |
 |:--------------:|:---------:|
-| **Manual (cli)** | [le-challenge-dns](https://git.coolaj86.com/coolaj86/le-challenge-dns.js.git) |
+| **Manual (cli)** | [le-challenge-dns](https://git.coolaj86.com/coolaj86/le-challenge-dns.js) |
 | AWS Route 53   | [thadeetrompetter/le-challenge-route53](https://github.com/thadeetrompetter/le-challenge-route53) |
 | CloudFlare     | [buschtoens/le-challenge-cloudflare](https://github.com/buschtoens/le-challenge-cloudflare) |
 | CloudFlare     | [llun/le-challenge-cloudflare](https://github.com/llun/le-challenge-cloudflare) |
 | Digital Ocean  | [bmv437/le-challenge-digitalocean](https://github.com/bmv437/le-challenge-digitalocean) |
 | etcd           | [ceecko/le-challenge-etcd](https://github.com/ceecko/le-challenge-etcd) |
-| - | Build Your Own <br> [le-challenge-dns-SPEC](https://git.coolaj86.com/coolaj86/le-challenge-dns.js.git) |
+| - | Build Your Own <br> [le-challenge-dns-SPEC](https://git.coolaj86.com/coolaj86/le-challenge-dns.js) |
 | Full List      | Search [le-challenge-](https://www.npmjs.com/search?q=le-challenge-) on npm |
 
 Account & Certificate Storage
 -----------
 
-|                | Plugin |
+|                | Plugin    |
 |:--------------:|:---------:|
-| **Defaults (fs)** | [le-store-certbot](https://git.coolaj86.com/coolaj86/le-store-certbot.js.git) |
+| **Default (fs)** | [le-store-certbot](https://git.coolaj86.com/coolaj86/le-store-certbot.js) |
 | AWS S3         | [paco3346/le-store-awss3](https://github.com/paco3346/le-store-awss3) |
 | AWS S3         | [llun/le-store-s3](https://github.com/llun/le-store-s3) |
 | Consul         | [sebastian-software/le-store-consul](https://github.com/sebastian-software/le-store-consul) |
 | json (fs)      | [paulgrove/le-store-simple-fs](https://github.com/paulgrove/le-store-simple-fs)
 | Redis          | [digitalbazaar/le-store-redis](https://github.com/digitalbazaar/le-store-redis) |
-| - | Build Your Own <br> [le-store-SPEC](https://git.coolaj86.com/coolaj86/le-store-SPEC.js.git) |
+| - | Build Your Own <br> [le-store-SPEC](https://git.coolaj86.com/coolaj86/le-store-SPEC.js) |
 | Full List      | Search [le-store-](https://www.npmjs.com/search?q=le-store-) on npm |
 
-Bugs: Please report bugs with the community plugins to the appropriate owner first, then here if you don't get a response.
+Auto-SNI
+--------
+
+|             | Plugin    |
+|:-----------:|:---------:|
+| **Default** | [le-store-certbot](https://git.coolaj86.com/coolaj86/le-sni-auto.js) |
+
+(you probably wouldn't need or want to replace this)
+
+
+**Bugs**: Please report bugs with the community plugins to the appropriate owner first, then here if you don't get a response.
 
 Usage
 =====
@@ -248,19 +262,13 @@ var lex = require('greenlock-express').create({
   server: 'https://acme-staging-v02.api.letsencrypt.org/directory'
 , version: 'draft-11' // Let's Encrypt v2 (ACME v2)
 
-// If you wish to replace the default plugins, you may do so here
-//
-, challenges: { 'http-01': require('le-challenge-fs').create({ webrootPath: '/tmp/acme-challenges' }) }
-, store: require('le-store-certbot').create({ webrootPath: '/tmp/acme-challenges' })
-
-// You probably wouldn't need to replace the default sni handler
-// See https://git.coolaj86.com/coolaj86/le-sni-auto if you think you do
-//, sni: require('le-sni-auto').create({})
+  // If you wish to replace the default account and domain key storage plugin
+, store: require('le-store-certbot').create({
+    configDir: require('path').join(require('os').homedir(), 'acme', 'etc')
+  , webrootPath: '/tmp/acme-challenges'
+  })
 
 , approveDomains: approveDomains
-
-  // Join the community to get notified of important updates and help me make greenlock better
-, communityMember: true
 });
 ```
 
@@ -268,11 +276,16 @@ The Automatic Certificate Issuance is initiated via SNI (`httpsOptions.SNICallba
 For security, domain validation MUST have an approval callback in *production*.
 
 ```javascript
+var http01 = require('le-challenge-fs').create({ webrootPath: '/tmp/acme-challenges' });
 function approveDomains(opts, certs, cb) {
   // This is where you check your database and associated
   // email addresses with domains and agreements and such
 
+  // Opt-in to submit stats and get important updates
   opts.communityMember = true;
+
+  // If you wish to replace the default challenge plugin, you may do so here
+  opts.challenges = { 'http-01': http01 };
 
   // The domains being approved for the first time are listed in opts.domains
   // Certs being renewed are listed in certs.altnames

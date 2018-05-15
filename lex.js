@@ -68,7 +68,7 @@ module.exports.create = function (opts) {
     ports.forEach(function (p) {
       if (!(parseInt(p, 10) >= 0)) { console.warn("'" + p + "' doesn't seem to be a valid port number for https"); }
       promises.push(new PromiseA(function (resolve) {
-        var server = require('https').createServer(le.httpsOptions, le.middleware(le.app)).listen(p, function () {
+        var server = require('https').createServer(le.tlsOptions, le.middleware(le.app)).listen(p, function () {
           console.log("Success! Serving https on port '" + p + "'");
           resolve();
         }).on('error', function (e) {
