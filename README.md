@@ -320,7 +320,7 @@ app.use('/', function (req, res) {
 });
 
 // handles your app
-require('https').createServer(lex.httpsOptions, lex.middleware(app)).listen(443, function () {
+require('https').createServer(lex.httpsOptions, app).listen(443, function () {
   console.log("Listening for ACME tls-sni-01 challenges and serve app on", this.address());
 });
 ```
