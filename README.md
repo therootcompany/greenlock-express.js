@@ -8,6 +8,7 @@ Free SSL, Free Wildcard SSL, and Fully Automated HTTPS made dead simple<br>
 !["Lifetime Downloads"](https://img.shields.io/npm/dt/greenlock.svg "Lifetime Download Count can't be shown")
 !["Monthly Downloads"](https://img.shields.io/npm/dm/greenlock.svg "Monthly Download Count can't be shown")
 !["Weekly Downloads"](https://img.shields.io/npm/dw/greenlock.svg "Weekly Download Count can't be shown")
+!["Stackoverflow Questions"](https://img.shields.io/stackexchange/stackoverflow/t/greenlock.svg "S.O. Question count can't be shown")
 
 | Sponsored by [ppl](https://ppl.family) |
 [Greenlock&trade;](https://git.coolaj86.com/coolaj86/greenlock.js) is for
