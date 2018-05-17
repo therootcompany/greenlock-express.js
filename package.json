@@ -11,8 +11,11 @@
     "greenlock": "^2.2.8",
     "le-challenge-fs": "^2.0.8",
     "le-sni-auto": "^2.1.4",
-    "le-store-certbot": "^2.0.5",
+    "le-store-certbot": "^2.1.0",
     "redirect-https": "^1.1.5"
+  },
+  "optionalDependencies": {
+    "spdy": "^3.4.7"
   },
   "devDependencies": {
     "express": "^4.16.3",
