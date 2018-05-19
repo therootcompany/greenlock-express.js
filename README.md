@@ -102,8 +102,9 @@ require('greenlock-express').create({
   // Let's Encrypt v2 is ACME draft 11
   version: 'draft-11'
 
-  // You MUST change 'acme-staging-v02' to 'acme-v02' in production
-, server: 'https://acme-staging-v02.api.letsencrypt.org/directory'  // staging
+, server: 'https://acme-v02.api.letsencrypt.org/directory'
+  // Note: If at first you don't succeed, switch to staging to debug
+  // https://acme-staging-v02.api.letsencrypt.org/directory
 
   // You MUST change this to a valid email address
 , email: 'john.doe@example.com'
@@ -157,18 +158,27 @@ Double check the following:
 * **API limits**
   * You MUST NOT exceed the API [**usage limits**](https://letsencrypt.org/docs/staging-environment/) per domain, certificate, IP address, etc
 * **Red Lock, Untrusted**
-  * You MUST change the `server` value **in production**
-  * Shorten the 'acme-staging-v02' part of the server URL to 'acme-v02'
+  * You MUST use the **production** server url, not staging
+  * The API URL should not have 'acme-staging-v02', but should have 'acme-v02'
+  * Delete the `configDir` used for getting certificates in staging
 
-### Get it working in staging first!
+### Production vs Staging
+
+If at first you don't succeed, stop and switch to staging.
 
 There are a number of common problems related to system configuration -
 firewalls, ports, permissions, etc - that you are likely to run up against
 when using greenlock for your first time.
 
-In order to avoid being blocked by hitting rate limits with bad requests,
-you should always test against the `staging` server
-(`https://acme-staging-v02.api.letsencrypt.org/directory`) first.
+I've put a "dry run" in place with built-in diagnostics, so hopefully
+you get everything right on your first or second try.
+
+However, in order to avoid being blocked by hitting the bad request rate limits
+you should switch to using the `staging` server for any testing or debugging.
+
+```
+https://acme-staging-v02.api.letsencrypt.org/directory
+```
 
 Plugins
 =====
@@ -254,8 +264,9 @@ It looks a little more like this:
 
 // returns an instance of greenlock.js with additional helper methods
 var lex = require('greenlock-express').create({
-  // set to https://acme-v02.api.letsencrypt.org/directory in production
-  server: 'https://acme-staging-v02.api.letsencrypt.org/directory'
+  server: 'https://acme-v02.api.letsencrypt.org/directory'
+  // Note: If at first you don't succeed, stop and switch to staging:
+  // https://acme-staging-v02.api.letsencrypt.org/directory
 , version: 'draft-11' // Let's Encrypt v2 (ACME v2)
 
   // If you wish to replace the default account and domain key storage plugin

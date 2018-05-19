@@ -21,8 +21,9 @@ require('../').create({
   // Let's Encrypt v2 is ACME draft 11
   version: 'draft-11'
 
-  // You MUST change 'acme-staging-v02' to 'acme-v02' in production
-, server: 'https://acme-v02.api.letsencrypt.org/directory'  // staging
+, server: 'https://acme-v02.api.letsencrypt.org/directory'
+  // Note: If at first you don't succeed, stop and switch to staging
+  // https://acme-staging-v02.api.letsencrypt.org/directory
 
 , approveDomains: function (opts, certs, cb) {
     // In this example the filesystem is our "database".

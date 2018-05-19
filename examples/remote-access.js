@@ -18,10 +18,9 @@ var secret = require('crypto').randomBytes(16).toString('hex');
 require('../').create({
   version: 'draft-11'
 
-  // WARNING: This runs PRODUCTION by default.
-  // Uncomment staging instead if you're a first-timer.
-, server: 'https://acme-v02.api.letsencrypt.org/directory' // production
-//, server: 'https://acme-staging-v02.api.letsencrypt.org/directory' // staging
+, server: 'https://acme-v02.api.letsencrypt.org/directory'
+  // Note: If at first you don't succeed, stop and switch to staging
+  // https://acme-staging-v02.api.letsencrypt.org/directory
 
 , email: email
 , agreeTos: agreeLeTos

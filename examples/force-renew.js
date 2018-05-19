@@ -3,7 +3,12 @@
 //require('greenlock-express')
 require('../').create({
 
-  server: 'staging'
+  // Let's Encrypt v2 is ACME draft 11
+  version: 'draft-11'
+
+, server: 'https://acme-v02.api.letsencrypt.org/directory'
+  // Note: If at first you don't succeed, stop and switch to staging
+  // https://acme-staging-v02.api.letsencrypt.org/directory
 
 , email: 'john.doe@example.com'
 
