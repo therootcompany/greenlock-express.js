@@ -2,9 +2,9 @@
 
 // opts.approveDomains(options, certs, cb)
 module.exports.create = function (opts) {
-  // accept all defaults for le.challenges, le.store, le.middleware
+  // accept all defaults for greenlock.challenges, greenlock.store, greenlock.middleware
   opts._communityPackage = opts._communityPackage || 'greenlock-express.js';
-  var le = require('greenlock').create(opts);
+  var greenlock = require('greenlock').create(opts);
 
   opts.app = opts.app || function (req, res) {
     res.end("Hello, World!\nWith Love,\nGreenlock for Express.js");
@@ -54,7 +54,7 @@ module.exports.create = function (opts) {
     plainPorts.forEach(function (p) {
       if (!(parseInt(p, 10) >= 0)) { console.warn("'" + p + "' doesn't seem to be a valid port number for http"); }
       promises.push(new PromiseA(function (resolve) {
-        require('http').createServer(le.middleware(require('redirect-https')())).listen(p, function () {
+        require('http').createServer(greenlock.middleware(require('redirect-https')())).listen(p, function () {
           console.log("Success! Bound to port '" + p + "' to handle ACME challenges and redirect to https");
           resolve();
         }).on('error', function (e) {
@@ -68,7 +68,14 @@ module.exports.create = function (opts) {
     ports.forEach(function (p) {
       if (!(parseInt(p, 10) >= 0)) { console.warn("'" + p + "' doesn't seem to be a valid port number for https"); }
       promises.push(new PromiseA(function (resolve) {
-        var server = require('https').createServer(le.tlsOptions, le.middleware(le.app)).listen(p, function () {
+        var https;
+        try {
+          https = require('spdy');
+          greenlock.tlsOptions.spdy = { protocols: [ 'h2', 'http/1.1' ], plain: false };
+        } catch(e) {
+          https = require('https');
+        }
+        var server = https.createServer(greenlock.tlsOptions, greenlock.middleware(greenlock.app)).listen(p, function () {
           console.log("Success! Serving https on port '" + p + "'");
           resolve();
         }).on('error', function (e) {
@@ -88,5 +95,5 @@ module.exports.create = function (opts) {
   };
 
 
-  return le;
+  return greenlock;
 };

@@ -270,7 +270,7 @@ It looks a little more like this:
 'use strict';
 
 // returns an instance of greenlock.js with additional helper methods
-var lex = require('greenlock-express').create({
+var glx = require('greenlock-express').create({
   server: 'https://acme-v02.api.letsencrypt.org/directory'
   // Note: If at first you don't succeed, stop and switch to staging:
   // https://acme-staging-v02.api.letsencrypt.org/directory
@@ -322,7 +322,7 @@ function approveDomains(opts, certs, cb) {
 
 ```javascript
 // handles acme-challenge and redirects to https
-require('http').createServer(lex.middleware(require('redirect-https')())).listen(80, function () {
+require('http').createServer(glx.middleware(require('redirect-https')())).listen(80, function () {
   console.log("Listening for ACME http-01 challenges on", this.address());
 });
 
@@ -334,7 +334,7 @@ app.use('/', function (req, res) {
 });
 
 // handles your app
-require('https').createServer(lex.httpsOptions, app).listen(443, function () {
+require('https').createServer(glx.httpsOptions, app).listen(443, function () {
   console.log("Listening for ACME tls-sni-01 challenges and serve app on", this.address());
 });
 ```
@@ -357,7 +357,7 @@ The API is actually located at [greenlock.js options](https://git.coolaj86.com/c
 The only "API" consists of two options, the rest is just a wrapper around `greenlock.js` to take LOC from 15 to 5:
 
 * `opts.app` An express app in the format `function (req, res) { ... }` (no `next`).
-* `lex.listen(plainPort, tlsPort)` Accepts port numbers (or arrays of port numbers) to listen on.
+* `glx.listen(plainPort, tlsPort)` Accepts port numbers (or arrays of port numbers) to listen on.
 
 Brief overview of some simple options for `greenlock.js`:
 
