@@ -78,7 +78,7 @@ QuickStart
 
 Watch the QuickStart demonstration: https://youtu.be/e8vaR4CEZ5s
 
-<a href="https://i.imgur.com/Y8ix6Ts.png"><img src="https://i.imgur.com/Y8ix6Ts.png" title="QuickStart Video" alt="YouTube Video Preview" /></a>
+<a href="https://youtu.be/e8vaR4CEZ5s"><img src="https://i.imgur.com/Y8ix6Ts.png" title="QuickStart Video" alt="YouTube Video Preview" /></a>
 
 * [0:00](https://youtu.be/e8vaR4CEZ5s#t=0) - Intro
 * [2:22](https://youtu.be/e8vaR4CEZ5s#t=142) - Demonstrating QuickStart Example
