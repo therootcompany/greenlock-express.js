@@ -138,6 +138,9 @@ require('greenlock-express').create({
   // Join the community to get notified of important updates and help me make greenlock better
 , communityMember: true
 
+  // Contribute telemetry data to the project
+, telemetry: true
+
 //, debug: true
 
 }).listen(80, 443);
@@ -284,6 +287,9 @@ var glx = require('greenlock-express').create({
     configDir: require('path').join(require('os').homedir(), 'acme', 'etc')
   , webrootPath: '/tmp/acme-challenges'
   })
+
+  // Contribute telemetry data to the project
+, telemetry: true
 
 , approveDomains: approveDomains
 });
