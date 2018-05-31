@@ -4,6 +4,8 @@
 
 Greenlock&trade; for Express.js
 =================
+<small>formerly letsencrypt-express</small>
+
 Free SSL, Free Wildcard SSL, and Fully Automated HTTPS made dead simple<br>
 <small>certificates issued by Let's Encrypt v2 via [ACME](https://git.coolaj86.com/coolaj86/acme-v2.js)</small>
 
@@ -388,3 +390,6 @@ Brief overview of some simple options for `greenlock.js`:
 * ACME draft 11 (ACME v2 is a misnomer)
 * Wildcard domains (via dns-01 challenges)
   * `*.example.com`
+
+
+<small>tags: letsencrypt acme free ssl automated https node express.js</small>
