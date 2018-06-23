@@ -2,6 +2,7 @@
 
 !["Greenlock Function"](https://git.coolaj86.com/coolaj86/greenlock.js/raw/branch/master/logo/from-not-secure-to-secure-url-bar.png "from url bar showing not secure to url bar showing secure")
 
+<center>
 <table>
   <tr>
     <td><a href="https://medium.com/@bohou/secure-your-nodejs-server-with-letsencrypt-for-free-f8925742faa9"><img src="https://git.coolaj86.com/coolaj86/greenlock.js/raw/branch/master/logo/ibm-301x112.png"></a></td>
@@ -14,6 +15,7 @@
     <td><a href="https://ppl.family"><img src="https://git.coolaj86.com/coolaj86/greenlock.js/raw/branch/master/logo/ppl-301x112.png"></a></td>
   </tr>
 </table>
+</center>
 
 Greenlock&trade; for Express.js
 =================
