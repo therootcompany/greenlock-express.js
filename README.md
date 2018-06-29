@@ -73,6 +73,21 @@ Install
 npm install --save greenlock-express@2.x
 ```
 
+Install (optional)
+-------
+
+*More efficient* RSA key generation (*optional*):
+<small>(important for those on ARM devices like Raspberry Pi)</small>
+```bash
+npm install --save ursa
+```
+
+*Let's Encrypt v01* (pre-draft ACME spec) compatibility (*optional*):
+<small>(important for those on ARM devices like Raspberry Pi)</small>
+```bash
+npm install --save le-acme-core
+```
+
 become a `communityMember`
 ==================
 
