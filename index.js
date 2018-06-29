@@ -1,5 +1,12 @@
 'use strict';
 
+var PromiseA;
+try {
+  PromiseA = require('bluebird');
+} catch(e) {
+  PromiseA = global.Promise;
+}
+
 // opts.approveDomains(options, certs, cb)
 module.exports.create = function (opts) {
   // accept all defaults for greenlock.challenges, greenlock.store, greenlock.middleware
@@ -11,14 +18,6 @@ module.exports.create = function (opts) {
   };
 
   opts.listen = function (plainPort, port) {
-    var PromiseA;
-    try {
-      PromiseA = require('bluebird');
-    } catch(e) {
-      console.warn("Package 'bluebird' not installed. Using global.Promise instead");
-      console.warn("(want bluebird instead? npm install --save bluebird)");
-      PromiseA = global.Promise;
-    }
     var promises = [];
     var plainPorts = plainPort;
     var ports = port;
