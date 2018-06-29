@@ -15,7 +15,7 @@
     "redirect-https": "^1.1.5"
   },
   "files": [
-  , "lib"
+    "lib"
   ],
   "optionalDependencies": {
     "spdy": "^3.4.7"
