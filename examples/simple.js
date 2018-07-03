@@ -22,7 +22,7 @@ require('../').create({
 
   // You MUST have access to write to directory where certs are saved
   // ex: /home/foouser/acme/etc
-, configDir: require('path').join(require('os').homedir(), 'acme', 'etc')
+, configDir: '~/.config/acme/'
 
 , app: require('express')().use('/', function (req, res) {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');

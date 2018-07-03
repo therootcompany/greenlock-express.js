@@ -26,7 +26,7 @@ var greenlock = Greenlock.create({
 
   // You MUST have access to write to directory where certs are saved
   // ex: /home/foouser/acme/etc
-, configDir: require('path').join(require('os').homedir(), 'acme', 'etc')
+, configDir: '~/.config/acme/'
 
   // Get notified of important updates and help me make greenlock better
 , communityMember: true

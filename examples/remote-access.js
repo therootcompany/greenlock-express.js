@@ -25,7 +25,7 @@ require('../').create({
 , email: email
 , agreeTos: agreeLeTos
 , approveDomains: domains
-, configDir: require('path').join(require('os').homedir(), 'acme', 'etc')
+, configDir: '~/.config/acme/'
 , app: remoteAccess(secret)
   // Get notified of important updates and help me make greenlock better
 , communityMember: true

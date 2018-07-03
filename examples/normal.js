@@ -1,29 +1,18 @@
 'use strict';
 
 //
-// My Express App
-//
-var express = require('express');
-var app = express();
-
-app.use('/', function (req, res) {
-  res.setHeader('Content-Type', 'text/html; charset=utf-8')
-  res.end('Hello, World!\n\n💚 🔒.js');
-});
-
-
-//
 // My Secure Server
 //
 //require('greenlock-express')
 require('../').create({
 
   // Let's Encrypt v2 is ACME draft 11
-  version: 'draft-11'
-
-, server: 'https://acme-v02.api.letsencrypt.org/directory'
   // Note: If at first you don't succeed, stop and switch to staging
   // https://acme-staging-v02.api.letsencrypt.org/directory
+  server: 'https://acme-v02.api.letsencrypt.org/directory'
+, version: 'draft-11'
+  // You MUST have write access to save certs
+, configDir: '~/.config/acme/'
 
 // The previous 'simple' example set these values statically,
 // but this example uses approveDomains() to set them dynamically
@@ -34,11 +23,7 @@ require('../').create({
   // email addresses with domains and agreements and such
 , approveDomains: approveDomains
 
-  // You MUST have access to write to directory where certs are saved
-  // ex: /etc/greenlock/
-, configDir: '/tmp/etc/greenlock'
-
-, app: app
+, app: require('./my-express-app.js')
 
   // Get notified of important updates and help me make greenlock better
 , communityMember: true

@@ -26,7 +26,7 @@ var greenlock = Greenlock.create({
 
   // You MUST have access to write to directory where certs are saved
   // ex: /home/foouser/acme/etc
-, configDir: require('path').join(require('os').homedir(), 'acme', 'etc')
+, configDir: '~/.config/acme/'      // MUST have write access
 
   // Get notified of important updates and help me make greenlock better
 , communityMember: true
@@ -57,10 +57,8 @@ require('http').createServer(acmeChallengeHandler).listen(80, function () {
 // spdy is a drop-in replacement for the https API
 var spdyOptions = Object.assign({}, greenlock.tlsOptions);
 spdyOptions.spdy = { protocols: [ 'h2', 'http/1.1' ], plain: false };
-var server = require('spdy').createServer(spdyOptions, require('express')().use('/', function (req, res) {
-  res.setHeader('Content-Type', 'text/html; charset=utf-8');
-  res.end('Hello, SPDY World!\n\n💚 🔒.js');
-}));
+var myApp = require('./my-express-app.js');
+var server = require('spdy').createServer(spdyOptions, myApp);
 server.on('error', function (err) {
   console.error(err);
 });

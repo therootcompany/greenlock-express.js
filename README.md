@@ -147,30 +147,29 @@ require('greenlock-express').create({
   // Let's Encrypt v2 is ACME draft 11
   version: 'draft-11'
 
-, server: 'https://acme-v02.api.letsencrypt.org/directory'
   // Note: If at first you don't succeed, switch to staging to debug
   // https://acme-staging-v02.api.letsencrypt.org/directory
+, server: 'https://acme-v02.api.letsencrypt.org/directory'
+
+  // Where the certs will be saved, MUST have write access
+, configDir: '~/.config/acme/'
 
   // You MUST change this to a valid email address
 , email: 'john.doe@example.com'
-
-  // You MUST NOT build clients that accept the ToS without asking the user
-, agreeTos: true
 
   // You MUST change these to valid domains
   // NOTE: all domains will validated and listed on the certificate
 , approveDomains: [ 'example.com', 'www.example.com' ]
 
-  // You MUST have access to write to directory where certs are saved
-  // ex: /home/foouser/acme/etc
-, configDir: require('path').join(require('os').homedir(), 'acme', 'etc')
+  // You MUST NOT build clients that accept the ToS without asking the user
+, agreeTos: true
 
 , app: require('express')().use('/', function (req, res) {
     res.setHeader('Content-Type', 'text/html; charset=utf-8')
     res.end('Hello, World!\n\n💚 🔒.js');
   })
 
-  // Join the community to get notified of important updates and help me make greenlock better
+  // Join the community to get notified of important updates
 , communityMember: true
 
   // Contribute telemetry data to the project
