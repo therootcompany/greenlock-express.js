@@ -57,9 +57,9 @@ var WebSocket = require('ws');
 var ws = new WebSocket.Server({ server: server });
 ws.on('connection', function (ws, req) {
   // inspect req.headers.authorization (or cookies) for session info
-  ws.write("[Secure Echo Server] Hello!\nAuth: '" + (req.headers.authorization || '') + "'\n"
-    + "Cookie: '" + (req.headers.cookie || '') + "'\n");
-  ws.on('data', function (data) { ws.write(data); });
+  ws.send("[Secure Echo Server] Hello!\nAuth: '" + (req.headers.authorization || 'none') + "'\n"
+    + "Cookie: '" + (req.headers.cookie || 'none') + "'\n");
+  ws.on('message', function (data) { ws.send(data); });
 });
 
 server.listen(443, function () {
