@@ -276,7 +276,7 @@ Auto-SNI
 
 |             | Plugin    |
 |:-----------:|:---------:|
-| **Default** | [le-store-certbot](https://git.coolaj86.com/coolaj86/le-sni-auto.js) |
+| **Default** | [le-sni-auto](https://git.coolaj86.com/coolaj86/le-sni-auto.js) |
 
 (you probably wouldn't need or want to replace this)
 
