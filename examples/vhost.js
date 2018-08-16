@@ -13,7 +13,8 @@ var fs = require('fs');
 var finalhandler = require('finalhandler');
 var serveStatic = require('serve-static');
 var path = require('path');
-var hostnameRe = /^[a-z0-9][\.a-z0-9\-]+$/;
+// Allowed characters are a-z,0-9,.,-,_ with TLDs being alpha-only
+var hostnameRe = /^[\.a-z0-9_\-]+\.[a-z]+$/i;
 
 //require('greenlock-express')
 require('../').create({
@@ -39,17 +40,13 @@ require('../').create({
       return;
     }
 
-    // TODO could test for www/no-www both in directory and IP
-    var e;
+    // SECURITY Greenlock validates opts.domains ahead-of-time
     var hostdir = path.join(srv, opts.domains[0]);
-    if (!hostnameRe.test(opts.domains[0])) {
-      e = new Error("rejecting '" + opts.domains[0] + "' because it is not a valid domain name");
-      cb(e);
-      return;
-    }
+    // TODO could test for www/no-www both in directory and IP
     fs.readdir(hostdir, function (err, nodes) {
-      e = new Error("rejecting '" + opts.domains[0] + "' because '" + hostdir + "' could not be read");
+      var e;
       if (err || !nodes) {
+        e = new Error("rejecting '" + opts.domains[0] + "' because '" + hostdir + "' could not be read");
         console.error(err);
         console.error(e);
         cb(e);
@@ -74,7 +71,7 @@ require('../').create({
 , app: function (req, res) {
     console.log(req.headers.host);
     var hostname = (req.headers.host||'').toLowerCase().split(':')[0];
-    // sanatize hostname to prevent unauthorized fs access
+    // SECURITY sanatize hostname to prevent unauthorized fs access
     if (!hostnameRe.test(hostname)) {
       res.statusCode = 404;
       res.end('Bad Hostname');
