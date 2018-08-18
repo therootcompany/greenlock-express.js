@@ -111,11 +111,20 @@ QuickStart
 
 Watch the QuickStart demonstration: https://youtu.be/e8vaR4CEZ5s
 
-<a href="https://youtu.be/e8vaR4CEZ5s"><img src="https://i.imgur.com/Y8ix6Ts.png" title="QuickStart Video" alt="YouTube Video Preview" /></a>
+<a href="https://www.youtube.com/watch?v=e8vaR4CEZ5s&list=PLZaEVINf2Bq_lrS-OOzTUJB4q3HxarlXk"><img src="https://i.imgur.com/Y8ix6Ts.png" title="QuickStart Video" alt="YouTube Video Preview" /></a>
 
-* [0:00](https://youtu.be/e8vaR4CEZ5s#t=0) - Intro
-* [2:22](https://youtu.be/e8vaR4CEZ5s#t=142) - Demonstrating QuickStart Example
-* [6:37](https://youtu.be/e8vaR4CEZ5s?t=397) - Troubleshooting / Gotchas
+* [0:00](https://www.youtube.com/watch?v=e8vaR4CEZ5s&list=PLZaEVINf2Bq_lrS-OOzTUJB4q3HxarlXk#t=0) - Intro
+* [2:22](https://www.youtube.com/watch?v=e8vaR4CEZ5s&list=PLZaEVINf2Bq_lrS-OOzTUJB4q3HxarlXk#t=142) - Demonstrating QuickStart Example
+* [6:37](https://www.youtube.com/watch?v=e8vaR4CEZ5s&list=PLZaEVINf2Bq_lrS-OOzTUJB4q3HxarlXk?t=397) - Troubleshooting / Gotchas
+
+#### Beyond the QuickStart (Part 2)
+
+* [1:00](https://www.youtube.com/watch?v=bTEn93gxY50&index=2&list=PLZaEVINf2Bq_lrS-OOzTUJB4q3HxarlXk&t=60) - Bringing Greenlock into an Existing Express Project
+* [2:26](https://www.youtube.com/watch?v=bTEn93gxY50&index=2&list=PLZaEVINf2Bq_lrS-OOzTUJB4q3HxarlXk&t=146) - The `approveDomains` callback
+
+#### Security Concerns (Part 3)
+
+* [0:00](https://www.youtube.com/watch?v=aZgVqPzoZTY&index=3&list=PLZaEVINf2Bq_lrS-OOzTUJB4q3HxarlXk) - Potential Attacks, and Mitigation
 
 ### Working Example Code
 
