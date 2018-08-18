@@ -57,6 +57,9 @@ var server = require('http2').createSecureServer(greenlock.tlsOptions);
 server.on('error', function (err) {
   console.error(err);
 });
+// WARNING: Because the middleware don't handle this API style,
+// the Host headers are unmodified and potentially dangerous
+// (ex: Host: Robert'); DROP TABLE Students;)
 server.on('stream', function (stream, headers) {
   console.log(headers);
   stream.respond({

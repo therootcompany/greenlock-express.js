@@ -15,6 +15,7 @@ var greenlock = Greenlock.create({
   server: 'https://acme-v02.api.letsencrypt.org/directory'
 , version: 'draft-11'
 , configDir: '~/.config/acme/'
+, app: require('./my-express-app.js')
 
   // You MUST change these to a valid email and domains
 , email: 'john.doe@example.com'
@@ -27,31 +28,7 @@ var greenlock = Greenlock.create({
 //, debug: true
 });
 
-
-////////////////////////
-// http-01 Challenges //
-////////////////////////
-
-// http-01 challenge happens over plain http/1.1, not secure http
-var redirectHttps = require('redirect-https')();
-var acmeChallengeHandler = greenlock.middleware(redirectHttps);
-require('http').createServer(acmeChallengeHandler).listen(80, function () {
-  console.log("Listening for ACME http-01 challenges on", this.address());
-});
-
-
-////////////////////////
-// secure http        //
-////////////////////////
-
-var myApp = require('./my-express-app.js');
-// Use spdy for "h2" (http2) as to not be penalized by Google
-var server = require('spdy').createSecureServer(greenlock.tlsOptions, myApp);
-
-
-////////////////////////
-// secure websockets  //
-////////////////////////
+var server = greenlock.listen(80, 443);
 
 var WebSocket = require('ws');
 var ws = new WebSocket.Server({ server: server });
@@ -60,8 +37,4 @@ ws.on('connection', function (ws, req) {
   ws.send("[Secure Echo Server] Hello!\nAuth: '" + (req.headers.authorization || 'none') + "'\n"
     + "Cookie: '" + (req.headers.cookie || 'none') + "'\n");
   ws.on('message', function (data) { ws.send(data); });
-});
-
-server.listen(443, function () {
-  console.log("Listening for secure http and websocket requests on", this.address());
 });
