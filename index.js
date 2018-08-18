@@ -29,68 +29,66 @@ module.exports.create = function (opts) {
     console.error(e.code + ": '" + e.address + ":" + e.port + "'");
   }
 
-  function _listenHttp(plainPort) {
+  function _listen(plainPort, plain) {
     if (!plainPort) { plainPort = 80; }
-    var p = plainPort;
+
+    var parts = String(plainPort).split(':');
+    var p = parts.pop();
+    var addr = parts.join(':').replace(/^\[/, '').replace(/\]$/, '');
+    var args = [];
+    var httpType;
+    var server;
     var validHttpPort = (parseInt(p, 10) >= 0);
-    if (!validHttpPort) { console.warn("'" + p + "' doesn't seem to be a valid port number for http"); }
-    var plainServer = require('http').createServer(
-      greenlock.middleware.sanitizeHost(greenlock.middleware(require('redirect-https')()))
-    );
+
+    function tryPlain() {
+      server = require('http').createServer(
+        greenlock.middleware.sanitizeHost(greenlock.middleware(require('redirect-https')()))
+      );
+      httpType = 'http';
+    }
+
+    function trySecure() {
+      var https;
+      try {
+        https = require('spdy');
+        greenlock.tlsOptions.spdy = { protocols: [ 'h2', 'http/1.1' ], plain: false };
+        httpType = 'http2 (spdy/h2)';
+      } catch(e) {
+        https = require('https');
+        httpType = 'https';
+      }
+      server = https.createServer(
+        greenlock.tlsOptions
+      , greenlock.middleware.sanitizeHost(function (req, res) {
+          try {
+            greenlock.app(req, res);
+          } catch(e) {
+            console.error("[error] [greenlock.app] Your HTTP handler had an uncaught error:");
+            console.error(e);
+          }
+        })
+      );
+      server.type = httpType;
+    }
+
+    if (addr) { args[1] = addr; }
+    if (!validHttpPort && !/(\/)|(\\\\)/.test(p)) {
+      console.warn("'" + p + "' doesn't seem to be a valid port number, socket path, or pipe");
+    }
+    if (plain) { tryPlain(); } else { trySecure(); }
+
     var promise = new PromiseA(function (resolve) {
-      plainServer.listen(p, function () {
-        resolve(plainServer);
-      }).on('error', function (e) {
-        if (plainServer.listenerCount('error') < 2) {
+      args[0] = p;
+      args.push(function () { resolve(server); });
+      server.listen.apply(server, args).on('error', function (e) {
+        if (server.listenerCount('error') < 2) {
           console.warn("Did not successfully create http server and bind to port '" + p + "':");
           explainError(e);
           process.exit(41);
         }
       });
     });
-    promise.server = plainServer;
-    return promise;
-  }
 
-  function _listenHttps(port) {
-    if (!port) { port = 443; }
-
-    var p = port;
-    var validHttpsPort = (parseInt(p, 10) >= 0);
-    var httpType;
-    if (!validHttpsPort) { console.warn("'" + p + "' doesn't seem to be a valid port number for https"); }
-    var https;
-    try {
-      https = require('spdy');
-      greenlock.tlsOptions.spdy = { protocols: [ 'h2', 'http/1.1' ], plain: false };
-      httpType = 'http2 (spdy/h2)';
-    } catch(e) {
-      https = require('https');
-      httpType = 'https';
-    }
-    var server = https.createServer(
-      greenlock.tlsOptions
-    , greenlock.middleware.sanitizeHost(function (req, res) {
-        try {
-          greenlock.app(req, res);
-        } catch(e) {
-          console.error("[error] [greenlock.app] Your HTTP handler had an uncaught error:");
-          console.error(e);
-        }
-      })
-    );
-    server.type = httpType;
-    var promise = new PromiseA(function (resolve) {
-      server.listen(p, function () {
-        resolve(server);
-      }).on('error', function (e) {
-        if (server.listenerCount('error') < 2) {
-          console.warn("Did not successfully create https server and bind to port '" + p + "':");
-          explainError(e);
-          process.exit(43);
-        }
-      });
-    });
     promise.server = server;
     return promise;
   }
@@ -101,40 +99,36 @@ module.exports.create = function (opts) {
     res.end("Hello, World!\nWith Love,\nGreenlock for Express.js");
   };
 
-  opts.listen = function (plainPort, port, fn1, fn2) {
+  opts.listen = function (plainPort, port, fnPlain, fn) {
     var promises = [];
     var server;
     var plainServer;
 
-    var fn;
-    var fnPlain;
-    if (fn2) {
-      fn = fn2;
-      fnPlain = fn1;
-    } else {
-      fn = fn1;
+    if (!fn) {
+      fn = fnPlain;
+      fnPlain = null;
     }
 
-    promises.push(_listenHttp(plainPort, !fnPlain));
-    promises.push(_listenHttps(port, !fn));
+    promises.push(_listen(plainPort, true));
+    promises.push(_listen(port, false));
 
     server = promises[1].server;
     plainServer = promises[0].server;
 
     PromiseA.all(promises).then(function () {
-      // Report h2/https status
-      if ('function' === typeof fn) {
-        fn.apply(server);
-      } else if (server.listenerCount('listening') < 2) {
-        console.info("Success! Serving " + server.type + " on port '" + server.address().port + "'");
-      }
-
       // Report plain http status
       if ('function' === typeof fnPlain) {
         fnPlain.apply(plainServer);
       } else if (!fn && plainServer.listenerCount('listening') < 2) {
-        console.info("Success! Bound to port '" + plainServer.address().port
-          + "' to handle ACME challenges and redirect to " + server.type);
+        console.info('[:' + (plainServer.address().port || plainServer.address())
+          + "] Handling ACME challenges and redirecting to " + server.type);
+      }
+
+      // Report h2/https status
+      if ('function' === typeof fn) {
+        fn.apply(server);
+      } else if (server.listenerCount('listening') < 2) {
+        console.info('[:' + (server.address().port || server.address()) + "] Serving " + server.type);
       }
     });
 

@@ -410,7 +410,13 @@ The API is actually located at [greenlock.js options](https://git.coolaj86.com/c
 The only "API" consists of two options, the rest is just a wrapper around `greenlock.js` to take LOC from 15 to 5:
 
 * `opts.app` An express app in the format `function (req, res) { ... }` (no `next`).
-* `server = glx.listen(plainPort, tlsPort)` Accepts port numbers (or arrays of port numbers) to listen on, returns secure server.
+* `server = glx.listen(plainAddr, tlsAddr, onListen)` Accepts port numbers (or arrays of port numbers) to listen on, returns secure server.
+  * `listen(80, 443)`
+  * `listen(80, 443, onListenSecure)`
+  * `listen(80, 443, onListenPlain, onListenSecure)`
+  * `listen('localhost:80', '0.0.0.0:443')`
+  * `listen('[::1]:80', '[::]:443')`
+  * `listen('/tmp/glx.plain.sock', '/tmp/glx.secure.sock')`
 
 Brief overview of some simple options for `greenlock.js`:
 
