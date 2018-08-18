@@ -3,8 +3,8 @@
 //
 // My Secure Server
 //
-//require('greenlock-express')
-require('../').create({
+//var greenlock = require('greenlock-express')
+var greenlock = require('../').create({
 
   // Let's Encrypt v2 is ACME draft 11
   // Note: If at first you don't succeed, stop and switch to staging
@@ -30,7 +30,9 @@ require('../').create({
 
 //, debug: true
 
-}).listen(80, 443);
+});
+
+var server = greenlock.listen(80, 443);
 
 
 //

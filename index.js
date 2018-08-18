@@ -29,7 +29,7 @@ module.exports.create = function (opts) {
     console.error(e.code + ": '" + e.address + ":" + e.port + "'");
   }
 
-  function _listenHttp(plainPort) {
+  function _listenHttp(plainPort, sayAnything) {
     if (!plainPort) { plainPort = 80; }
     var p = plainPort;
     var validHttpPort = (parseInt(p, 10) >= 0);
@@ -39,19 +39,23 @@ module.exports.create = function (opts) {
     );
     var promise = new PromiseA(function (resolve) {
       plainServer.listen(p, function () {
-        console.log("Success! Bound to port '" + p + "' to handle ACME challenges and redirect to https");
+        if (sayAnything) {
+          console.info("Success! Bound to port '" + p + "' to handle ACME challenges and redirect to https");
+        }
         resolve();
       }).on('error', function (e) {
-        console.log("Did not successfully create http server and bind to port '" + p + "':");
-        explainError(e);
-        process.exit(0);
+        if (plainServer.listenerCount('error') < 2) {
+          console.warn("Did not successfully create http server and bind to port '" + p + "':");
+          explainError(e);
+          process.exit(41);
+        }
       });
     });
     promise.server = plainServer;
     return promise;
   }
 
-  function _listenHttps(port) {
+  function _listenHttps(port, sayAnything) {
     if (!port) { port = 443; }
 
     var p = port;
@@ -77,12 +81,16 @@ module.exports.create = function (opts) {
     );
     var promise = new PromiseA(function (resolve) {
       server.listen(p, function () {
-        console.log("Success! Serving https on port '" + p + "'");
+        if (sayAnything) {
+          console.info("Success! Serving https on port '" + p + "'");
+        }
         resolve(server);
       }).on('error', function (e) {
-        console.log("Did not successfully create https server and bind to port '" + p + "':");
-        explainError(e);
-        process.exit(0);
+        if (server.listenerCount('error') < 2) {
+          console.warn("Did not successfully create https server and bind to port '" + p + "':");
+          explainError(e);
+          process.exit(43);
+        }
       });
     });
     promise.server = server;
@@ -95,10 +103,22 @@ module.exports.create = function (opts) {
     res.end("Hello, World!\nWith Love,\nGreenlock for Express.js");
   };
 
-  opts.listen = function (plainPort, port) {
+  opts.listen = function (plainPort, port, fn) {
     var promises = [];
-    promises.push(_listenHttp(plainPort));
-    promises.push(_listenHttps(port));
+    var server;
+
+    promises.push(_listenHttp(plainPort, !fn));
+    promises.push(_listenHttps(port, !fn));
+
+    server = promises[1].server;
+    PromiseA.all(promises).then(function () {
+      if ('function' === typeof fn) {
+        fn.apply(server);
+      }
+      return server;
+    });
+
+    return server;
   };
 
 

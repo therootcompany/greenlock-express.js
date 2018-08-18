@@ -324,6 +324,10 @@ var glx = require('greenlock-express').create({
 
 , approveDomains: approveDomains
 });
+
+var server = glx.listen(80, 443, function () {
+  console.log("Listening on port 80 for ACME challenges and 443 for express app.");
+});
 ```
 
 The Automatic Certificate Issuance is initiated via SNI (`httpsOptions.SNICallback`).
@@ -397,7 +401,7 @@ The API is actually located at [greenlock.js options](https://git.coolaj86.com/c
 The only "API" consists of two options, the rest is just a wrapper around `greenlock.js` to take LOC from 15 to 5:
 
 * `opts.app` An express app in the format `function (req, res) { ... }` (no `next`).
-* `glx.listen(plainPort, tlsPort)` Accepts port numbers (or arrays of port numbers) to listen on.
+* `server = glx.listen(plainPort, tlsPort)` Accepts port numbers (or arrays of port numbers) to listen on, returns secure server.
 
 Brief overview of some simple options for `greenlock.js`:
 
