@@ -16,7 +16,9 @@ var greenlock = Greenlock.create({
 var server1 = greenlock.listen(5080, 5443);
 server1.on('listening', function () {
   console.log("### THREE 3333 - All is well server1", this.address());
-  server1.close();
+  setTimeout(function () {
+    // so that the address() object doesn't disappear
+  }, 10);
 });
 setTimeout(function () {
   var server2 = greenlock.listen(6080, 6443, function () {
@@ -32,10 +34,21 @@ setTimeout(function () {
   });
 }, 1000);
 
-var server3 = greenlock.listen(7080, 22, function () {
-  // ignore
+var server3 = greenlock.listen(22, 22, function () {
+  console.error("Error: expected to get an error when launching plain server on port 22");
+}, function () {
+  console.error("Error: expected to get an error when launching " + server3.type + " server on port 22");
+});
+server3.unencrypted.on('error', function () {
+  console.log("Success: caught expected (plain) error");
 });
 server3.on('error', function () {
-  console.log("Success: caught expected error");
-  server3.close();
+  console.log("Success: caught expected " + server3.type + " error");
+  //server3.close();
+});
+
+var server4 = greenlock.listen(7080, 7443, function () {
+  console.log('Success: server4: plain');
+}, function () {
+  console.log('Success: server4: ' + server4.type);
 });

@@ -330,6 +330,15 @@ var server = glx.listen(80, 443, function () {
 });
 ```
 
+Note: You shouldn't be using the plain HTTP server for anything except, potentially, for error handling
+on the listen event (if the default print-and-quit behavior doesn't work for your use case).
+If you need to do that, here's how:
+
+```
+var plainServer = server.unencrypted;
+plainServer.on('error', function (err) { ... });
+```
+
 The Automatic Certificate Issuance is initiated via SNI (`httpsOptions.SNICallback`).
 For security, domain validation MUST have an approval callback in *production*.
 

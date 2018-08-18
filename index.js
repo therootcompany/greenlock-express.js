@@ -29,7 +29,7 @@ module.exports.create = function (opts) {
     console.error(e.code + ": '" + e.address + ":" + e.port + "'");
   }
 
-  function _listenHttp(plainPort, sayAnything) {
+  function _listenHttp(plainPort) {
     if (!plainPort) { plainPort = 80; }
     var p = plainPort;
     var validHttpPort = (parseInt(p, 10) >= 0);
@@ -39,10 +39,7 @@ module.exports.create = function (opts) {
     );
     var promise = new PromiseA(function (resolve) {
       plainServer.listen(p, function () {
-        if (sayAnything) {
-          console.info("Success! Bound to port '" + p + "' to handle ACME challenges and redirect to https");
-        }
-        resolve();
+        resolve(plainServer);
       }).on('error', function (e) {
         if (plainServer.listenerCount('error') < 2) {
           console.warn("Did not successfully create http server and bind to port '" + p + "':");
@@ -55,18 +52,21 @@ module.exports.create = function (opts) {
     return promise;
   }
 
-  function _listenHttps(port, sayAnything) {
+  function _listenHttps(port) {
     if (!port) { port = 443; }
 
     var p = port;
     var validHttpsPort = (parseInt(p, 10) >= 0);
+    var httpType;
     if (!validHttpsPort) { console.warn("'" + p + "' doesn't seem to be a valid port number for https"); }
     var https;
     try {
       https = require('spdy');
       greenlock.tlsOptions.spdy = { protocols: [ 'h2', 'http/1.1' ], plain: false };
+      httpType = 'http2 (spdy/h2)';
     } catch(e) {
       https = require('https');
+      httpType = 'https';
     }
     var server = https.createServer(
       greenlock.tlsOptions
@@ -79,11 +79,9 @@ module.exports.create = function (opts) {
         }
       })
     );
+    server.type = httpType;
     var promise = new PromiseA(function (resolve) {
       server.listen(p, function () {
-        if (sayAnything) {
-          console.info("Success! Serving https on port '" + p + "'");
-        }
         resolve(server);
       }).on('error', function (e) {
         if (server.listenerCount('error') < 2) {
@@ -103,21 +101,44 @@ module.exports.create = function (opts) {
     res.end("Hello, World!\nWith Love,\nGreenlock for Express.js");
   };
 
-  opts.listen = function (plainPort, port, fn) {
+  opts.listen = function (plainPort, port, fn1, fn2) {
     var promises = [];
     var server;
+    var plainServer;
 
-    promises.push(_listenHttp(plainPort, !fn));
+    var fn;
+    var fnPlain;
+    if (fn2) {
+      fn = fn2;
+      fnPlain = fn1;
+    } else {
+      fn = fn1;
+    }
+
+    promises.push(_listenHttp(plainPort, !fnPlain));
     promises.push(_listenHttps(port, !fn));
 
     server = promises[1].server;
+    plainServer = promises[0].server;
+
     PromiseA.all(promises).then(function () {
+      // Report h2/https status
       if ('function' === typeof fn) {
         fn.apply(server);
+      } else if (server.listenerCount('listening') < 2) {
+        console.info("Success! Serving " + server.type + " on port '" + server.address().port + "'");
       }
-      return server;
+
+      // Report plain http status
+      if ('function' === typeof fnPlain) {
+        fnPlain.apply(plainServer);
+      } else if (!fn && plainServer.listenerCount('listening') < 2) {
+        console.info("Success! Bound to port '" + plainServer.address().port
+          + "' to handle ACME challenges and redirect to " + server.type);
+      }
     });
 
+    server.unencrypted = plainServer;
     return server;
   };
 
