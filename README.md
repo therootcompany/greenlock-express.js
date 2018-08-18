@@ -233,6 +233,20 @@ you should switch to using the `staging` server for any testing or debugging.
 https://acme-staging-v02.api.letsencrypt.org/directory
 ```
 
+Working Examples
+-----------
+
+| Example         | Location + Description |
+|:---------------:|:---------:|
+| **QuickStart**  | [examples/quickstart.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/quickstart.js) uses the fewest options and accepts all default settings. It's guaranteed to work for you. |
+| Production      | [examples/production.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/production.js) shows how to require an express app (or other middleware system), expand the `approveDomains` callback, provides an example database shim, and exposes the server instance. |
+| Virtual Hosting | [examples/vhost.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/vhost.js) shows how to dynamically secure and serve domains based on their existance on the file system. |
+| HTTP2 (spdy)    | Although greenlock uses spdy by default, [examples/spdy.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/spdy.js) demonstrates how to manually configure a node web server with Greenlock. |
+| HTTP2 (node)    | [examples/http2.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/http2.js) uses node's new HTTP2 module, which is NOT compatible with the existing middleware systems (and is not "stable" as of v10.0). |
+| WebSockets (ws) | [examples/websockets.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/websockets.js) demonstrates how to use Greenlock express with a websocket server. |
+| - | Build Your Own <br> Be sure to tell me (@coolaj86) / us (@GreenlockHTTPS) about it. :) |
+| Full List      | Check out the [examples/](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples) directory |
+
 Plugins
 =====
 **IMPORTANT**: Community plugins may or may not be maintained and working. Please try with the defaults before switching to community plugins.
