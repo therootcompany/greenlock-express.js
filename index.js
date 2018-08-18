@@ -119,7 +119,7 @@ module.exports.create = function (opts) {
       // Report plain http status
       if ('function' === typeof fnPlain) {
         fnPlain.apply(plainServer);
-      } else if (!fn && plainServer.listenerCount('listening') < 2) {
+      } else if (!fn && !plainServer.listenerCount('listening') && !server.listenerCount('listening')) {
         console.info('[:' + (plainServer.address().port || plainServer.address())
           + "] Handling ACME challenges and redirecting to " + server.type);
       }
@@ -127,7 +127,7 @@ module.exports.create = function (opts) {
       // Report h2/https status
       if ('function' === typeof fn) {
         fn.apply(server);
-      } else if (server.listenerCount('listening') < 2) {
+      } else if (!server.listenerCount('listening')) {
         console.info('[:' + (server.address().port || server.address()) + "] Serving " + server.type);
       }
     });
