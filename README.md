@@ -109,13 +109,22 @@ QuickStart
 
 ### Screencast
 
-Watch the QuickStart demonstration: https://youtu.be/e8vaR4CEZ5s
+Watch the QuickStart demonstration: [https://youtu.be/e8vaR4CEZ5s](https://youtu.be/e8vaR4CEZ5s&list=PLZaEVINf2Bq_lrS-OOzTUJB4q3HxarlXk)
 
-<a href="https://youtu.be/e8vaR4CEZ5s"><img src="https://i.imgur.com/Y8ix6Ts.png" title="QuickStart Video" alt="YouTube Video Preview" /></a>
+<a href="https://www.youtube.com/watch?v=e8vaR4CEZ5s&list=PLZaEVINf2Bq_lrS-OOzTUJB4q3HxarlXk"><img src="https://i.imgur.com/Y8ix6Ts.png" title="QuickStart Video" alt="YouTube Video Preview" /></a>
 
-* [0:00](https://youtu.be/e8vaR4CEZ5s#t=0) - Intro
-* [2:22](https://youtu.be/e8vaR4CEZ5s#t=142) - Demonstrating QuickStart Example
-* [6:37](https://youtu.be/e8vaR4CEZ5s?t=397) - Troubleshooting / Gotchas
+* [0:00](https://www.youtube.com/watch?v=e8vaR4CEZ5s&list=PLZaEVINf2Bq_lrS-OOzTUJB4q3HxarlXk#t=0) - Intro
+* [2:22](https://www.youtube.com/watch?v=e8vaR4CEZ5s&list=PLZaEVINf2Bq_lrS-OOzTUJB4q3HxarlXk#t=142) - Demonstrating QuickStart Example
+* [6:37](https://www.youtube.com/watch?v=e8vaR4CEZ5s&list=PLZaEVINf2Bq_lrS-OOzTUJB4q3HxarlXk?t=397) - Troubleshooting / Gotchas
+
+#### Beyond the QuickStart (Part 2)
+
+* [1:00](https://www.youtube.com/watch?v=bTEn93gxY50&index=2&list=PLZaEVINf2Bq_lrS-OOzTUJB4q3HxarlXk&t=60) - Bringing Greenlock into an Existing Express Project
+* [2:26](https://www.youtube.com/watch?v=bTEn93gxY50&index=2&list=PLZaEVINf2Bq_lrS-OOzTUJB4q3HxarlXk&t=146) - The `approveDomains` callback
+
+#### Security Concerns (Part 3)
+
+* [0:00](https://www.youtube.com/watch?v=aZgVqPzoZTY&index=3&list=PLZaEVINf2Bq_lrS-OOzTUJB4q3HxarlXk) - Potential Attacks, and Mitigation
 
 ### Working Example Code
 
@@ -223,6 +232,20 @@ you should switch to using the `staging` server for any testing or debugging.
 ```
 https://acme-staging-v02.api.letsencrypt.org/directory
 ```
+
+Working Examples
+-----------
+
+| Example         | Location + Description |
+|:---------------:|:---------:|
+| **QuickStart**  | [examples/quickstart.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/quickstart.js) uses the fewest options and accepts all default settings. It's guaranteed to work for you. |
+| Production      | [examples/production.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/production.js) shows how to require an express app (or other middleware system), expand the `approveDomains` callback, provides an example database shim, and exposes the server instance. |
+| Virtual Hosting | [examples/vhost.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/vhost.js) shows how to dynamically secure and serve domains based on their existance on the file system. |
+| HTTP2 (spdy)    | Although greenlock uses spdy by default, [examples/spdy.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/spdy.js) demonstrates how to manually configure a node web server with Greenlock. |
+| HTTP2 (node)    | [examples/http2.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/http2.js) uses node's new HTTP2 module, which is NOT compatible with the existing middleware systems (and is not "stable" as of v10.0). |
+| WebSockets (ws) | [examples/websockets.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/websockets.js) demonstrates how to use Greenlock express with a websocket server. |
+| - | Build Your Own <br> Be sure to tell me (@coolaj86) / us (@GreenlockHTTPS) about it. :) |
+| Full List      | Check out the [examples/](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples) directory |
 
 Plugins
 =====
