@@ -14,10 +14,9 @@ var finalhandler = require('finalhandler');
 var serveStatic = require('serve-static');
 var path = require('path');
 // Allowed characters are a-z,0-9,.,-,_ with TLDs being alpha-only
-var hostnameRe = /^[\.a-z0-9_\-]+\.[a-z]+$/i;
 
-//require('greenlock-express')
-require('../').create({
+//var glx = require('greenlock-express')
+var glx = require('../').create({
 
   // Let's Encrypt v2 is ACME draft 11
   version: 'draft-11'
@@ -69,14 +68,9 @@ require('../').create({
 , configDir: '~/.config/acme/'
 
 , app: function (req, res) {
+    // SECURITY greenlock pre-sanitizes hostnames to prevent unauthorized fs access
     console.log(req.headers.host);
-    var hostname = (req.headers.host||'').toLowerCase().split(':')[0];
-    // SECURITY sanatize hostname to prevent unauthorized fs access
-    if (!hostnameRe.test(hostname)) {
-      res.statusCode = 404;
-      res.end('Bad Hostname');
-      return;
-    }
+    var hostname = req.headers.host;
 
     var serve = serveStatic(path.join(srv, hostname), { redirect: true });
     serve(req, res, finalhandler(req, res));
@@ -87,4 +81,6 @@ require('../').create({
 
 //, debug: true
 
-}).listen(80, 443);
+});
+
+var server = glx.listen(80, 443);
