@@ -93,11 +93,14 @@ module.exports.create = function (opts) {
     return promise;
   }
 
+  // NOTE: 'greenlock' is just 'opts' renamed
   var greenlock = require('greenlock').create(opts);
 
-  opts.app = opts.app || function (req, res) {
-    res.end("Hello, World!\nWith Love,\nGreenlock for Express.js");
-  };
+  if (!opts.app) {
+    opts.app = function (req, res) {
+      res.end("Hello, World!\nWith Love,\nGreenlock for Express.js");
+    };
+  }
 
   opts.listen = function (plainPort, port, fnPlain, fn) {
     var promises = [];
@@ -135,7 +138,12 @@ module.exports.create = function (opts) {
     server.unencrypted = plainServer;
     return server;
   };
-
+  opts.middleware.acme = function (opts) {
+    return greenlock.middleware.sanitizeHost(greenlock.middleware(require('redirect-https')(opts)));
+  };
+  opts.middleware.secure = function (app) {
+    return greenlock.middleware.sanitizeHost(app);
+  };
 
   return greenlock;
 };
