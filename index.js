@@ -65,6 +65,13 @@ module.exports.create = function (opts) {
           } catch(e) {
             console.error("[error] [greenlock.app] Your HTTP handler had an uncaught error:");
             console.error(e);
+            try {
+              res.statusCode = 500;
+              res.end("Internal Server Error: [Greenlock] HTTP exception logged for user-provided handler.");
+            } catch(e) {
+              // ignore
+              // (headers may have already been sent, etc)
+            }
           }
         })
       );
