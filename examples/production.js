@@ -84,7 +84,7 @@ function fooCheckDb(domains, cb) {
   });
 
   if (!passCheck) {
-    cb(new Error('domain not allowed');
+    cb(new Error('domain not allowed'));
   } else {
     cb(null, userAgrees, userEmail);
   }
