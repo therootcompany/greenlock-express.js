@@ -20,7 +20,7 @@ var greenlock = Greenlock.create({
 
   // You MUST change these to valid domains
   // NOTE: all domains will validated and listed on the certificate
-, approveDomains: [ 'example.com', 'www.example.com' ]
+, approvedDomains: [ 'example.com', 'www.example.com' ]
 
   // You MUST have access to write to directory where certs are saved
   // ex: /home/foouser/acme/etc

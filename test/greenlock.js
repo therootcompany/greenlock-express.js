@@ -4,7 +4,7 @@ var greenlock = Greenlock.create({
   version: 'draft-11'
 , server: 'https://acme-staging-v02.api.letsencrypt.org/directory'
 , agreeTos: true
-, approveDomains: [ 'example.com', 'www.example.com' ]
+, approvedDomains: [ 'example.com', 'www.example.com' ]
 , configDir: require('path').join(require('os').tmpdir(), 'acme')
 
 , app: require('express')().use('/', function (req, res) {

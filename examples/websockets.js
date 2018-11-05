@@ -19,7 +19,7 @@ var greenlock = Greenlock.create({
 
   // You MUST change these to a valid email and domains
 , email: 'john.doe@example.com'
-, approveDomains: [ 'example.com', 'www.example.com' ]
+, approvedDomains: [ 'example.com', 'www.example.com' ]
 , agreeTos: true
 
   // Get notified of important updates and help me make greenlock better
