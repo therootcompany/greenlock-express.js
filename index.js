@@ -12,6 +12,7 @@ module.exports.create = function (opts) {
   // accept all defaults for greenlock.challenges, greenlock.store, greenlock.middleware
   if (!opts._communityPackage) {
     opts._communityPackage = 'greenlock-express.js';
+    opts._communityPackageVersion = require('./package.json').version;
   }
 
   function explainError(e) {
