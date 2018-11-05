@@ -40,23 +40,22 @@ var server = greenlock.listen(80, 443);
 //
 function approveDomains(opts, certs, cb) {
 
-  // The domains being approved for the first time are listed in opts.domains
-  // Certs being renewed are listed in certs.altnames
-  if (certs) {
-    opts.domains = certs.altnames;
-    cb(null, { options: opts, certs: certs });
-    return;
-  }
-
   // Only one domain is listed with *automatic* registration via SNI
   // (it's an array because managed registration allows for multiple domains,
   //                                which was the case in the simple example)
   console.log(opts.domains);
 
+  // The domains being approved for the first time are listed in opts.domains
+  // Certs being renewed are listed in certs.altnames
+  if (certs) {
+    opts.domains = [certs.subject].concat(certs.altnames);
+  }
+
   fooCheckDb(opts.domains, function (err, agree, email) {
     if (err) { cb(err); return; }
 
-    // You MUST NOT build clients that accept the ToS without asking the user
+    // Services SHOULD automatically accept the ToS and use YOUR email
+    // Clients MUST NOT accept the ToS without asking the user
     opts.agreeTos = agree;
     opts.email = email;
 
