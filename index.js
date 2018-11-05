@@ -114,6 +114,8 @@ module.exports.create = function (opts) {
     var server;
     var plainServer;
 
+    // If there is only one handler for the `listening` (i.e. TCP bound) event
+    // then we want to use it as HTTPS (backwards compat)
     if (!fn) {
       fn = fnPlain;
       fnPlain = null;
