@@ -70,42 +70,10 @@ Install
 npm install --save greenlock-express@2.x
 ```
 
-Install (optional)
--------
-
-*More efficient* RSA key generation (*optional*):
-<small>(important for those on ARM devices like Raspberry Pi)</small>
-```bash
-npm install --save ursa
-```
-
-*Let's Encrypt v01* (pre-draft ACME spec) compatibility (*optional*):
-<small>(important for those on ARM devices like Raspberry Pi)</small>
-```bash
-npm install --save le-acme-core
-```
-
-become a `communityMember`
-==================
-
-If you're the kind of person that likes the kinds of stuff that I do,
-well, I want to do more of it and I'd like to get you involved.
-
-When you set the `communityMember` option to `true` I save your
-email and I'm able to inform you when there are mandatory updates
-(such as with Let's Encrypt v2), notify you of important security issues,
-give you early access to similar projects, and
-get your feedback from time to time.
-
-I'll also get a hash of domain names that receive and renew certificates,
-which is a metric that has long interested me and may help me in getting
-non-developers involved in this and future projects.
-
 QuickStart
 ==========
-<!--
-[![Free SSL with Greenlock.js](https://i.imgur.com/Y8ix6Ts.png)](https://youtu.be/e8vaR4CEZ5s)
--->
+
+<!-- TODO better quickstart (fewer options) -->
 
 ### Screencast
 
@@ -185,6 +153,21 @@ require('greenlock-express').create({
 
 }).listen(80, 443);
 ```
+
+### `communityMember`
+
+If you're the kind of person that likes the kinds of stuff that I do,
+well, I want to do more of it and I'd like to get you involved.
+
+As expected, by default we keep your email private and only use it for
+transactional messaging, urgent security or API updates
+(such as the mandatory upgrade to Let's Encrypt v2), and ACME account registration.
+
+However, when you set the `communityMember` option to `true` we'll also
+inform you when there are meaningful and relavant feature updates (no bugfix noise),
+and give you early access to similar projects.
+
+You can see our full privacy policy at <https://greenlock.domains/legal/#privacy>.
 
 ### What if the example didn't work?
 
@@ -462,3 +445,6 @@ Brief overview of some simple options for `greenlock.js`:
 
 
 <small>tags: letsencrypt acme free ssl automated https node express.js</small>
+
+
+Greenlock [Terms of Service](https://greenlock.domains/legal/#terms) and [Privacy Policy](https://greenlock.domains/legal/#privacy).
