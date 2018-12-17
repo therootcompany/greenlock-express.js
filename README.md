@@ -17,8 +17,8 @@
   </tr>
 </table>
 
-Greenlock&trade; for Express.js
-=================
+# [Greenlock](https://git.coolaj86.com/coolaj86/greenlock-express.js)&trade; for Express.js
+
 <small>formerly letsencrypt-express</small>
 
 Free SSL, Free Wildcard SSL, and Fully Automated HTTPS made dead simple<br>
@@ -30,14 +30,13 @@ Free SSL, Free Wildcard SSL, and Fully Automated HTTPS made dead simple<br>
 !["Stackoverflow Questions"](https://img.shields.io/stackexchange/stackoverflow/t/greenlock.svg "S.O. Question count can't be shown")
 <a href="https://twitter.com/intent/follow?screen_name=GreenlockHTTPS"><img src="https://img.shields.io/twitter/url/http/shields.io.svg?style=social&label=Follow%20@GreenlockHTTPS" title="Follow @GreenlockHTTPS on Twitter" alt="Twitter Badge"></a>
 
-| Sponsored by [ppl](https://ppl.family) |
+| A [Root](https://therootcompany.com) Project |
 [Greenlock&trade;](https://git.coolaj86.com/coolaj86/greenlock.js) is for
 [Web Servers](https://git.coolaj86.com/coolaj86/greenlock-cli.js),
-[Web Browsers](https://git.coolaj86.com/coolaj86/greenlock.html),
+[Web Browsers](https://greenlock.domains),
 and **node.js middleware systems**.
 
-Features
-========
+# Features
 
   - [x] Automatic HTTPS
     - [x] Free SSL
@@ -63,15 +62,13 @@ Features
     - [x] etcd
     - [x] Redis
 
-Install
-=======
+# Install
 
 ```bash
 npm install --save greenlock-express@2.x
 ```
 
-QuickStart
-==========
+# QuickStart
 
 <!-- TODO better quickstart (fewer options) -->
 
@@ -216,8 +213,7 @@ you should switch to using the `staging` server for any testing or debugging.
 https://acme-staging-v02.api.letsencrypt.org/directory
 ```
 
-Working Examples
------------
+## Working Examples
 
 | Example         | Location + Description |
 |:---------------:|:---------:|
@@ -230,12 +226,11 @@ Working Examples
 | - | Build Your Own <br> Be sure to tell me (@coolaj86) / us (@GreenlockHTTPS) about it. :) |
 | Full&nbsp;List      | Check out the [examples/](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples) directory |
 
-Plugins
-=====
+# Plugins
+
 **IMPORTANT**: Community plugins may or may not be maintained and working. Please try with the defaults before switching to community plugins.
 
-HTTP-01 Challenges
------------
+## HTTP-01 Challenges
 
 |                | Plugin    |
 |:--------------:|:---------:|
@@ -246,8 +241,7 @@ HTTP-01 Challenges
 | Full List      | Search [le-challenge-](https://www.npmjs.com/search?q=le-challenge-) on npm |
 
 
-DNS-01 Challenges
------------
+## DNS-01 Challenges
 
 |                | Plugin    |
 |:--------------:|:---------:|
@@ -260,8 +254,7 @@ DNS-01 Challenges
 | - | Build Your Own <br> [le-challenge-dns-SPEC](https://git.coolaj86.com/coolaj86/le-challenge-dns.js) |
 | Full List      | Search [le-challenge-](https://www.npmjs.com/search?q=le-challenge-) on npm |
 
-Account & Certificate Storage
------------
+## Account & Certificate Storage
 
 |                | Plugin    |
 |:--------------:|:---------:|
@@ -274,8 +267,7 @@ Account & Certificate Storage
 | - | Build Your Own <br> [le-store-SPEC](https://git.coolaj86.com/coolaj86/le-store-SPEC.js) |
 | Full List      | Search [le-store-](https://www.npmjs.com/search?q=le-store-) on npm |
 
-Auto-SNI
---------
+## Auto-SNI
 
 |             | Plugin    |
 |:-----------:|:---------:|
@@ -286,8 +278,8 @@ Auto-SNI
 
 **Bugs**: Please report bugs with the community plugins to the appropriate owner first, then here if you don't get a response.
 
-Usage
-=====
+# Usage
+
 The oversimplified example was the bait
 (because everyone seems to want an example that fits in 3 lines, even if it's terribly bad practices),
 now here's the switch.
@@ -403,8 +395,7 @@ an attacker will spoof SNI packets with bad hostnames and that will
 cause you to be rate-limited and or blocked from the ACME server.
 
 
-API
-===
+# API
 
 This module is an elaborate ruse (to provide an oversimplified example and to nab some SEO).
 
@@ -443,8 +434,13 @@ Brief overview of some simple options for `greenlock.js`:
 * Wildcard domains (via dns-01 challenges)
   * `*.example.com`
 
-
 <small>tags: letsencrypt acme free ssl automated https node express.js</small>
 
+# Legal
 
-Greenlock [Terms of Service](https://greenlock.domains/legal/#terms) and [Privacy Policy](https://greenlock.domains/legal/#privacy).
+Greenlock&trade; is a [trademark](https://greenlock.domains/legal/#trademark) of AJ ONeal
+
+[greenlock-express.js](https://git.coolaj86.com/coolaj86/greenlock-express.js) |
+MPL-2.0 |
+[Terms of Use](https://therootcompany.com/legal/#terms) |
+[Privacy Policy](https://therootcompany.com/legal/#privacy)
