@@ -114,41 +114,37 @@ All you have to do is start the webserver and then visit it at its domain name.
 'use strict';
 
 require('greenlock-express').create({
+  email: 'john.doe@example.com'     // The email address of the ACME user / hosting provider
+, agreeTos: true                    // You must accept the ToS as the host which handles the certs
+, configDir: '~/.config/acme/'      // Writable directory where certs will be saved
+, communityMember: true             // Join the community to get notified of important updates
+, telemetry: true                   // Contribute telemetry data to the project
 
-  // Let's Encrypt v2 is ACME draft 11
-  version: 'draft-11'
-
-  // Note: If at first you don't succeed, switch to staging to debug
-  // https://acme-staging-v02.api.letsencrypt.org/directory
-, server: 'https://acme-v02.api.letsencrypt.org/directory'
-
-  // Where the certs will be saved, MUST have write access
-, configDir: '~/.config/acme/'
-
-  // You MUST change this to a valid email address
-, email: 'john.doe@example.com'
-
-  // You MUST change these to valid domains
-  // NOTE: all domains will validated and listed on the certificate
-, approvedDomains: [ 'example.com', 'www.example.com' ]
-
-  // You MUST NOT build clients that accept the ToS without asking the user
-, agreeTos: true
-
-, app: require('express')().use('/', function (req, res) {
-    res.setHeader('Content-Type', 'text/html; charset=utf-8')
-    res.end('Hello, World!\n\n💚 🔒.js');
-  })
-
-  // Join the community to get notified of important updates
-, communityMember: true
-
-  // Contribute telemetry data to the project
-, telemetry: true
+  // Using your express app:
+  // simply export it as-is, then include it here
+, app: require('./app.js')
 
 //, debug: true
-
 }).listen(80, 443);
+```
+
+`app.js`:
+```js
+'use strict';
+
+var express = require('express');
+var app = express();
+
+app.use('/', function (req, res) {
+  res.setHeader('Content-Type', 'text/html; charset=utf-8')
+  res.end('Hello, World!\n\n💚 🔒.js');
+})
+
+// Don't do this:
+// app.listen(3000)
+
+// Do this instead:
+module.exports = app;
 ```
 
 ### `communityMember`
@@ -181,7 +177,6 @@ Double check the following:
   * You MUST set `email` to a **valid address**
   * MX records must validate (`dig MX example.com` for `'john@example.com'`)
 * **valid DNS records**
-  * You MUST set `approveDomains` to real domains
   * Must have public DNS records (test with `dig +trace A example.com; dig +trace www.example.com` for `[ 'example.com', 'www.example.com' ]`)
 * **write access**
   * You MUST set `configDir` to a writeable location (test with `touch ~/acme/etc/tmp.tmp`)
@@ -320,6 +315,10 @@ var glx = require('greenlock-express').create({
   // Contribute telemetry data to the project
 , telemetry: true
 
+  // the default servername to use when the client doesn't specify
+  // (because some IoT devices don't support servername indication)
+, servername: 'example.com'
+
 , approveDomains: approveDomains
 });
 
@@ -345,6 +344,10 @@ var http01 = require('le-challenge-fs').create({ webrootPath: '/tmp/acme-challen
 function approveDomains(opts, certs, cb) {
   // This is where you check your database and associated
   // email addresses with domains and agreements and such
+  // if (!isAllowed(opts.domains)) { return cb(new Error("not allowed")); }
+
+  // The domains being approved for the first time are listed in opts.domains
+  // Certs being renewed are listed in certs.altnames (if that's useful)
 
   // Opt-in to submit stats and get important updates
   opts.communityMember = true;
@@ -352,11 +355,6 @@ function approveDomains(opts, certs, cb) {
   // If you wish to replace the default challenge plugin, you may do so here
   opts.challenges = { 'http-01': http01 };
 
-  // The domains being approved for the first time are listed in opts.domains
-  // Certs being renewed are listed in certs.altnames
-  if (certs) {
-    opts.domains = [certs.subject].concat(certs.altnames);
-  }
   opts.email = 'john.doe@example.com';
   opts.agreeTos = true;
 
@@ -388,11 +386,10 @@ require('https').createServer(glx.httpsOptions, app).listen(443, function () {
 });
 ```
 
-**Security Warning**:
+**Security**:
 
-If you don't do proper checks in `approveDomains(opts, certs, cb)`
-an attacker will spoof SNI packets with bad hostnames and that will
-cause you to be rate-limited and or blocked from the ACME server.
+Greenlock will do a self-check on all domain registrations
+to prevent you from hitting rate limits.
 
 
 # API
