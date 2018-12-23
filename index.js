@@ -153,6 +153,12 @@ module.exports.create = function (opts) {
         });
       });
     };
+    if (greenlock.tlsOptions.cert) {
+      server._hasDefaultSecureContext = true;
+      if (greenlock.tlsOptions.cert.toString('ascii').split("BEGIN").length < 3) {
+        console.warn("Invalid certificate file. 'tlsOptions.cert' should contain cert.pem (certificate file) *and* chain.pem (intermediate certificates) seperated by an extra newline (CRLF)");
+      }
+    }
     server = https.createServer(
       greenlock.tlsOptions
     , greenlock.middleware.sanitizeHost(function (req, res) {
