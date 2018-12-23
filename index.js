@@ -51,7 +51,7 @@ module.exports.create = function (opts) {
     );
     httpType = 'http';
 
-    return { server: server, listen: function () { return new Promise(function (resolve, reject) {
+    return { server: server, listen: function () { return new PromiseA(function (resolve, reject) {
       args[0] = p;
       args.push(function () {
         if (!greenlock.servername) {
@@ -68,7 +68,6 @@ module.exports.create = function (opts) {
         }
         return greenlock.check({ domains: [ greenlock.servername ] }).then(function (certs) {
           if (certs) {
-            console.info("Using '%s' as default certificate", greenlock.servername);
             return {
               key: Buffer.from(certs.privkey, 'ascii')
             , cert: Buffer.from(certs.cert + '\r\n' + certs.chain, 'ascii')
@@ -135,11 +134,16 @@ module.exports.create = function (opts) {
           // ignore the case that check doesn't have all the right args here
           // to get the same certs that it just got (eventually the right ones will come in)
           if (!certs) { return; }
-          console.info("Using '%s' as default certificate", domain);
-          server.setSecureContext({
-            key: Buffer.from(certs.privkey, 'ascii')
-          , cert: Buffer.from(certs.cert + '\r\n' + certs.chain, 'ascii')
-          });
+          if (server.setSecureContext) {
+            // only available in node v11.0+
+            server.setSecureContext({
+              key: Buffer.from(certs.privkey, 'ascii')
+            , cert: Buffer.from(certs.cert + '\r\n' + certs.chain, 'ascii')
+            });
+            console.info("Using '%s' as default certificate", domain);
+          } else {
+            console.info("Setting default certificates dynamically requires node v11.0+. Skipping.");
+          }
           server._hasDefaultSecureContext = true;
         }).catch(function (/*e*/) {
           // this may be that the test.example.com was requested, but it's listed
@@ -210,7 +214,13 @@ module.exports.create = function (opts) {
 
     server.then = obj1.listen().then(function (tlsOptions) {
       if (tlsOptions) {
-        server.setSecureContext(tlsOptions);
+        if (server.setSecureContext) {
+          // only available in node v11.0+
+          server.setSecureContext(tlsOptions);
+          console.info("Using '%s' as default certificate", greenlock.servername);
+        } else {
+          console.info("Setting default certificates dynamically requires node v11.0+. Skipping.");
+        }
         server._hasDefaultSecureContext = true;
       }
       return obj2.listen().then(function () {
