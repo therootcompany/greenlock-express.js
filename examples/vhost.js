@@ -78,6 +78,7 @@ function checkWwws(_hostname) {
       hostname = hostname.slice(4);
       hostdir = path.join(srv, hostname);
       return fs.readdir(hostdir).then(function () {
+        // TODO list both domains?
         return hostname;
       });
     } else {
@@ -85,6 +86,7 @@ function checkWwws(_hostname) {
       hostname = 'www.' + hostname;
       hostdir = path.join(srv, hostname);
       return fs.readdir(hostdir).then(function () {
+        // TODO list both domains?
         return hostname;
       });
     }
@@ -101,6 +103,13 @@ function myVhostApp(req, res) {
   // We could cache wether or not a host exists for some amount of time
   var fin = finalhandler(req, res);
   return checkWwws(req.headers.host).then(function (hostname) {
+    if (hostname !== req.headers.host) {
+      res.statusCode = 302;
+      res.setHeader('Location', 'https://' + hostname);
+      // SECURITY this is safe only because greenlock disallows invalid hostnames
+      res.end("<!-- redirecting to https://" + hostname + "-->");
+      return;
+    }
     var serve = serveStatic(path.join(srv, hostname), { redirect: true });
     serve(req, res, fin);
   }).catch(function () {
