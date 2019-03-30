@@ -49,7 +49,7 @@ server.on('listening', function () {
 });
 
 function myApproveDomains(opts, certs, cb) {
-  console.log(opts.domains);
+  console.log('sni:', opts.domain);
   // In this example the filesystem is our "database".
   // We check in /srv/www for whatever.com and if it exists, it's allowed
 
@@ -63,7 +63,8 @@ function myApproveDomains(opts, certs, cb) {
 
 function checkWwws(_hostname) {
   var hostname = _hostname;
-  var hostdir = path.join(srv, hostname);
+  var _hostdir = path.join(srv, hostname);
+  var hostdir = _hostdir;
   // TODO could test for www/no-www both in directory
   return fs.readdir(hostdir).then(function () {
     // TODO check for some sort of htaccess.json and use email in that
@@ -88,14 +89,14 @@ function checkWwws(_hostname) {
       });
     }
   }).catch(function () {
-    throw new Error("rejecting '" + _hostname + "' because '" + hostdir + "' could not be read");
+    throw new Error("rejecting '" + _hostname + "' because '" + _hostdir + "' could not be read");
   });
 }
 
 function myVhostApp(req, res) {
   // SECURITY greenlock pre-sanitizes hostnames to prevent unauthorized fs access so you don't have to
   // (also: only domains approved above will get here)
-  console.log(req.headers.host);
+  console.log('vhost:', req.headers.host);
 
   // We could cache wether or not a host exists for some amount of time
   var fin = finalhandler(req, res);
