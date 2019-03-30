@@ -1,0 +1,50 @@
+[Unit]
+Description=Greenlock Static Server
+Documentation=https://git.coolaj86.com/coolaj86/greenlock-express.js/
+After=network.target
+Wants=network.target systemd-networkd-wait-online.service
+
+[Service]
+# Restart on crash (bad signal), 'clean' failure (error exit code), everything
+# Allow up to 3 restarts within 10 seconds
+# (it's unlikely that a user or properly-running script will do this)
+Restart=always
+StartLimitInterval=10
+StartLimitBurst=3
+
+# User and group the process will run as
+# (git is the de facto standard on most systems)
+User=ubuntu
+Group=ubuntu
+
+WorkingDirectory=/srv/www
+# custom directory cannot be set and will be the place where gitea exists, not the working directory
+ExecStart=/opt/node/bin/node /opt/greenlock-express.js/server.js /opt/greenlock-express.js/config.js
+
+# Limit the number of file descriptors and processes; see `man systemd.exec` for more limit settings.
+# greenlock is not expected to use more than this.
+LimitNOFILE=1048576
+LimitNPROC=64
+
+# Use private /tmp and /var/tmp, which are discarded after gitea stops.
+PrivateTmp=true
+# Use a minimal /dev
+PrivateDevices=true
+# Hide /home, /root, and /run/user. Nobody will steal your SSH-keys.
+ProtectHome=true
+# Make /usr, /boot, /etc and possibly some more folders read-only.
+ProtectSystem=full
+# ... except /opt/greenlock-express.js/acme because we want a place for the database
+# and /opt/greenlock-express.js/var because we want a place where logs can go.
+# This merely retains r/w access rights, it does not add any new.
+# Must still be writable on the host!
+ReadWriteDirectories=/srv/www /opt/greenlock-express.js
+
+# Note: in v231 and above ReadWritePaths has been renamed to ReadWriteDirectories
+; ReadWritePaths=/opt/gitea /var/log/gitea
+
+# The following additional security directives only work with systemd v229 or later.
+# They further retrict privileges that can be gained by gitea.
+# Note that you may have to add capabilities required by any plugins in use.
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_BIND_SERVICE
