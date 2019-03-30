@@ -13,7 +13,7 @@
   <tr>
     <td><a href="https://github.com/beakerbrowser/homebase" target="_blank"><img src="https://git.coolaj86.com/coolaj86/greenlock.js/raw/branch/master/logo/beaker-browser-301x112.png"></a></td>
     <td><a href="https://telebit.cloud" target="_blank"><img src="https://git.coolaj86.com/coolaj86/greenlock.js/raw/branch/master/logo/telebit-301x112.png"></a></td>
-    <td><a href="https://ppl.family" target="_blank"><img src="https://git.coolaj86.com/coolaj86/greenlock.js/raw/branch/master/logo/ppl-301x112.png"></a></td>
+    <td><a href="https://rootprojects.org" target="_blank"><img src="https://git.coolaj86.com/coolaj86/greenlock.js/raw/branch/master/logo/ppl-301x112.png"></a></td>
   </tr>
 </table>
 
@@ -30,7 +30,7 @@ Free SSL, Free Wildcard SSL, and Fully Automated HTTPS made dead simple<br>
 !["Stackoverflow Questions"](https://img.shields.io/stackexchange/stackoverflow/t/greenlock.svg "S.O. Question count can't be shown")
 <a href="https://twitter.com/intent/follow?screen_name=GreenlockHTTPS"><img src="https://img.shields.io/twitter/url/http/shields.io.svg?style=social&label=Follow%20@GreenlockHTTPS" title="Follow @GreenlockHTTPS on Twitter" alt="Twitter Badge"></a>
 
-| A [Root](https://therootcompany.com) Project |
+| A [Root](https://rootprojects.org) Project |
 [Greenlock&trade;](https://git.coolaj86.com/coolaj86/greenlock.js) is for
 [Web Servers](https://git.coolaj86.com/coolaj86/greenlock-cli.js),
 [Web Browsers](https://greenlock.domains),
@@ -109,7 +109,7 @@ node greenlock-express.js/examples/simple.js
 
 All you have to do is start the webserver and then visit it at its domain name.
 
-`app.js`:
+`server.js`:
 ```javascript
 'use strict';
 
