@@ -62,10 +62,12 @@ module.exports.create = function (opts) {
             greenlock.servername = greenlock.approvedDomains[0];
           }
         }
+
         if (!greenlock.servername) {
           resolve(null);
           return;
         }
+
         return greenlock.check({ domains: [ greenlock.servername ] }).then(function (certs) {
           if (certs) {
             return {
@@ -127,9 +129,11 @@ module.exports.create = function (opts) {
     greenlock.tlsOptions.SNICallback = function (domain, cb) {
       sniCallback(domain, function (err, context) {
         cb(err, context);
-        if (!context || server._hasDefaultSecureContext) {
-          return;
-        }
+
+        if (!context || server._hasDefaultSecureContext) { return; }
+        if (!domain) { domain = greenlock.servername; }
+        if (!domain) { return; }
+
         return greenlock.check({ domains: [ domain ] }).then(function (certs) {
           // ignore the case that check doesn't have all the right args here
           // to get the same certs that it just got (eventually the right ones will come in)
