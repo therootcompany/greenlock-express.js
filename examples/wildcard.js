@@ -42,12 +42,12 @@ server.on('listening', function () {
 });
 
 function myApproveDomains(opts) {
-  console.log('sni:', opts.domains[0]);
+  console.log('sni:', opts.domain);
 
   // must be 'example.com' or start with 'example.com'
-  if ('example.com' !== opts.domains[0]
-    && 'example.com' !== opts.domains[0].split('.').slice(1).join('.')) {
-    return Promise.reject(new Error("we don't serve your kind here: " + opts.domains[0]));
+  if ('example.com' !== opts.domain
+    && 'example.com' !== opts.domain.split('.').slice(1).join('.')) {
+    return Promise.reject(new Error("we don't serve your kind here: " + opts.domain));
   }
 
   // the primary domain for the cert
