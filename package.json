@@ -1,6 +1,6 @@
 {
   "name": "greenlock-express",
-  "version": "2.6.9",
+  "version": "2.7.0",
   "description": "Free SSL and managed or automatic HTTPS for node.js with Express, Koa, Connect, Hapi, and all other middleware systems.",
   "main": "index.js",
   "homepage": "https://git.coolaj86.com/coolaj86/greenlock-express.js",
@@ -8,10 +8,12 @@
     "example": "examples"
   },
   "dependencies": {
-    "greenlock": "^2.6.8",
+    "greenlock": "^2.7.3",
+    "le-challenge-dns": "^2.3.2",
     "le-challenge-fs": "^2.0.8",
-    "le-sni-auto": "^2.1.4",
+    "le-sni-auto": "^2.1.8",
     "le-store-certbot": "^2.1.0",
+    "le-store-fs": "^1.0.0",
     "redirect-https": "^1.1.5"
   },
   "files": [
