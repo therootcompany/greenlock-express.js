@@ -11,7 +11,7 @@
 //
 
 //var glx = require('greenlock-express')
-var glx = require('./').create({
+var glx = require('../').create({
 
   version: 'draft-11'                                       // Let's Encrypt v2 is ACME draft 11
 
