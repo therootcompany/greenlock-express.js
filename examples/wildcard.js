@@ -57,6 +57,9 @@ function myApproveDomains(opts) {
 
   if (!opts.challenges) { opts.challenges = {}; }
   opts.challenges['http-01'] = require('le-challenge-fs').create({});
+  // Note: When implementing a dns-01 plugin you should make it check in a loop
+  // until it can positively confirm that the DNS changes have propagated.
+  // That could take several seconds to a few minutes.
   opts.challenges['dns-01'] = require('le-challenge-dns').create({});
 
   // explicitly set account id and certificate.id
