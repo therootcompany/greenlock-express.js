@@ -62,6 +62,11 @@ function myApproveDomains(opts, certs, cb) {
 }
 
 function checkWwws(_hostname) {
+  if (!_hostname) {
+    // SECURITY, don't allow access to the 'srv' root
+    // (greenlock-express uses middleware to check '..', etc)
+    return '';
+  }
   var hostname = _hostname;
   var _hostdir = path.join(srv, hostname);
   var hostdir = _hostdir;
@@ -99,6 +104,11 @@ function myVhostApp(req, res) {
   // SECURITY greenlock pre-sanitizes hostnames to prevent unauthorized fs access so you don't have to
   // (also: only domains approved above will get here)
   console.log('vhost:', req.headers.host);
+  if (!req.headers.host) {
+    // SECURITY, don't allow access to the 'srv' root
+    // (greenlock-express uses middleware to check '..', etc)
+    return res.end();
+  }
 
   // We could cache wether or not a host exists for some amount of time
   var fin = finalhandler(req, res);
