@@ -84,8 +84,12 @@ function myApproveDomains(opts) {
     return null;
   }).then(function () {
     // check for api prefix
-    return checkApi('api.' + domain).then(function () {
-      domains.push(opts.domain);
+    var apiname = domain;
+    if (domains.length) {
+      apiname = 'api.' + domain;
+    }
+    return checkApi(apiname).then(function () {
+      domains.push(apiname);
     }).catch(function () {
       return null;
     });
@@ -129,11 +133,16 @@ function checkApi(hostname) {
     });
   }).catch(function (e) {
     if ('ENOENT' === e.code) { return null; }
+    console.error(e);
     throw new Error("rejecting '" + hostname + "' because '" + apipath + link + "' failed at require()");
   });
 }
 
 function checkWwws(_hostname) {
+  if (!_hostname) {
+    // SECURITY don't serve the whole config.srv
+    return Promise.reject(new Error("missing hostname"));
+  }
   var hostname = _hostname;
   var hostdir = path.join(config.srv, hostname);
   // TODO could test for www/no-www both in directory
@@ -167,9 +176,10 @@ function checkWwws(_hostname) {
 function myVhostApp(req, res) {
   // SECURITY greenlock pre-sanitizes hostnames to prevent unauthorized fs access so you don't have to
   // (also: only domains approved above will get here)
-  console.log(req.method);
-  console.log(req.url);
-  console.log(req.headers);
+  console.info(req.method, (req.headers.host|'') + req.url);
+  Object.keys(req.headers).forEach(function (key) {
+    console.info(key, req.headers[key])
+  });
 
   // We could cache wether or not a host exists for some amount of time
   var fin = finalhandler(req, res);
@@ -186,10 +196,10 @@ function myVhostApp(req, res) {
   }).catch(function (err) {
     return checkApi(req.headers.host).then(function (app) {
       if (app) { app(req, res); return; }
-      console.log("www error", err);
+      console.error("none found", err);
       fin();
     }).catch(function (err) {
-      console.log("api error", err);
+      console.error("api crashed error", err);
       fin(err);
     });
   });
