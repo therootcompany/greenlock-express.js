@@ -234,7 +234,7 @@ https://acme-staging-v02.api.letsencrypt.org/directory
 | **Default (fs)** | [le-challenge-fs](https://git.coolaj86.com/coolaj86/le-challenge-fs.js) |
 | AWS S3         | [llun/le-challenge-s3](https://github.com/llun/le-challenge-s3) |
 | Azure          | [kolarcz/node-le-challenge-azure-storage](https://github.com/kolarcz/node-le-challenge-azure-storage) |
-| - | Build Your Own <br> [le-challenge-http-SPEC](https://git.coolaj86.com/coolaj86/le-challenge-manual.js) |
+| - | Build Your Own <br> [greenlock-challenge-test](https://git.rootprojects.org/root/greenlock-challenge-test.js) |
 | Full List      | Search [le-challenge-](https://www.npmjs.com/search?q=le-challenge-) on npm |
 
 
@@ -248,7 +248,7 @@ https://acme-staging-v02.api.letsencrypt.org/directory
 | CloudFlare     | [llun/le-challenge-cloudflare](https://github.com/llun/le-challenge-cloudflare) |
 | Digital Ocean  | [bmv437/le-challenge-digitalocean](https://github.com/bmv437/le-challenge-digitalocean) |
 | etcd           | [ceecko/le-challenge-etcd](https://github.com/ceecko/le-challenge-etcd) |
-| - | Build Your Own <br> [le-challenge-dns-SPEC](https://git.coolaj86.com/coolaj86/le-challenge-dns.js) |
+| - | Build Your Own <br> [greenlock-challenge-test](https://git.rootprojects.org/root/greenlock-challenge-test.js) |
 | Full List      | Search [le-challenge-](https://www.npmjs.com/search?q=le-challenge-) on npm |
 
 ## Account & Certificate Storage
@@ -262,7 +262,7 @@ https://acme-staging-v02.api.letsencrypt.org/directory
 | Consul         | [sebastian-software/le-store-consul](https://github.com/sebastian-software/le-store-consul) |
 | json (fs)      | [paulgrove/le-store-simple-fs](https://github.com/paulgrove/le-store-simple-fs)
 | Redis          | [digitalbazaar/le-store-redis](https://github.com/digitalbazaar/le-store-redis) |
-| - | Build Your Own <br> [le-store-SPEC](https://git.coolaj86.com/coolaj86/le-store-SPEC.js) |
+| - | Build Your Own <br> [greenlock-store-test](https://git.rootprojects.org/root/greenlock-store-test.js) |
 | Full List      | Search [le-store-](https://www.npmjs.com/search?q=le-store-) on npm |
 
 ## Auto-SNI
