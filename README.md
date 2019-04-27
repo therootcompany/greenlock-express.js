@@ -215,7 +215,7 @@ https://acme-staging-v02.api.letsencrypt.org/directory
 | **QuickStart**  | [examples/quickstart.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/quickstart.js) uses the fewest options and accepts all default settings. It's guaranteed to work for you. |
 | Production      | [examples/production.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/production.js) shows how to require an express app (or other middleware system), expand the `approveDomains` callback, provides an example database shim, and exposes the server instance. |
 | Virtual&nbsp;Hosting | [examples/vhost.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/vhost.js) shows how to dynamically secure and serve domains based on their existance on the file system. |
-| Wildcard&nbsp;Domains | [examples/wildcard.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/wildcard.js) shows how to use the `le-challenge-dns` and wildcard cetificates. |
+| Wildcard&nbsp;Domains | [examples/wildcard.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/wildcard.js) shows how to use the `greenlock-challenge-dns` and wildcard cetificates. |
 | HTTPS&nbsp;(raw)    | [examples/spdy.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/spdy.js) demonstrates how to manually configure a node web server using the node's built-in `http` and `https` modules. |
 | HTTP2&nbsp;(spdy)    | Presently spdy is incompatible with node v11, but [examples/spdy.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/spdy.js) demonstrates how to manually configure a node web server with spdy-compatible versions of node and Greenlock. |
 | HTTP2&nbsp;(node)    | [examples/http2.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/http2.js) uses node's new HTTP2 module, which is NOT compatible with the existing middleware systems (and is not "stable" as of v10.0). |
@@ -231,31 +231,31 @@ https://acme-staging-v02.api.letsencrypt.org/directory
 
 |                | Plugin    |
 |:--------------:|:---------:|
-| **Default (fs)** | [le-challenge-fs](https://git.coolaj86.com/coolaj86/le-challenge-fs.js) |
+| **Default (fs)** | [acme-http-01-cli](https://git.rootprojects.org/root/acme-http-01-cli.js) |
 | AWS S3         | [llun/le-challenge-s3](https://github.com/llun/le-challenge-s3) |
 | Azure          | [kolarcz/node-le-challenge-azure-storage](https://github.com/kolarcz/node-le-challenge-azure-storage) |
 | - | Build Your Own <br> [greenlock-challenge-test](https://git.rootprojects.org/root/greenlock-challenge-test.js) |
-| Full List      | Search [le-challenge-](https://www.npmjs.com/search?q=le-challenge-) on npm |
+| Full List      | Search [acme-http-01-](https://www.npmjs.com/search?q=acme-http-01-) or [le-challenge-](https://www.npmjs.com/search?q=le-challenge-) on npm |
 
 
 ## DNS-01 Challenges
 
 |                | Plugin    |
 |:--------------:|:---------:|
-| **Manual (cli)** | [le-challenge-dns](https://git.coolaj86.com/coolaj86/le-challenge-dns.js) |
+| **Manual (cli)** | [acme-dns-01-cli](https://git.rootprojects.org/root/acme-dns-01-cli.js) |
 | AWS Route 53   | [thadeetrompetter/le-challenge-route53](https://github.com/thadeetrompetter/le-challenge-route53) |
 | CloudFlare     | [buschtoens/le-challenge-cloudflare](https://github.com/buschtoens/le-challenge-cloudflare) |
 | CloudFlare     | [llun/le-challenge-cloudflare](https://github.com/llun/le-challenge-cloudflare) |
 | Digital Ocean  | [bmv437/le-challenge-digitalocean](https://github.com/bmv437/le-challenge-digitalocean) |
 | etcd           | [ceecko/le-challenge-etcd](https://github.com/ceecko/le-challenge-etcd) |
 | - | Build Your Own <br> [greenlock-challenge-test](https://git.rootprojects.org/root/greenlock-challenge-test.js) |
-| Full List      | Search [le-challenge-](https://www.npmjs.com/search?q=le-challenge-) on npm |
+| Full List      | Search [acme-dns-01-](https://www.npmjs.com/search?q=acme-dns-01-) or [le-challenge-](https://www.npmjs.com/search?q=le-challenge-) on npm |
 
 ## Account & Certificate Storage
 
 |                | Plugin    |
 |:--------------:|:---------:|
-| **Simplest** | [le-store-fs](https://git.coolaj86.com/coolaj86/le-store-fs.js) |
+| **Simplest** | [greenlock-store-fs](https://git.rootprojects.org/root/greenlock-store-fs.js) |
 | certbot (v2 default) | [le-store-certbot](https://git.coolaj86.com/coolaj86/le-store-certbot.js) |
 | AWS S3         | [paco3346/le-store-awss3](https://github.com/paco3346/le-store-awss3) |
 | AWS S3         | [llun/le-store-s3](https://github.com/llun/le-store-s3) |
