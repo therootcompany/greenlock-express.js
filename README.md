@@ -220,7 +220,8 @@ https://acme-staging-v02.api.letsencrypt.org/directory
 | HTTP2&nbsp;(spdy)    | Presently spdy is incompatible with node v11, but [examples/spdy.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/spdy.js) demonstrates how to manually configure a node web server with spdy-compatible versions of node and Greenlock. |
 | HTTP2&nbsp;(node)    | [examples/http2.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/http2.js) uses node's new HTTP2 module, which is NOT compatible with the existing middleware systems (and is not "stable" as of v10.0). |
 | WebSockets&nbsp;(ws) | [examples/websockets.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/websockets.js) demonstrates how to use Greenlock express with a websocket server. |
-| - | Build Your Own <br> Be sure to tell me (@coolaj86) / us (@GreenlockHTTPS) about it. :) |
+| socket.io | [examples/socket.io.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/socket.io.js) demonstrates how to use Greenlock express with socket.io (even though `ws` is far simpler, faster, and better and every way). |
+| - | Build Your Own <br> Be sure to tell me ([@coolaj86](https://twitter.com/@coolaj86)) / us ([@GreenlockHTTPS](https://twitter.com/@GreenlockHTTPS)) about it. :) |
 | Full&nbsp;List      | Check out the [examples/](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples) directory |
 
 # Plugins
