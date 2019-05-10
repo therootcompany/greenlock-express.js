@@ -233,7 +233,7 @@ https://acme-staging-v02.api.letsencrypt.org/directory
 |                | Plugin    |
 |:--------------:|:---------:|
 | **Default (fs)** | [acme-http-01-cli](https://git.rootprojects.org/root/acme-http-01-cli.js) |
-| AWS S3         | [llun/le-challenge-s3](https://github.com/llun/le-challenge-s3) |
+| AWS S3         | [acme-http-01-s3](https://git.rootprojects.org/root/acme-http-01-s3.js) |
 | Azure          | [kolarcz/node-le-challenge-azure-storage](https://github.com/kolarcz/node-le-challenge-azure-storage) |
 | - | Build Your Own <br> [greenlock-challenge-test](https://git.rootprojects.org/root/greenlock-challenge-test.js) |
 | Full List      | Search [acme-http-01-](https://www.npmjs.com/search?q=acme-http-01-) or [le-challenge-](https://www.npmjs.com/search?q=le-challenge-) on npm |
@@ -258,8 +258,7 @@ https://acme-staging-v02.api.letsencrypt.org/directory
 |:--------------:|:---------:|
 | **Simplest** | [greenlock-store-fs](https://git.rootprojects.org/root/greenlock-store-fs.js) |
 | certbot (v2 default) | [le-store-certbot](https://git.coolaj86.com/coolaj86/le-store-certbot.js) |
-| AWS S3         | [paco3346/le-store-awss3](https://github.com/paco3346/le-store-awss3) |
-| AWS S3         | [llun/le-store-s3](https://github.com/llun/le-store-s3) |
+| AWS S3         | [gl-store-s3](https://git.rootprojects.org/root/gl-store-s3.js) |
 | Consul         | [sebastian-software/le-store-consul](https://github.com/sebastian-software/le-store-consul) |
 | json (fs)      | [paulgrove/le-store-simple-fs](https://github.com/paulgrove/le-store-simple-fs)
 | Redis          | [digitalbazaar/le-store-redis](https://github.com/digitalbazaar/le-store-redis) |
