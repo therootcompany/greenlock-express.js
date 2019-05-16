@@ -1,28 +1,28 @@
-![Greenlock Logo](https://git.coolaj86.com/coolaj86/greenlock.js/raw/branch/master/logo/greenlock-1063x250.png "Greenlock Logo")
+![Greenlock Logo](https://git.rootprojects.org/root/greenlock.js/raw/branch/master/logo/greenlock-1063x250.png "Greenlock Logo")
 
-!["Greenlock Function"](https://git.coolaj86.com/coolaj86/greenlock.js/raw/branch/master/logo/from-not-secure-to-secure-url-bar.png "from url bar showing not secure to url bar showing secure")
+!["Greenlock Function"](https://git.rootprojects.org/root/greenlock.js/raw/branch/master/logo/from-not-secure-to-secure-url-bar.png "from url bar showing not secure to url bar showing secure")
 
 <table>
   <tr>
-    <td><a href="https://medium.com/@bohou/secure-your-nodejs-server-with-letsencrypt-for-free-f8925742faa9" target="_blank"><img src="https://git.coolaj86.com/coolaj86/greenlock.js/raw/branch/master/logo/ibm-301x112.png"></a></td>
-    <td><a href="https://github.com/mozilla-iot/le-store-certbot/issues/4" target="_blank"><img src="https://git.coolaj86.com/coolaj86/greenlock.js/raw/branch/master/logo/mozilla-iot-301x112.png"></a></td>
-    <td><a href="https://github.com/digitalbazaar/bedrock-letsencrypt" target="_blank"><img src="https://git.coolaj86.com/coolaj86/greenlock.js/raw/branch/master/logo/digital-bazaar-301x112.png"></a></td>
+    <td><a href="https://medium.com/@bohou/secure-your-nodejs-server-with-letsencrypt-for-free-f8925742faa9" target="_blank"><img src="https://git.rootprojects.org/root/greenlock.js/raw/branch/master/logo/ibm-301x112.png"></a></td>
+    <td><a href="https://github.com/mozilla-iot/le-store-certbot/issues/4" target="_blank"><img src="https://git.rootprojects.org/root/greenlock.js/raw/branch/master/logo/mozilla-iot-301x112.png"></a></td>
+    <td><a href="https://github.com/digitalbazaar/bedrock-letsencrypt" target="_blank"><img src="https://git.rootprojects.org/root/greenlock.js/raw/branch/master/logo/digital-bazaar-301x112.png"></a></td>
   </tr>
 </table>
 <table>
   <tr>
-    <td><a href="https://github.com/beakerbrowser/homebase" target="_blank"><img src="https://git.coolaj86.com/coolaj86/greenlock.js/raw/branch/master/logo/beaker-browser-301x112.png"></a></td>
-    <td><a href="https://telebit.cloud" target="_blank"><img src="https://git.coolaj86.com/coolaj86/greenlock.js/raw/branch/master/logo/telebit-301x112.png"></a></td>
-    <td><a href="https://rootprojects.org" target="_blank"><img src="https://git.coolaj86.com/coolaj86/greenlock.js/raw/branch/master/logo/ppl-301x112.png"></a></td>
+    <td><a href="https://github.com/beakerbrowser/homebase" target="_blank"><img src="https://git.rootprojects.org/root/greenlock.js/raw/branch/master/logo/beaker-browser-301x112.png"></a></td>
+    <td><a href="https://telebit.cloud" target="_blank"><img src="https://git.rootprojects.org/root/greenlock.js/raw/branch/master/logo/telebit-301x112.png"></a></td>
+    <td><a href="https://rootprojects.org" target="_blank"><img src="https://git.rootprojects.org/root/greenlock.js/raw/branch/master/logo/ppl-301x112.png"></a></td>
   </tr>
 </table>
 
-# [Greenlock](https://git.coolaj86.com/coolaj86/greenlock-express.js)&trade; for Express.js
+# [Greenlock](https://git.rootprojects.org/root/greenlock-express.js)&trade; for Express.js
 
 <small>formerly letsencrypt-express</small>
 
 Free SSL, Free Wildcard SSL, and Fully Automated HTTPS made dead simple<br>
-<small>certificates issued by Let's Encrypt v2 via [ACME](https://git.coolaj86.com/coolaj86/acme-v2.js)</small>
+<small>certificates issued by Let's Encrypt v2 via [ACME](https://git.rootprojects.org/root/acme-v2.js)</small>
 
 !["Lifetime Downloads"](https://img.shields.io/npm/dt/greenlock.svg "Lifetime Download Count can't be shown")
 !["Monthly Downloads"](https://img.shields.io/npm/dm/greenlock.svg "Monthly Download Count can't be shown")
@@ -31,8 +31,8 @@ Free SSL, Free Wildcard SSL, and Fully Automated HTTPS made dead simple<br>
 <a href="https://twitter.com/intent/follow?screen_name=GreenlockHTTPS"><img src="https://img.shields.io/twitter/url/http/shields.io.svg?style=social&label=Follow%20@GreenlockHTTPS" title="Follow @GreenlockHTTPS on Twitter" alt="Twitter Badge"></a>
 
 | A [Root](https://rootprojects.org) Project |
-[Greenlock&trade;](https://git.coolaj86.com/coolaj86/greenlock.js) is for
-[Web Servers](https://git.coolaj86.com/coolaj86/greenlock-cli.js),
+[Greenlock&trade;](https://git.rootprojects.org/root/greenlock.js) is for
+[Web Servers](https://git.rootprojects.org/root/greenlock-cli.js),
 [Web Browsers](https://greenlock.domains),
 and **node.js middleware systems**.
 
@@ -51,8 +51,8 @@ and **node.js middleware systems**.
   - [x] Full node.js support
     - [x] core https module
     - [x] Express.js
-    - [x] [Koa](https://git.coolaj86.com/coolaj86/greenlock-koa.js)
-    - [x] [hapi](https://git.coolaj86.com/coolaj86/greenlock-hapi.js)
+    - [x] [Koa](https://git.rootprojects.org/root/greenlock-koa.js)
+    - [x] [hapi](https://git.rootprojects.org/root/greenlock-hapi.js)
   - [x] Extensible Plugin Support
     - [x] AWS (S3, Route53)
     - [x] Azure
@@ -96,7 +96,7 @@ Watch the QuickStart demonstration: [https://youtu.be/e8vaR4CEZ5s](https://youtu
 Here's a completely working example that will get you started.
 
 ```
-git clone https://git.coolaj86.com/coolaj86/greenlock-express.js.git
+git clone https://git.rootprojects.org/root/greenlock-express.js.git
 pushd greenlock-express.js
   npm install
 popd
@@ -212,17 +212,17 @@ https://acme-staging-v02.api.letsencrypt.org/directory
 
 | Example         | Location + Description |
 |:---------------:|:---------:|
-| **QuickStart**  | [examples/quickstart.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/quickstart.js) uses the fewest options and accepts all default settings. It's guaranteed to work for you. |
-| Production      | [examples/production.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/production.js) shows how to require an express app (or other middleware system), expand the `approveDomains` callback, provides an example database shim, and exposes the server instance. |
-| Virtual&nbsp;Hosting | [examples/vhost.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/vhost.js) shows how to dynamically secure and serve domains based on their existance on the file system. |
-| Wildcard&nbsp;Domains | [examples/wildcard.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/wildcard.js) shows how to use the `greenlock-challenge-dns` and wildcard cetificates. |
-| HTTPS&nbsp;(raw)    | [examples/spdy.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/spdy.js) demonstrates how to manually configure a node web server using the node's built-in `http` and `https` modules. |
-| HTTP2&nbsp;(spdy)    | Presently spdy is incompatible with node v11, but [examples/spdy.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/spdy.js) demonstrates how to manually configure a node web server with spdy-compatible versions of node and Greenlock. |
-| HTTP2&nbsp;(node)    | [examples/http2.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/http2.js) uses node's new HTTP2 module, which is NOT compatible with the existing middleware systems (and is not "stable" as of v10.0). |
-| WebSockets&nbsp;(ws) | [examples/websockets.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/websockets.js) demonstrates how to use Greenlock express with a websocket server. |
-| socket.io | [examples/socket.io.js](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples/socket.io.js) demonstrates how to use Greenlock express with socket.io (even though `ws` is far simpler, faster, and better and every way). |
+| **QuickStart**  | [examples/quickstart.js](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/quickstart.js) uses the fewest options and accepts all default settings. It's guaranteed to work for you. |
+| Production      | [examples/production.js](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/production.js) shows how to require an express app (or other middleware system), expand the `approveDomains` callback, provides an example database shim, and exposes the server instance. |
+| Virtual&nbsp;Hosting | [examples/vhost.js](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/vhost.js) shows how to dynamically secure and serve domains based on their existance on the file system. |
+| Wildcard&nbsp;Domains | [examples/wildcard.js](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/wildcard.js) shows how to use the `greenlock-challenge-dns` and wildcard cetificates. |
+| HTTPS&nbsp;(raw)    | [examples/spdy.js](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/spdy.js) demonstrates how to manually configure a node web server using the node's built-in `http` and `https` modules. |
+| HTTP2&nbsp;(spdy)    | Presently spdy is incompatible with node v11, but [examples/spdy.js](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/spdy.js) demonstrates how to manually configure a node web server with spdy-compatible versions of node and Greenlock. |
+| HTTP2&nbsp;(node)    | [examples/http2.js](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/http2.js) uses node's new HTTP2 module, which is NOT compatible with the existing middleware systems (and is not "stable" as of v10.0). |
+| WebSockets&nbsp;(ws) | [examples/websockets.js](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/websockets.js) demonstrates how to use Greenlock express with a websocket server. |
+| socket.io | [examples/socket.io.js](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/socket.io.js) demonstrates how to use Greenlock express with socket.io (even though `ws` is far simpler, faster, and better and every way). |
 | - | Build Your Own <br> Be sure to tell me ([@coolaj86](https://twitter.com/@coolaj86)) / us ([@GreenlockHTTPS](https://twitter.com/@GreenlockHTTPS)) about it. :) |
-| Full&nbsp;List      | Check out the [examples/](https://git.coolaj86.com/coolaj86/greenlock-express.js/src/branch/master/examples) directory |
+| Full&nbsp;List      | Check out the [examples/](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples) directory |
 
 # Plugins
 
@@ -285,7 +285,7 @@ now here's the switch.
 We have another completely working example that will provides a little more to build off of.
 
 ```
-git clone https://git.coolaj86.com/coolaj86/greenlock-express.js.git
+git clone https://git.rootprojects.org/root/greenlock-express.js.git
 pushd greenlock-express.js
   npm install
 popd
@@ -399,7 +399,7 @@ to prevent you from hitting rate limits.
 
 This module is an elaborate ruse (to provide an oversimplified example and to nab some SEO).
 
-The API is actually located at [greenlock.js options](https://git.coolaj86.com/coolaj86/greenlock.js)
+The API is actually located at [greenlock.js options](https://git.rootprojects.org/root/greenlock.js)
 (because all options are simply passed through to `greenlock.js` proper without modification).
 
 The only "API" consists of two options, the rest is just a wrapper around `greenlock.js` to take LOC from 15 to 5:
@@ -436,11 +436,18 @@ Brief overview of some simple options for `greenlock.js`:
 
 <small>tags: letsencrypt acme free ssl automated https node express.js</small>
 
-# Legal
+# Legal &amp; Rules of the Road
 
-Greenlock&trade; is a [trademark](https://greenlock.domains/legal/#trademark) of AJ ONeal
+Greenlock&trade; is a [trademark](https://rootprojects.org/legal/#trademark) of AJ ONeal
 
-[greenlock-express.js](https://git.coolaj86.com/coolaj86/greenlock-express.js) |
+The rule of thumb is "attribute, but don't confuse". For example:
+
+> Built with [Greenlock CLI](https://git.rootprojects.org/root/greenlock-cli.js) (a [Root](https://rootprojects.org) project).
+
+Please [contact us](mailto:aj@therootcompany.com) if you have any questions in regards to our trademark,
+attribution, and/or visible source policies. We want to build great software and a great community.
+
+[Greenlock&trade;](https://git.rootprojects.org/root/greenlock.js) |
 MPL-2.0 |
 [Terms of Use](https://therootcompany.com/legal/#terms) |
 [Privacy Policy](https://therootcompany.com/legal/#privacy)
