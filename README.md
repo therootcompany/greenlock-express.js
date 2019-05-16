@@ -17,7 +17,7 @@
   </tr>
 </table>
 
-# [Greenlock](https://git.rootprojects.org/root/greenlock-express.js)&trade; for Express.js
+# [Greenlock](https://git.rootprojects.org/root/greenlock-express.js)&trade; for Express.js | a [Root](https://rootprojects.org) project
 
 <small>formerly letsencrypt-express</small>
 
@@ -30,7 +30,6 @@ Free SSL, Free Wildcard SSL, and Fully Automated HTTPS made dead simple<br>
 !["Stackoverflow Questions"](https://img.shields.io/stackexchange/stackoverflow/t/greenlock.svg "S.O. Question count can't be shown")
 <a href="https://twitter.com/intent/follow?screen_name=GreenlockHTTPS"><img src="https://img.shields.io/twitter/url/http/shields.io.svg?style=social&label=Follow%20@GreenlockHTTPS" title="Follow @GreenlockHTTPS on Twitter" alt="Twitter Badge"></a>
 
-| A [Root](https://rootprojects.org) Project |
 [Greenlock&trade;](https://git.rootprojects.org/root/greenlock.js) is for
 [Web Servers](https://git.rootprojects.org/root/greenlock-cli.js),
 [Web Browsers](https://greenlock.domains),
@@ -221,7 +220,7 @@ https://acme-staging-v02.api.letsencrypt.org/directory
 | HTTP2&nbsp;(node)    | [examples/http2.js](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/http2.js) uses node's new HTTP2 module, which is NOT compatible with the existing middleware systems (and is not "stable" as of v10.0). |
 | WebSockets&nbsp;(ws) | [examples/websockets.js](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/websockets.js) demonstrates how to use Greenlock express with a websocket server. |
 | socket.io | [examples/socket.io.js](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/socket.io.js) demonstrates how to use Greenlock express with socket.io (even though `ws` is far simpler, faster, and better and every way). |
-| - | Build Your Own <br> Be sure to tell me ([@coolaj86](https://twitter.com/@coolaj86)) / us ([@GreenlockHTTPS](https://twitter.com/@GreenlockHTTPS)) about it. :) |
+| - | Build Your Own <br> Be sure to tell me ([@solderjs](https://twitter.com/@solderjs)) / us ([@GreenlockHTTPS](https://twitter.com/@GreenlockHTTPS)) about it. :) |
 | Full&nbsp;List      | Check out the [examples/](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples) directory |
 
 # Plugins
@@ -232,11 +231,12 @@ https://acme-staging-v02.api.letsencrypt.org/directory
 
 |                | Plugin    |
 |:--------------:|:---------:|
-| **Default (fs)** | [acme-http-01-cli](https://git.rootprojects.org/root/acme-http-01-cli.js) |
+| **Default (fs)** | [acme-http-01-fs](https://git.rootprojects.org/root/acme-http-01-webroot.js) |
+| **Manual (cli)** | [acme-http-01-cli](https://git.rootprojects.org/root/acme-http-01-cli.js) |
 | AWS S3         | [acme-http-01-s3](https://git.rootprojects.org/root/acme-http-01-s3.js) |
 | Azure          | [kolarcz/node-le-challenge-azure-storage](https://github.com/kolarcz/node-le-challenge-azure-storage) |
-| - | Build Your Own <br> [greenlock-challenge-test](https://git.rootprojects.org/root/greenlock-challenge-test.js) |
-| Full List      | Search [acme-http-01-](https://www.npmjs.com/search?q=acme-http-01-) or [le-challenge-](https://www.npmjs.com/search?q=le-challenge-) on npm |
+| - | Build Your Own <br> [acme-http-01-challenge-test](https://git.rootprojects.org/root/greenlock-challenge-test.js) |
+| Full List      | Search [acme-http-01-](https://www.npmjs.com/search?q=acme-http-01-) on npm (or [le-challenge-](https://www.npmjs.com/search?q=le-challenge-) for older versions) |
 
 
 ## DNS-01 Challenges
@@ -442,7 +442,7 @@ Greenlock&trade; is a [trademark](https://rootprojects.org/legal/#trademark) of 
 
 The rule of thumb is "attribute, but don't confuse". For example:
 
-> Built with [Greenlock CLI](https://git.rootprojects.org/root/greenlock-cli.js) (a [Root](https://rootprojects.org) project).
+> Built with [Greenlock Express](https://git.rootprojects.org/root/greenlock.js) (a [Root](https://rootprojects.org) project).
 
 Please [contact us](mailto:aj@therootcompany.com) if you have any questions in regards to our trademark,
 attribution, and/or visible source policies. We want to build great software and a great community.

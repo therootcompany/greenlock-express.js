@@ -1,9 +1,9 @@
 {
   "name": "greenlock-express",
-  "version": "2.7.7",
+  "version": "2.7.8",
   "description": "Free SSL and managed or automatic HTTPS for node.js with Express, Koa, Connect, Hapi, and all other middleware systems.",
   "main": "index.js",
-  "homepage": "https://git.coolaj86.com/coolaj86/greenlock-express.js",
+  "homepage": "https://greenlock.domains",
   "directories": {
     "example": "examples"
   },
@@ -31,22 +31,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://git.coolaj86.com/coolaj86/greenlock-express.js.git"
+    "url": "https://git.rootprojects.org/root/greenlock-express.js.git"
   },
   "keywords": [
-    "free",
-    "ssl",
-    "letsencrypt",
-    "acme",
+    "Let's Encrypt",
+    "ACME",
     "greenlock",
+    "Free SSL",
+    "Automated HTTPS",
     "https",
-    "cloud",
-    "le",
     "tls"
   ],
-  "author": "AJ ONeal <coolaj86@gmail.com> (https://coolaj86.com/)",
-  "license": "(MIT OR Apache-2.0)",
+  "author": "AJ ONeal <solderjs@gmail.com> (https://solderjs.com/)",
+  "license": "MPL-2.0",
   "bugs": {
-    "url": "https://git.coolaj86.com/coolaj86/greenlock-express.js/issues"
+    "url": "https://git.rootprojects.org/root/greenlock-express.js/issues"
   }
 }
