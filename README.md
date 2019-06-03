@@ -215,7 +215,7 @@ https://acme-staging-v02.api.letsencrypt.org/directory
 | **QuickStart**  | [examples/quickstart.js](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/quickstart.js) uses the fewest options and accepts all default settings. It's guaranteed to work for you. |
 | Production      | [examples/production.js](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/production.js) shows how to require an express app (or other middleware system), expand the `approveDomains` callback, provides an example database shim, and exposes the server instance. |
 | Virtual&nbsp;Hosting | [examples/vhost.js](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/vhost.js) shows how to dynamically secure and serve domains based on their existance on the file system. |
-| Wildcard&nbsp;Domains | [examples/wildcard.js](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/wildcard.js) shows how to use the `greenlock-challenge-dns` and wildcard cetificates. |
+| Wildcard&nbsp;Domains | [examples/wildcard.js](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/wildcard.js) shows how to use the `acme-dns-01-cli` and wildcard cetificates. |
 | HTTPS&nbsp;(raw)    | [examples/spdy.js](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/spdy.js) demonstrates how to manually configure a node web server using the node's built-in `http` and `https` modules. |
 | HTTP2&nbsp;(spdy)    | Presently spdy is incompatible with node v11, but [examples/spdy.js](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/spdy.js) demonstrates how to manually configure a node web server with spdy-compatible versions of node and Greenlock. |
 | HTTP2&nbsp;(node)    | [examples/http2.js](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/http2.js) uses node's new HTTP2 module, which is NOT compatible with the existing middleware systems (and is not "stable" as of v10.0). |
@@ -236,7 +236,7 @@ https://acme-staging-v02.api.letsencrypt.org/directory
 | **Manual (cli)** | [acme-http-01-cli](https://git.rootprojects.org/root/acme-http-01-cli.js) |
 | AWS S3         | [acme-http-01-s3](https://git.rootprojects.org/root/acme-http-01-s3.js) |
 | Azure          | [kolarcz/node-le-challenge-azure-storage](https://github.com/kolarcz/node-le-challenge-azure-storage) |
-| - | Build Your Own <br> [acme-http-01-challenge-test](https://git.rootprojects.org/root/greenlock-challenge-test.js) |
+| - | Build Your Own <br> [acme-http-01-challenge-test](https://git.rootprojects.org/root/acme-challenge-test.js) |
 | Full List      | Search [acme-http-01-](https://www.npmjs.com/search?q=acme-http-01-) on npm (or [le-challenge-](https://www.npmjs.com/search?q=le-challenge-) for older versions) |
 
 
@@ -250,7 +250,7 @@ https://acme-staging-v02.api.letsencrypt.org/directory
 | CloudFlare     | [llun/le-challenge-cloudflare](https://github.com/llun/le-challenge-cloudflare) |
 | Digital Ocean  | [bmv437/le-challenge-digitalocean](https://github.com/bmv437/le-challenge-digitalocean) |
 | etcd           | [ceecko/le-challenge-etcd](https://github.com/ceecko/le-challenge-etcd) |
-| - | Build Your Own <br> [greenlock-challenge-test](https://git.rootprojects.org/root/greenlock-challenge-test.js) |
+| - | Build Your Own <br> [acme-challenge-test](https://git.rootprojects.org/root/acme-challenge-test.js) |
 | Full List      | Search [acme-dns-01-](https://www.npmjs.com/search?q=acme-dns-01-) or [le-challenge-](https://www.npmjs.com/search?q=le-challenge-) on npm |
 
 ## Account & Certificate Storage
