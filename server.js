@@ -21,7 +21,7 @@ var config = require(configpath);
 // For example: whatever.com may live in /srv/www/whatever.com, thus /srv/www is our path
 
 var path = require('path');
-var fs = require('fs').promises;
+var fs = require('./lib/compat.js').fsAsync;
 var finalhandler = require('finalhandler');
 var serveStatic = require('serve-static');
 
@@ -48,7 +48,7 @@ var glx = require('./').create({
 //, communityMember: true                                   // Join Greenlock to get important updates, no spam
 
 //, debug: true
-, store: require('le-store-fs')
+, store: require('greenlock-store-fs')
 
 });
 
@@ -58,7 +58,7 @@ server.on('listening', function () {
 });
 
 function myApproveDomains(opts) {
-  console.log(opts.domain);
+  console.info("SNI:", opts.domain);
   // In this example the filesystem is our "database".
   // We check in /srv/www for whatever.com and if it exists, it's allowed
   // SECURITY Greenlock validates opts.domains ahead-of-time so you don't have to
@@ -66,19 +66,13 @@ function myApproveDomains(opts) {
   var domains = [];
   var domain = opts.domain.replace(/^(www|api)\./, '');
   return checkWwws(domain).then(function (hostname) {
-    // tried both permutations already (failed first, succeeded second)
-    if (hostname !== domain) {
-      domains.push(hostname);
-      return;
-    }
-
-    // only tried the bare domain, let's try www too
-    domains.push(domain);
-    return checkWwws('www.' + domain).then(function (hostname) {
-      if (hostname === domain) {
-        domains.push(domain);
+    // this is either example.com or www.example.com
+    domains.push(hostname);
+    if ('api.' + domain !== opts.domain) {
+      if (!domains.includes(opts.domain)) {
+        domains.push(opts.domain)
       }
-    });
+    }
   }).catch(function () {
     // ignore error
     return null;
@@ -88,7 +82,8 @@ function myApproveDomains(opts) {
     if (domains.length) {
       apiname = 'api.' + domain;
     }
-    return checkApi(apiname).then(function () {
+    return checkApi(apiname).then(function (app) {
+      if (!app) { return null; }
       domains.push(apiname);
     }).catch(function () {
       return null;
@@ -98,6 +93,8 @@ function myApproveDomains(opts) {
       return Promise.reject(new Error("no bare, www., or api. domain matching '" + opts.domain + "'"));
     }
 
+    console.info('Approved domains:', domains);
+    opts.domains = domains;
     //opts.email = email;
     opts.agreeTos = true;
     // pick the shortest (bare) or latest (www. instead of api.) to be the subject
@@ -176,7 +173,7 @@ function checkWwws(_hostname) {
 function myVhostApp(req, res) {
   // SECURITY greenlock pre-sanitizes hostnames to prevent unauthorized fs access so you don't have to
   // (also: only domains approved above will get here)
-  console.info(req.method, (req.headers.host|'') + req.url);
+  console.info(req.method, (req.headers.host||'') + req.url);
   Object.keys(req.headers).forEach(function (key) {
     console.info(key, req.headers[key])
   });

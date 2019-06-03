@@ -48,6 +48,7 @@ and **node.js middleware systems**.
     - [x] Let's Encrypt v2
     - [x] Let's Encrypt v1
   - [x] Full node.js support
+    - [x] node v6+
     - [x] core https module
     - [x] Express.js
     - [x] [Koa](https://git.rootprojects.org/root/greenlock-koa.js)
