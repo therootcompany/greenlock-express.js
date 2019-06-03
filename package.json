@@ -1,50 +1,50 @@
 {
-  "name": "greenlock-express",
-  "version": "2.7.9",
-  "description": "Free SSL and managed or automatic HTTPS for node.js with Express, Koa, Connect, Hapi, and all other middleware systems.",
-  "main": "index.js",
-  "homepage": "https://greenlock.domains",
-  "directories": {
-    "example": "examples"
-  },
-  "dependencies": {
-    "greenlock": "^2.7.24",
-    "redirect-https": "^1.1.5"
-  },
-  "files": [
-    "lib"
-  ],
-  "trulyOptionalDependencies": {
-    "spdy": "^3.4.7"
-  },
-  "devDependencies": {
-    "express": "^4.16.3",
-    "express-basic-auth": "^1.1.5",
-    "finalhandler": "^1.1.1",
-    "serve-index": "^1.9.1",
-    "serve-static": "^1.13.2",
-    "ws": "^5.2.1"
-  },
-  "scripts": {
-    "start": "node server.js ./config.js",
-    "test": "node test/greenlock.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://git.rootprojects.org/root/greenlock-express.js.git"
-  },
-  "keywords": [
-    "Let's Encrypt",
-    "ACME",
-    "greenlock",
-    "Free SSL",
-    "Automated HTTPS",
-    "https",
-    "tls"
-  ],
-  "author": "AJ ONeal <solderjs@gmail.com> (https://solderjs.com/)",
-  "license": "MPL-2.0",
-  "bugs": {
-    "url": "https://git.rootprojects.org/root/greenlock-express.js/issues"
-  }
+	"name": "greenlock-express",
+	"version": "2.7.9",
+	"description": "Free SSL and managed or automatic HTTPS for node.js with Express, Koa, Connect, Hapi, and all other middleware systems.",
+	"main": "index.js",
+	"homepage": "https://greenlock.domains",
+	"directories": {
+		"example": "examples"
+	},
+	"dependencies": {
+		"greenlock": "^2.7.24",
+		"redirect-https": "^1.1.5"
+	},
+	"files": [
+		"lib"
+	],
+	"trulyOptionalDependencies": {
+		"spdy": "^3.4.7"
+	},
+	"devDependencies": {
+		"express": "^4.16.3",
+		"express-basic-auth": "^1.1.5",
+		"finalhandler": "^1.1.1",
+		"serve-index": "^1.9.1",
+		"serve-static": "^1.13.2",
+		"ws": "^5.2.1"
+	},
+	"scripts": {
+		"start": "node server.js ./config.js",
+		"test": "node test/greenlock.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://git.rootprojects.org/root/greenlock-express.js.git"
+	},
+	"keywords": [
+		"Let's Encrypt",
+		"ACME",
+		"greenlock",
+		"Free SSL",
+		"Automated HTTPS",
+		"https",
+		"tls"
+	],
+	"author": "AJ ONeal <solderjs@gmail.com> (https://solderjs.com/)",
+	"license": "MPL-2.0",
+	"bugs": {
+		"url": "https://git.rootprojects.org/root/greenlock-express.js/issues"
+	}
 }

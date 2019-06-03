@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
-var path = require('path');
+var path = require("path");
 module.exports = {
-  email: 'jon.doe@example.com'
-, configDir: path.join(__dirname, 'acme')
-, srv: '/srv/www/'
-, api: '/srv/api/'
+	email: "jon.doe@example.com",
+	configDir: path.join(__dirname, "acme"),
+	srv: "/srv/www/",
+	api: "/srv/api/"
 };
