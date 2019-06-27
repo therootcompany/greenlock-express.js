@@ -50,10 +50,12 @@ var glx = require("./").create({
 	store: require("greenlock-store-fs")
 });
 
-var server = glx.listen(80, 443);
-server.on("listening", function() {
-	console.info(server.type + " listening on", server.address());
-});
+if (require.main === module) {
+	var server = glx.listen(80, 443);
+	server.on("listening", function() {
+		console.info(server.type + " listening on", server.address());
+	});
+}
 
 function myApproveDomains(opts) {
 	console.info("SNI:", opts.domain);
@@ -62,14 +64,26 @@ function myApproveDomains(opts) {
 	// SECURITY Greenlock validates opts.domains ahead-of-time so you don't have to
 
 	var domains = [];
-	var domain = opts.domain.replace(/^(www|api)\./, "");
-	return checkWwws(domain)
+	var original = opts.domain;
+	var bare = original.replace(/^(www|api)\./, "");
+	// The goal here is to support both bare and www domains
+	//
+	// dns:example.com + fs:www.example.com => both
+	// dns:www.example.com + fs:example.com => both
+	//
+	// dns:api.example.com + fs:www.example.com => www.example.com
+	// dns:api.example.com + fs:example.com => example.com
+	//
+	// dns:example.com + fs:example.com => example.com
+	// dns:www.example.com + fs:www.example.com => www.example.com
+	//
+	return checkWwws(bare)
 		.then(function(hostname) {
-			// this is either example.com or www.example.com
+			// hostname is either example.com or www.example.com
 			domains.push(hostname);
-			if ("api." + domain !== opts.domain) {
-				if (!domains.includes(opts.domain)) {
-					domains.push(opts.domain);
+			if ("api." + bare !== original) {
+				if (!domains.includes(original)) {
+					domains.push(original);
 				}
 			}
 		})
@@ -79,10 +93,7 @@ function myApproveDomains(opts) {
 		})
 		.then(function() {
 			// check for api prefix
-			var apiname = domain;
-			if (domains.length) {
-				apiname = "api." + domain;
-			}
+			var apiname = "api." + bare;
 			return checkApi(apiname)
 				.then(function(app) {
 					if (!app) {
@@ -95,7 +106,9 @@ function myApproveDomains(opts) {
 				});
 		})
 		.then(function() {
-			if (0 === domains.length) {
+			// It's possible that example.com could have been requested,
+			// and not found, but api.example.com was found
+			if (!domains.includes(original)) {
 				return Promise.reject(new Error("no bare, www., or api. domain matching '" + opts.domain + "'"));
 			}
 
@@ -129,6 +142,7 @@ function myApproveDomains(opts) {
 			return Promise.resolve(opts);
 		});
 }
+exports.myApproveDomains = myApproveDomains;
 
 function checkApi(hostname) {
 	var apipath = path.join(config.api, hostname);
@@ -153,6 +167,7 @@ function checkApi(hostname) {
 			throw new Error("rejecting '" + hostname + "' because '" + apipath + link + "' failed at require()");
 		});
 }
+exports.checkApi = checkApi;
 
 function checkWwws(_hostname) {
 	if (!_hostname) {
@@ -192,6 +207,7 @@ function checkWwws(_hostname) {
 			throw new Error("rejecting '" + _hostname + "' because '" + hostdir + "' could not be read");
 		});
 }
+exports.checkWwws = checkWwws;
 
 function myVhostApp(req, res) {
 	// SECURITY greenlock pre-sanitizes hostnames to prevent unauthorized fs access so you don't have to
