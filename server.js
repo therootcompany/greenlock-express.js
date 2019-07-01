@@ -210,6 +210,11 @@ function checkWwws(_hostname) {
 exports.checkWwws = checkWwws;
 
 function myVhostApp(req, res) {
+	req.on("error", function(err) {
+		console.error("HTTPS Request Network Connection Error:");
+		console.error(err);
+	});
+
 	// SECURITY greenlock pre-sanitizes hostnames to prevent unauthorized fs access so you don't have to
 	// (also: only domains approved above will get here)
 	console.info("");

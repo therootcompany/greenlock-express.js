@@ -230,10 +230,13 @@ module.exports.create = function(opts) {
 			}
 		});
 		server = https.createServer(greenlock.tlsOptions, function(req, res) {
+			/*
+			// Don't do this yet
 			req.on("error", function(err) {
 				console.error("HTTPS Request Network Connection Error:");
 				console.error(err);
 			});
+			*/
 			mw(req, res);
 		});
 		server.type = httpType;
