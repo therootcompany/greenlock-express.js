@@ -212,7 +212,7 @@ exports.checkWwws = checkWwws;
 function myVhostApp(req, res) {
 	// SECURITY greenlock pre-sanitizes hostnames to prevent unauthorized fs access so you don't have to
 	// (also: only domains approved above will get here)
-	console.info(req.method, (req.headers.host || "") + req.url);
+	console.info("\n", req.method, (req.headers.host || "") + req.url);
 	Object.keys(req.headers).forEach(function(key) {
 		console.info(key, req.headers[key]);
 	});
