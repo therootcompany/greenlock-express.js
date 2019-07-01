@@ -53,9 +53,14 @@ module.exports.create = function(opts) {
 			console.warn("'" + p + "' doesn't seem to be a valid port number, socket path, or pipe");
 		}
 
-		server = require("http").createServer(
-			greenlock.middleware.sanitizeHost(greenlock.middleware(require("redirect-https")()))
-		);
+		var mw = greenlock.middleware.sanitizeHost(greenlock.middleware(require("redirect-https")()));
+		server = require("http").createServer(function(req, res) {
+			req.on("error", function(err) {
+				console.error("Insecure Request Network Connection Error:");
+				console.error(err);
+			});
+			mw(req, res);
+		});
 		httpType = "http";
 
 		return {
@@ -208,24 +213,29 @@ module.exports.create = function(opts) {
 				);
 			}
 		}
-		server = https.createServer(
-			greenlock.tlsOptions,
-			greenlock.middleware.sanitizeHost(function(req, res) {
+
+		var mw = greenlock.middleware.sanitizeHost(function(req, res) {
+			try {
+				greenlock.app(req, res);
+			} catch (e) {
+				console.error("[error] [greenlock.app] Your HTTP handler had an uncaught error:");
+				console.error(e);
 				try {
-					greenlock.app(req, res);
+					res.statusCode = 500;
+					res.end("Internal Server Error: [Greenlock] HTTP exception logged for user-provided handler.");
 				} catch (e) {
-					console.error("[error] [greenlock.app] Your HTTP handler had an uncaught error:");
-					console.error(e);
-					try {
-						res.statusCode = 500;
-						res.end("Internal Server Error: [Greenlock] HTTP exception logged for user-provided handler.");
-					} catch (e) {
-						// ignore
-						// (headers may have already been sent, etc)
-					}
+					// ignore
+					// (headers may have already been sent, etc)
 				}
-			})
-		);
+			}
+		});
+		server = https.createServer(greenlock.tlsOptions, function(req, res) {
+			req.on("error", function(err) {
+				console.error("HTTPS Request Network Connection Error:");
+				console.error(err);
+			});
+			mw(req, res);
+		});
 		server.type = httpType;
 
 		return {
