@@ -39,6 +39,7 @@ var glx = require("./").create({
 	approveDomains: myApproveDomains, // Greenlock's wraps around tls.SNICallback. Check the
 	// domain name here and reject invalid ones
 
+	servername: config.servername,
 	app: myVhostApp, // Any node-style http app (i.e. express, koa, hapi, rill)
 
 	/* CHANGE TO A VALID EMAIL */
@@ -93,7 +94,10 @@ function myApproveDomains(opts) {
 		})
 		.then(function() {
 			// check for api prefix
-			var apiname = "api." + bare;
+			var apiname = bare;
+			if (domains.length) {
+				apiname = "api." + bare;
+			}
 			return checkApi(apiname)
 				.then(function(app) {
 					if (!app) {
