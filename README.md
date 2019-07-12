@@ -240,20 +240,22 @@ https://acme-staging-v02.api.letsencrypt.org/directory
 | **Manual (cli)** |                                             [acme-http-01-cli](https://git.rootprojects.org/root/acme-http-01-cli.js)                                             |
 |      AWS S3      |                                              [acme-http-01-s3](https://git.rootprojects.org/root/acme-http-01-s3.js)                                              |
 |      Azure       |                               [kolarcz/node-le-challenge-azure-storage](https://github.com/kolarcz/node-le-challenge-azure-storage)                               |
-|        -         |                            Build Your Own <br> [acme-http-01-challenge-test](https://git.rootprojects.org/root/acme-challenge-test.js)                            |
+|        -         |                                  Build Your Own <br> [acme-http-01-test](https://git.rootprojects.org/root/acme-http-01-test.js)                                  |
 |    Full List     | Search [acme-http-01-](https://www.npmjs.com/search?q=acme-http-01-) on npm (or [le-challenge-](https://www.npmjs.com/search?q=le-challenge-) for older versions) |
 
 ## DNS-01 Challenges
 
 |                  |                                                                   Plugin                                                                   |
 | :--------------: | :----------------------------------------------------------------------------------------------------------------------------------------: |
-| **Manual (cli)** |                                  [acme-dns-01-cli](https://git.rootprojects.org/root/acme-dns-01-cli.js)                                   |
+| **Manual (cli)** |                                [root/acme-dns-01-cli](https://git.rootprojects.org/root/acme-dns-01-cli.js)                                |
+|    Cloudflare    |                          [nodecraft/acme-dns-01-cloudflare](https://github.com/nodecraft/acme-dns-01-cloudflare)                           |
+|  Digital Ocean   |                       [root/acme-dns-01-digitalocean](https://git.rootprojects.org/root/acme-dns-01-digitalocean.js)                       |
+|     Duck DNS     |                            [root/acme-dns-01-duckdns](https://git.rootprojects.org/root/acme-dns-01-duckdns.js)                            |
+|      Gandi       |                              [root/acme-dns-01-gandi](https://git.rootprojects.org/root/acme-dns-01-gandi.js)                              |
+|      Vultr       |                              [root/acme-dns-01-vultr](https://git.rootprojects.org/root/acme-dns-01-vultr.js)                              |
 |   AWS Route 53   |                     [thadeetrompetter/le-challenge-route53](https://github.com/thadeetrompetter/le-challenge-route53)                      |
-|    CloudFlare    |                        [buschtoens/le-challenge-cloudflare](https://github.com/buschtoens/le-challenge-cloudflare)                         |
-|    CloudFlare    |                              [llun/le-challenge-cloudflare](https://github.com/llun/le-challenge-cloudflare)                               |
-|  Digital Ocean   |                          [bmv437/le-challenge-digitalocean](https://github.com/bmv437/le-challenge-digitalocean)                           |
 |       etcd       |                                  [ceecko/le-challenge-etcd](https://github.com/ceecko/le-challenge-etcd)                                   |
-|        -         |                    Build Your Own <br> [acme-challenge-test](https://git.rootprojects.org/root/acme-challenge-test.js)                     |
+|        -         |                     **Build Your Own** <br> [acme-dns-01-test](https://git.rootprojects.org/root/acme-dns-01-test.js)                      |
 |    Full List     | Search [acme-dns-01-](https://www.npmjs.com/search?q=acme-dns-01-) or [le-challenge-](https://www.npmjs.com/search?q=le-challenge-) on npm |
 
 ## Account & Certificate Storage
