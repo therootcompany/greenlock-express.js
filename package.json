@@ -1,6 +1,6 @@
 {
 	"name": "greenlock-express",
-	"version": "2.7.11",
+	"version": "2.7.12",
 	"description": "Free SSL and managed or automatic HTTPS for node.js with Express, Koa, Connect, Hapi, and all other middleware systems.",
 	"main": "index.js",
 	"homepage": "https://greenlock.domains",
@@ -19,7 +19,7 @@
 	},
 	"devDependencies": {
 		"express": "^4.16.3",
-		"express-basic-auth": "^1.1.5",
+		"express-basic-auth": "^1.2.0",
 		"finalhandler": "^1.1.1",
 		"serve-index": "^1.9.1",
 		"serve-static": "^1.13.2",

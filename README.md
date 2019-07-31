@@ -230,30 +230,43 @@ https://acme-staging-v02.api.letsencrypt.org/directory
 
 # Plugins
 
-**IMPORTANT**: Community plugins may or may not be maintained and working. Please try with the defaults before switching to community plugins.
+Plugins developed by `root` are officially maintained, written in Vanilla JS, and typically have 0 dependencies.
+
+**IMPORTANT**:
+Community plugins may or may not be maintained and working.
+Please try with the defaults before switching to community plugins.
 
 ## HTTP-01 Challenges
 
+Plugins for ACME / Let's Encrypt HTTP-01 Challenges.
+
 |                  |                                                                              Plugin                                                                               |
 | :--------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| **Default (fs)** |                                           [acme-http-01-fs](https://git.rootprojects.org/root/acme-http-01-webroot.js)                                            |
-| **Manual (cli)** |                                             [acme-http-01-cli](https://git.rootprojects.org/root/acme-http-01-cli.js)                                             |
-|      AWS S3      |                                              [acme-http-01-s3](https://git.rootprojects.org/root/acme-http-01-s3.js)                                              |
+| **Default (fs)** |                                         [root/acme-http-01-fs](https://git.rootprojects.org/root/acme-http-01-webroot.js)                                         |
+| **Manual (cli)** |                                          [root/acme-http-01-cli](https://git.rootprojects.org/root/acme-http-01-cli.js)                                           |
+|    standalone    |                                   [root/acme-http-01-standalone](https://git.rootprojects.org/root/acme-http-01-standalone.js)                                    |
+|      AWS S3      |                                           [root/acme-http-01-s3](https://git.rootprojects.org/root/acme-http-01-s3.js)                                            |
 |      Azure       |                               [kolarcz/node-le-challenge-azure-storage](https://github.com/kolarcz/node-le-challenge-azure-storage)                               |
 |        -         |                                  Build Your Own <br> [acme-http-01-test](https://git.rootprojects.org/root/acme-http-01-test.js)                                  |
 |    Full List     | Search [acme-http-01-](https://www.npmjs.com/search?q=acme-http-01-) on npm (or [le-challenge-](https://www.npmjs.com/search?q=le-challenge-) for older versions) |
 
 ## DNS-01 Challenges
 
+Plugins for ACME / Let's Encrypt DNS-01 Challenges.
+
 |                  |                                                                   Plugin                                                                   |
 | :--------------: | :----------------------------------------------------------------------------------------------------------------------------------------: |
 | **Manual (cli)** |                                [root/acme-dns-01-cli](https://git.rootprojects.org/root/acme-dns-01-cli.js)                                |
 |    Cloudflare    |                          [nodecraft/acme-dns-01-cloudflare](https://github.com/nodecraft/acme-dns-01-cloudflare)                           |
+|     DNSimple     |                           [root/acme-dns-01-dnsimple](https://git.rootprojects.org/root/acme-dns-01-dnsimple.js)                           |
 |  Digital Ocean   |                       [root/acme-dns-01-digitalocean](https://git.rootprojects.org/root/acme-dns-01-digitalocean.js)                       |
 |     Duck DNS     |                            [root/acme-dns-01-duckdns](https://git.rootprojects.org/root/acme-dns-01-duckdns.js)                            |
 |      Gandi       |                              [root/acme-dns-01-gandi](https://git.rootprojects.org/root/acme-dns-01-gandi.js)                              |
+|     GoDaddy      |                            [root/acme-dns-01-godaddy](https://git.rootprojects.org/root/acme-dns-01-godaddy.js)                            |
+|    NameCheap     |                          [root/acme-dns-01-namecheap](https://git.rootprojects.org/root/acme-dns-01-namecheap.js)                          |
+|     Name.com     |                         [root/acme-dns-01-namedotcom](https://git.rootprojects.org/root/acme-dns-01-namedotcom.js)                         |
+|  Route 53 (AWS)  |                                [hgezim/acme-dsns-01-route53](https://github.com/hgezim/acme-dns-01-route53)                                |
 |      Vultr       |                              [root/acme-dns-01-vultr](https://git.rootprojects.org/root/acme-dns-01-vultr.js)                              |
-|   AWS Route 53   |                     [thadeetrompetter/le-challenge-route53](https://github.com/thadeetrompetter/le-challenge-route53)                      |
 |       etcd       |                                  [ceecko/le-challenge-etcd](https://github.com/ceecko/le-challenge-etcd)                                   |
 |        -         |                     **Build Your Own** <br> [acme-dns-01-test](https://git.rootprojects.org/root/acme-dns-01-test.js)                      |
 |    Full List     | Search [acme-dns-01-](https://www.npmjs.com/search?q=acme-dns-01-) or [le-challenge-](https://www.npmjs.com/search?q=le-challenge-) on npm |
