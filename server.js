@@ -58,6 +58,31 @@ if (require.main === module) {
 	});
 }
 
+function matchConfig(thing, domain) {
+	if (!thing) {
+		return false;
+	}
+	if (thing[domain]) {
+		return domain;
+	}
+
+	var keys = Object.keys(thing);
+	var result = null;
+	keys.some(function(k) {
+		if ("*" !== k[0]) {
+			return;
+		}
+
+		// "foo.whatever.com".endsWith("*.whatever.com".slice(1))
+		if (domain.endsWith(k.slice(1).toLowerCase())) {
+			result = k;
+			return true;
+		}
+	});
+
+	return result;
+}
+
 function myApproveDomains(opts) {
 	console.info("SNI:", opts.domain);
 	// In this example the filesystem is our "database".
@@ -67,6 +92,52 @@ function myApproveDomains(opts) {
 	var domains = [];
 	var original = opts.domain;
 	var bare = original.replace(/^(www|api)\./, "");
+	var challenger = matchConfig(config.challenges, original);
+	if (challenger) {
+		opts.challenges = {
+			"dns-01": config.challenges[challenger]
+		};
+		domains.push(challenger);
+		return approveThem();
+	}
+
+	if (matchConfig(config.proxy, original)) {
+		console.log("debug: found proxy for", original);
+		domains.push(original);
+		return approveThem();
+	}
+
+	function approveThem() {
+		console.info("Approved domains:", domains);
+		opts.domains = domains;
+		//opts.email = email;
+		opts.agreeTos = true;
+		// pick the shortest (bare) or latest (www. instead of api.) to be the subject
+		opts.subject = opts.domains.sort(function(a, b) {
+			var len = a.length - b.length;
+			if (0 !== len) {
+				return len;
+			}
+			if (a < b) {
+				return 1;
+			} else {
+				return -1;
+			}
+		})[0];
+
+		if (!opts.challenges) {
+			opts.challenges = {};
+		}
+		opts.challenges["http-01"] = require("le-challenge-fs");
+		//opts.challenges['dns-01'] = require('le-challenge-dns');
+
+		// explicitly set account id and certificate.id
+		opts.account = { id: opts.email };
+		opts.certificate = { id: opts.subject };
+
+		return Promise.resolve(opts);
+	}
+
 	// The goal here is to support both bare and www domains
 	//
 	// dns:example.com + fs:www.example.com => both
@@ -77,7 +148,6 @@ function myApproveDomains(opts) {
 	//
 	// dns:example.com + fs:example.com => example.com
 	// dns:www.example.com + fs:www.example.com => www.example.com
-	//
 	return checkWwws(bare)
 		.then(function(hostname) {
 			// hostname is either example.com or www.example.com
@@ -116,34 +186,7 @@ function myApproveDomains(opts) {
 				return Promise.reject(new Error("no bare, www., or api. domain matching '" + opts.domain + "'"));
 			}
 
-			console.info("Approved domains:", domains);
-			opts.domains = domains;
-			//opts.email = email;
-			opts.agreeTos = true;
-			// pick the shortest (bare) or latest (www. instead of api.) to be the subject
-			opts.subject = opts.domains.sort(function(a, b) {
-				var len = a.length - b.length;
-				if (0 !== len) {
-					return len;
-				}
-				if (a < b) {
-					return 1;
-				} else {
-					return -1;
-				}
-			})[0];
-
-			if (!opts.challenges) {
-				opts.challenges = {};
-			}
-			opts.challenges["http-01"] = require("le-challenge-fs");
-			//opts.challenges['dns-01'] = require('le-challenge-dns');
-
-			// explicitly set account id and certificate.id
-			opts.account = { id: opts.email };
-			opts.certificate = { id: opts.subject };
-
-			return Promise.resolve(opts);
+			return approveThem();
 		});
 }
 exports.myApproveDomains = myApproveDomains;
@@ -213,11 +256,34 @@ function checkWwws(_hostname) {
 }
 exports.checkWwws = checkWwws;
 
+var httpProxy = require("http-proxy");
+
+var proxy = httpProxy.createProxyServer({
+	xfwd: true
+});
+
+proxy.on("error", function(req, res) {
+	res.statusCode = 500;
+	res.end("500: Server Error");
+});
+
 function myVhostApp(req, res) {
 	req.on("error", function(err) {
 		console.error("HTTPS Request Network Connection Error:");
 		console.error(err);
 	});
+
+	// this is protected by greenlock-express from domain fronting attacks
+	var host = req.headers.host;
+	// ex: example.com
+	// ex: example.com:4080
+	console.log("debug: host is", host);
+	var domain = matchConfig(config.proxy, host);
+	if (domain) {
+		console.log("debug: forwarding to", config.proxy[domain]);
+		proxy.web(req, res, { target: config.proxy[domain] });
+		return;
+	}
 
 	// SECURITY greenlock pre-sanitizes hostnames to prevent unauthorized fs access so you don't have to
 	// (also: only domains approved above will get here)
