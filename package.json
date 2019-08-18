@@ -1,6 +1,6 @@
 {
 	"name": "greenlock-express",
-	"version": "2.7.13",
+	"version": "2.7.14",
 	"description": "Free SSL and managed or automatic HTTPS for node.js with Express, Koa, Connect, Hapi, and all other middleware systems.",
 	"main": "index.js",
 	"homepage": "https://greenlock.domains",
