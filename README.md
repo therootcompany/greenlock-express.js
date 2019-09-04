@@ -1,3 +1,13 @@
+# Do you rely on Greenlock.js?
+
+Hey! Let's Encrypt will **STOP WORKING** with Greenlock and ACME.js at the end of Oct 2019.
+**WITHOUT YOUR HELP** we won't get the next release out in time.
+
+If Greenlock (or ACME.js) has saved you time and money, and taken stress out of your life,
+or you just love it, please reach out to return the favor today:
+
+[**SAVE GREENLOCK / ACME.js**](https://indiegogo.com/at/greenlock): <https://indiegogo.com/at/greenlock>
+
 ![Greenlock Logo](https://git.rootprojects.org/root/greenlock.js/raw/branch/master/logo/greenlock-1063x250.png "Greenlock Logo")
 
 !["Greenlock Function"](https://git.rootprojects.org/root/greenlock.js/raw/branch/master/logo/from-not-secure-to-secure-url-bar.png "from url bar showing not secure to url bar showing secure")

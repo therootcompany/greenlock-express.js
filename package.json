@@ -1,6 +1,6 @@
 {
 	"name": "greenlock-express",
-	"version": "2.7.15",
+	"version": "2.7.16",
 	"description": "Free SSL and managed or automatic HTTPS for node.js with Express, Koa, Connect, Hapi, and all other middleware systems.",
 	"main": "index.js",
 	"homepage": "https://greenlock.domains",
@@ -8,7 +8,7 @@
 		"example": "examples"
 	},
 	"dependencies": {
-		"greenlock": "^2.8.4",
+		"greenlock": "^2.8.6",
 		"redirect-https": "^1.1.5"
 	},
 	"files": [
@@ -44,7 +44,7 @@
 		"https",
 		"tls"
 	],
-	"author": "AJ ONeal <solderjs@gmail.com> (https://solderjs.com/)",
+	"author": "AJ ONeal <coolaj86@gmail.com> (https://solderjs.com/)",
 	"license": "MPL-2.0",
 	"bugs": {
 		"url": "https://git.rootprojects.org/root/greenlock-express.js/issues"
