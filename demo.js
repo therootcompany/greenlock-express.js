@@ -7,6 +7,7 @@ var greenlockOptions = {
 	serverId: "bowie.local",
 	servername: "foo-gl.test.utahrust.com",
 	maintainerEmail: "greenlock-test@rootprojects.org",
+	staging: true,
 
 	/*
   manager: {
