@@ -6,8 +6,6 @@ var Master = module.exports;
 
 var cluster = require("cluster");
 var os = require("os");
-var Greenlock = require("@root/greenlock");
-var pkg = require("./package.json");
 
 Master.create = function(opts) {
 	var workers = [];
@@ -15,14 +13,7 @@ Master.create = function(opts) {
 	var readyCb;
 	var _kicked = false;
 
-	var packageAgent = pkg.name + "/" + pkg.version;
-	if ("string" === typeof opts.packageAgent) {
-		opts.packageAgent += " ";
-	} else {
-		opts.packageAgent = "";
-	}
-	opts.packageAgent += packageAgent;
-	var greenlock = Greenlock.create(opts);
+	var greenlock = require("./greenlock.js").create(opts);
 
 	var ready = new Promise(function(resolve) {
 		resolveCb = resolve;
@@ -68,7 +59,6 @@ GLE.create = function(opts) {
 	GLE._spawnWorkers(opts);
 
 	gl.tlsOptions = {};
-
 
 	return master;
 };
