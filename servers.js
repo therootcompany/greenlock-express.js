@@ -119,7 +119,6 @@ function wrapDefaultSniCallback(opts, greenlock, secureOpts) {
 function createSecureServer(secureOpts, fn) {
 	var major = process.versions.node.split(".")[0];
 
-	console.log("debug set SNICallback:", secureOpts);
 	// TODO can we trust earlier versions as well?
 	if (major >= 12) {
 		secureOpts.allowHTTP1 = true;

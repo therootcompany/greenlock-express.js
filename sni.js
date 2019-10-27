@@ -122,7 +122,6 @@ sni.create = function(opts, greenlock, secureOpts) {
 		// TODO don't get unknown certs at all, rely on auto-updates from greenlock
 		// Note: greenlock.renew() will return an existing fresh cert or issue a new one
 		return greenlock.renew({ servername: servername }).then(function(matches) {
-			console.log("debug matches", matches);
 			var meta = getCachedMeta(servername);
 			if (!meta) {
 				meta = _cache[servername] = { secureContext: {} };
