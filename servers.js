@@ -60,7 +60,7 @@ Servers.create = function(greenlock, opts) {
 				console.info("Listening on", plainAddr + ":" + plainPort, "for ACME challenges, and redirecting to HTTPS");
 
 				// TODO fetch greenlock.servername
-				var secureServer = servers.httpsServer(app);
+				var secureServer = servers.httpsServer({}, app);
 				var secureAddr = "0.0.0.0";
 				var securePort = 443;
 				secureServer.listen(securePort, secureAddr, function() {
@@ -119,8 +119,10 @@ function wrapDefaultSniCallback(opts, greenlock, secureOpts) {
 function createSecureServer(secureOpts, fn) {
 	var major = process.versions.node.split(".")[0];
 
+	console.log("debug set SNICallback:", secureOpts);
 	// TODO can we trust earlier versions as well?
 	if (major >= 12) {
+		secureOpts.allowHTTP1 = true;
 		return require("http2").createSecureServer(secureOpts, fn);
 	} else {
 		return require("https").createServer(secureOpts, fn);

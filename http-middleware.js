@@ -46,7 +46,7 @@ function skipIfNeedBe(req, res, next, defaultApp, hostname) {
 }
 
 function respondWithGrace(res, result, hostname, token) {
-	var keyAuth = result.keyAuthorization;
+	var keyAuth = result && result.keyAuthorization;
 	if (keyAuth && "string" === typeof keyAuth) {
 		res.setHeader("Content-Type", "text/plain; charset=utf-8");
 		res.end(keyAuth);

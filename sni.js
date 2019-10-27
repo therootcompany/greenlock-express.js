@@ -38,6 +38,7 @@ sni.create = function(opts, greenlock, secureOpts) {
 	}
 
 	function getSecureContext(servername, cb) {
+		//console.log("debug sni", servername);
 		if ("string" !== typeof servername) {
 			// this will never happen... right? but stranger things have...
 			console.error("[sanity fail] non-string servername:", servername);
@@ -47,6 +48,7 @@ sni.create = function(opts, greenlock, secureOpts) {
 
 		var secureContext = getCachedContext(servername);
 		if (secureContext) {
+			//console.log("debug sni got cached context", servername, getCachedMeta(servername));
 			cb(null, secureContext);
 			return;
 		}
@@ -54,11 +56,13 @@ sni.create = function(opts, greenlock, secureOpts) {
 		getFreshContext(servername)
 			.then(function(secureContext) {
 				if (secureContext) {
+					//console.log("debug sni got fresh context", servername, getCachedMeta(servername));
 					cb(null, secureContext);
 					return;
 				}
 				// Note: this does not replace tlsSocket.setSecureContext()
 				// as it only works when SNI has been sent
+				//console.log("debug sni got default context", servername, getCachedMeta(servername));
 				cb(null, getDefaultContext());
 			})
 			.catch(function(err) {
@@ -66,6 +70,7 @@ sni.create = function(opts, greenlock, secureOpts) {
 					err.context = "sni_callback";
 				}
 				notify("error", err);
+				//console.log("debug sni error", servername, err);
 				cb(err);
 			});
 	}
@@ -86,6 +91,7 @@ sni.create = function(opts, greenlock, secureOpts) {
 			return null;
 		}
 
+		// always renew in background
 		if (!meta.refreshAt || Date.now() >= meta.refreshAt) {
 			getFreshContext(servername).catch(function(e) {
 				if (!e.context) {
@@ -95,6 +101,9 @@ sni.create = function(opts, greenlock, secureOpts) {
 			});
 		}
 
+		// under normal circumstances this would never be expired
+		// and, if it is expired, something is so wrong it's probably
+		// not worth wating for the renewal - it has probably failed
 		return meta.secureContext;
 	}
 
@@ -113,6 +122,7 @@ sni.create = function(opts, greenlock, secureOpts) {
 		// TODO don't get unknown certs at all, rely on auto-updates from greenlock
 		// Note: greenlock.renew() will return an existing fresh cert or issue a new one
 		return greenlock.renew({ servername: servername }).then(function(matches) {
+			console.log("debug matches", matches);
 			var meta = getCachedMeta(servername);
 			if (!meta) {
 				meta = _cache[servername] = { secureContext: {} };

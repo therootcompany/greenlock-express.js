@@ -4,9 +4,9 @@ var Greenlock = require("./");
 var greenlockOptions = {
 	cluster: false,
 
-	maintainerEmail: "greenlock-test@rootprojects.org",
+	serverId: "bowie.local",
 	servername: "foo-gl.test.utahrust.com",
-	serverId: "bowie.local"
+	maintainerEmail: "greenlock-test@rootprojects.org",
 
 	/*
   manager: {
@@ -14,6 +14,12 @@ var greenlockOptions = {
     dbUrl: "postgres://foo@bar:baz/quux"
   }
   */
+
+	challenges: {
+		"dns-01": {
+			module: "acme-dns-01-digitalocean"
+		}
+	}
 };
 
 Greenlock.create(greenlockOptions)
