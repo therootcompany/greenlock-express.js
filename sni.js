@@ -11,10 +11,10 @@ var refreshStagger = Math.round(Math.PI * 5 * (60 * 1000));
 // and another, about 30 seconds
 var smallStagger = Math.round(Math.PI * (30 * 1000));
 
-//secureOpts.SNICallback = sni.create(opts, greenlock, secureOpts);
-sni.create = function(opts, greenlock, secureOpts) {
+//secureOpts.SNICallback = sni.create(greenlock, secureOpts);
+sni.create = function(greenlock, secureOpts) {
 	var _cache = {};
-	var defaultServername = opts.servername || greenlock.servername || "";
+	var defaultServername = greenlock.servername || "";
 
 	if (secureOpts.cert) {
 		// Note: it's fine if greenlock.servername is undefined,
@@ -30,7 +30,7 @@ sni.create = function(opts, greenlock, secureOpts) {
 	function notify(ev, args) {
 		try {
 			// TODO _notify() or notify()?
-			(opts.notify || greenlock.notify || greenlock._notify)(ev, args);
+			(greenlock.notify || greenlock._notify)(ev, args);
 		} catch (e) {
 			console.error(e);
 			console.error(ev, args);
@@ -158,7 +158,7 @@ sni.create = function(opts, greenlock, secureOpts) {
 				_cache[altname] = meta;
 			});
 
-      return meta.secureContext;
+			return meta.secureContext;
 		});
 	}
 

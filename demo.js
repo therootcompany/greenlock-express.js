@@ -11,9 +11,8 @@ function initialize() {
 	var pkg = require("./package.json");
 	var config = {
 		package: pkg,
-		//serverId: "bowie.local",
-		//servername: "foo-gl.test.utahrust.com",
 		staging: true,
+		cluster: true,
 
 		challenges: {
 			"dns-01": {
@@ -21,16 +20,16 @@ function initialize() {
 			}
 		},
 
-    notify: function (ev, params) {
-      console.log(ev, params);
-    }
+		notify: function(ev, params) {
+			console.log(ev, params);
+		}
 	};
 	return config;
 }
 
 function worker(glx) {
 	console.info();
-	console.info("Hello from worker");
+	console.info("Hello from worker #" + glx.id());
 
 	glx.serveApp(function(req, res) {
 		res.end("Hello, Encrypted World!");

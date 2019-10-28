@@ -8,7 +8,7 @@ var HttpsMiddleware = require("./https-middleware.js");
 var sni = require("./sni.js");
 var cluster = require("cluster");
 
-Servers.create = function(greenlock, opts) {
+Servers.create = function(greenlock) {
 	var servers = {};
 	var _httpServer;
 	var _httpsServer;
@@ -49,7 +49,7 @@ Servers.create = function(greenlock, opts) {
 		}
 
 		_httpsServer = createSecureServer(
-			wrapDefaultSniCallback(opts, greenlock, secureOpts),
+			wrapDefaultSniCallback(greenlock, secureOpts),
 			HttpsMiddleware.create(greenlock, function(req, res) {
 				if (!_middlewareApp) {
 					throw new Error("Set app with `glx.serveApp(app)` or `glx.httpsServer(tlsOptions, app)`");
@@ -62,6 +62,9 @@ Servers.create = function(greenlock, opts) {
 		return _httpsServer;
 	};
 
+	servers.id = function() {
+		return (cluster.isWorker && cluster.worker.id) || "0";
+	};
 	servers.serveApp = function(app) {
 		return new Promise(function(resolve, reject) {
 			if ("function" !== typeof app) {
@@ -70,7 +73,7 @@ Servers.create = function(greenlock, opts) {
 			}
 
 			var id = cluster.isWorker && cluster.worker.id;
-			var idstr = (id && "$" + id + " ") || "";
+			var idstr = (id && "#" + id + " ") || "";
 			var plainServer = servers.httpServer(require("redirect-https")());
 			var plainAddr = "0.0.0.0";
 			var plainPort = 80;
@@ -115,7 +118,7 @@ function explainError(e) {
 	console.error();
 }
 
-function wrapDefaultSniCallback(opts, greenlock, secureOpts) {
+function wrapDefaultSniCallback(greenlock, secureOpts) {
 	// I'm not sure yet if the original SNICallback
 	// should be called before or after, so I'm just
 	// going to delay making that choice until I have the use case
@@ -136,7 +139,8 @@ function wrapDefaultSniCallback(opts, greenlock, secureOpts) {
 		console.warn();
 	}
 
-	secureOpts.SNICallback = sni.create(opts, greenlock, secureOpts);
+	// TODO greenlock.servername for workers
+	secureOpts.SNICallback = sni.create(greenlock, secureOpts);
 	return secureOpts;
 }
 

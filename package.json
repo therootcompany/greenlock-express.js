@@ -1,24 +1,26 @@
 {
-	"name": "greenlock-express",
-	"version": "2.7.18",
+	"name": "@root/greenlock-express",
+	"version": "3.0.0",
 	"description": "Free SSL and managed or automatic HTTPS for node.js with Express, Koa, Connect, Hapi, and all other middleware systems.",
-	"main": "index.js",
+	"main": "greenlock-express.js",
 	"homepage": "https://greenlock.domains",
+	"files": [
+		"*.js",
+		"lib",
+		"scripts"
+	],
+	"scripts": {
+		"start": "node_todo server.js ./config.js",
+		"test": "node_todo test/greenlock.js"
+	},
 	"directories": {
 		"example": "examples"
 	},
 	"dependencies": {
-		"greenlock": "^2.8.8",
+		"@root/greenlock": "^3.0.1",
 		"redirect-https": "^1.1.5"
 	},
-	"files": [
-		"lib",
-		"scripts"
-	],
 	"trulyOptionalDependencies": {
-		"spdy": "^3.4.7"
-	},
-	"devDependencies": {
 		"http-proxy": "^1.17.0",
 		"express": "^4.16.3",
 		"express-basic-auth": "^1.2.0",
@@ -27,10 +29,7 @@
 		"serve-static": "^1.13.2",
 		"ws": "^5.2.1"
 	},
-	"scripts": {
-		"start": "node server.js ./config.js",
-		"test": "node test/greenlock.js"
-	},
+	"devDependencies": {},
 	"repository": {
 		"type": "git",
 		"url": "https://git.rootprojects.org/root/greenlock-express.js.git"

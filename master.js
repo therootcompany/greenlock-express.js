@@ -10,7 +10,7 @@ var msgPrefix = "greenlock:";
 
 Master.create = function(opts) {
 	var resolveCb;
-	var readyCb;
+	var _readyCb;
 	var _kicked = false;
 
 	var greenlock = require("./greenlock.js").create(opts);
@@ -18,7 +18,8 @@ Master.create = function(opts) {
 	var ready = new Promise(function(resolve) {
 		resolveCb = resolve;
 	}).then(function(fn) {
-		readyCb = fn;
+		_readyCb = fn;
+		return fn;
 	});
 
 	function kickoff() {
@@ -41,7 +42,7 @@ Master.create = function(opts) {
 			return master;
 		},
 		master: function(fn) {
-			if (readyCb) {
+			if (_readyCb) {
 				throw new Error("can't call master twice");
 			}
 			kickoff();
@@ -49,6 +50,7 @@ Master.create = function(opts) {
 			return master;
 		}
 	};
+	return master;
 };
 
 function range(n) {
@@ -67,15 +69,33 @@ Master._spawnWorkers = function(opts, greenlock) {
 	var numWorkers = parseInt(opts.numWorkers, 10);
 	if (!numWorkers) {
 		if (numCpus <= 2) {
-			numWorkers = numCpus;
+			numWorkers = 2;
 		} else {
 			numWorkers = numCpus - 1;
 		}
 	}
 
-	return range(numWorkers - 1).map(function() {
-		Master._spawnWorker(opts, greenlock);
-	});
+  cluster.on('exit', function () {
+    setTimeout(function () {
+      process.exit(3);
+    }, 100);
+  });
+
+	var workers = range(numWorkers);
+	function next() {
+		if (!workers.length) {
+			return;
+		}
+		workers.pop();
+
+		// for a nice aesthetic
+		setTimeout(function() {
+			Master._spawnWorker(opts, greenlock);
+			next();
+		}, 250);
+	}
+
+	next();
 };
 
 Master._spawnWorker = function(opts, greenlock) {

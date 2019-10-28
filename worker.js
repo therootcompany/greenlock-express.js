@@ -3,7 +3,7 @@
 var Worker = module.exports;
 // *very* generous, but well below the http norm of 120
 var messageTimeout = 30 * 1000;
-var msgPrefix = 'greenlock:';
+var msgPrefix = "greenlock:";
 
 Worker.create = function() {
 	var greenlock = {};
@@ -30,6 +30,7 @@ Worker.create = function() {
 function rpc(funcname, msg) {
 	return new Promise(function(resolve, reject) {
 		var rnd = Math.random()
+			.toString()
 			.slice(2)
 			.toString(16);
 		var id = msgPrefix + rnd;
