@@ -32,5 +32,5 @@ if (major < 11 || (11 === major && minor < 2)) {
 
 if (shouldUpgrade) {
 	console.warn("Warning: Please upgrade to node v11.2.0 or greater.");
-  console.warn();
+	console.warn();
 }

@@ -75,11 +75,11 @@ Master._spawnWorkers = function(opts, greenlock) {
 		}
 	}
 
-  cluster.on('exit', function () {
-    setTimeout(function () {
-      process.exit(3);
-    }, 100);
-  });
+	cluster.on("exit", function() {
+		setTimeout(function() {
+			process.exit(3);
+		}, 100);
+	});
 
 	var workers = range(numWorkers);
 	function next() {

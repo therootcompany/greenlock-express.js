@@ -135,7 +135,7 @@ later, if you need them.
 
 `server.js`:
 
-```bash
+```js
 require("greenlock-express")
 	.init(getConfig)
 	.serve(worker);
@@ -143,14 +143,14 @@ require("greenlock-express")
 function getConfig() {
 	return {
 		// uses name and version as part of the ACME client user-agent
-    // uses author as the contact for support notices
+		// uses author as the contact for support notices
 		package: require("./package.json")
 	};
 }
 
 function worker(server) {
 	// Works with any Node app (Express, etc)
-  var app = require('my-express-app.js');
+	var app = require("my-express-app.js");
 	server.serveApp(app);
 }
 ```
