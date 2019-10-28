@@ -11,7 +11,7 @@ Single.create = function(opts) {
 	var servers = Servers.create(greenlock, opts);
 
 	var single = {
-		worker: function(fn) {
+		serve: function(fn) {
 			fn(servers);
 			return single;
 		},

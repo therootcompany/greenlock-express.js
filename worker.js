@@ -1,18 +1,21 @@
 "use strict";
 
 var Worker = module.exports;
+// *very* generous, but well below the http norm of 120
+var messageTimeout = 30 * 1000;
+var msgPrefix = 'greenlock:';
 
-Worker.create = function(opts) {
-	var greenlock = {
-		// rename presentChallenge?
-		getAcmeHttp01ChallengeResponse: presentChallenge,
-		notify: notifyMaster,
-		get: greenlockRenew
-	};
+Worker.create = function() {
+	var greenlock = {};
+	["getAcmeHttp01ChallengeResponse", "renew", "notify"].forEach(function(k) {
+		greenlock[k] = function(args) {
+			return rpc(k, args);
+		};
+	});
 
 	var worker = {
-		worker: function(fn) {
-			var servers = require("./servers.js").create(greenlock, opts);
+		serve: function(fn) {
+			var servers = require("./servers.js").create(greenlock);
 			fn(servers);
 			return worker;
 		},
@@ -24,51 +27,32 @@ Worker.create = function(opts) {
 	return worker;
 };
 
-function greenlockRenew(args) {
-	return request("renew", {
-		servername: args.servername
-	});
-}
-
-function presentChallenge(args) {
-	return request("challenge-response", {
-		servername: args.servername,
-		token: args.token
-	});
-}
-
-function request(typename, msg) {
+function rpc(funcname, msg) {
 	return new Promise(function(resolve, reject) {
 		var rnd = Math.random()
 			.slice(2)
 			.toString(16);
-		var id = "greenlock:" + rnd;
+		var id = msgPrefix + rnd;
 		var timeout;
 
 		function getResponse(msg) {
-			if (msg.id !== id) {
+			if (msg._id !== id) {
 				return;
 			}
 			clearTimeout(timeout);
-			resolve(msg);
+			resolve(msg._result);
 		}
 
 		process.on("message", getResponse);
-		msg.id = msg;
-		msg.type = typename;
-		process.send(msg);
+		process.send({
+			_id: id,
+			_funcname: funcname,
+			_input: msg
+		});
 
 		timeout = setTimeout(function() {
 			process.removeListener("message", getResponse);
-			reject(new Error("process message timeout"));
-		}, 30 * 1000);
-	});
-}
-
-function notifyMaster(ev, args) {
-	process.on("message", {
-		type: "notification",
-		event: ev,
-		parameters: args
+			reject(new Error("worker rpc request timeout"));
+		}, messageTimeout);
 	});
 }

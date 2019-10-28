@@ -14,7 +14,7 @@ var smallStagger = Math.round(Math.PI * (30 * 1000));
 //secureOpts.SNICallback = sni.create(opts, greenlock, secureOpts);
 sni.create = function(opts, greenlock, secureOpts) {
 	var _cache = {};
-	var defaultServername = opts.servername || greenlock.servername;
+	var defaultServername = opts.servername || greenlock.servername || "";
 
 	if (secureOpts.cert) {
 		// Note: it's fine if greenlock.servername is undefined,
@@ -157,6 +157,8 @@ sni.create = function(opts, greenlock, secureOpts) {
 			[match.altnames || site.altnames || [match.subject || site.subject]].forEach(function(altname) {
 				_cache[altname] = meta;
 			});
+
+      return meta.secureContext;
 		});
 	}
 

@@ -6,6 +6,7 @@ var http = require("http");
 var HttpMiddleware = require("./http-middleware.js");
 var HttpsMiddleware = require("./https-middleware.js");
 var sni = require("./sni.js");
+var cluster = require("cluster");
 
 Servers.create = function(greenlock, opts) {
 	var servers = {};
@@ -22,14 +23,24 @@ Servers.create = function(greenlock, opts) {
 			return _httpServer;
 		}
 
-		_httpServer = http.createServer(HttpMiddleware.create(opts.greenlock, defaultApp));
+		_httpServer = http.createServer(HttpMiddleware.create(greenlock, defaultApp));
 		_httpServer.once("error", startError);
 
 		return _httpServer;
 	};
 
+	var _middlewareApp;
+
 	servers.httpsServer = function(secureOpts, defaultApp) {
+		if (defaultApp) {
+			// TODO guard against being set twice?
+			_middlewareApp = defaultApp;
+		}
+
 		if (_httpsServer) {
+			if (secureOpts && Object.keys(secureOpts)) {
+				throw new Error("Call glx.httpsServer(tlsOptions) before calling glx.serveApp(app)");
+			}
 			return _httpsServer;
 		}
 
@@ -39,7 +50,12 @@ Servers.create = function(greenlock, opts) {
 
 		_httpsServer = createSecureServer(
 			wrapDefaultSniCallback(opts, greenlock, secureOpts),
-			HttpsMiddleware.create(greenlock, defaultApp)
+			HttpsMiddleware.create(greenlock, function(req, res) {
+				if (!_middlewareApp) {
+					throw new Error("Set app with `glx.serveApp(app)` or `glx.httpsServer(tlsOptions, app)`");
+				}
+				_middlewareApp(req, res);
+			})
 		);
 		_httpsServer.once("error", startError);
 
@@ -53,18 +69,25 @@ Servers.create = function(greenlock, opts) {
 				return;
 			}
 
+			var id = cluster.isWorker && cluster.worker.id;
+			var idstr = (id && "$" + id + " ") || "";
 			var plainServer = servers.httpServer(require("redirect-https")());
 			var plainAddr = "0.0.0.0";
 			var plainPort = 80;
 			plainServer.listen(plainPort, plainAddr, function() {
-				console.info("Listening on", plainAddr + ":" + plainPort, "for ACME challenges, and redirecting to HTTPS");
+				console.info(
+					idstr + "Listening on",
+					plainAddr + ":" + plainPort,
+					"for ACME challenges, and redirecting to HTTPS"
+				);
 
 				// TODO fetch greenlock.servername
+				_middlewareApp = app || _middlewareApp;
 				var secureServer = servers.httpsServer({}, app);
 				var secureAddr = "0.0.0.0";
 				var securePort = 443;
 				secureServer.listen(securePort, secureAddr, function() {
-					console.info("Listening on", secureAddr + ":" + securePort, "for secure traffic");
+					console.info(idstr + "Listening on", secureAddr + ":" + securePort, "for secure traffic");
 
 					plainServer.removeListener("error", startError);
 					secureServer.removeListener("error", startError);
@@ -73,6 +96,7 @@ Servers.create = function(greenlock, opts) {
 			});
 		});
 	};
+
 	return servers;
 };
 

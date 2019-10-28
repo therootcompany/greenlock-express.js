@@ -6,9 +6,9 @@ var Master = module.exports;
 
 var cluster = require("cluster");
 var os = require("os");
+var msgPrefix = "greenlock:";
 
 Master.create = function(opts) {
-	var workers = [];
 	var resolveCb;
 	var readyCb;
 	var _kicked = false;
@@ -27,19 +27,16 @@ Master.create = function(opts) {
 		}
 		_kicked = true;
 
-		console.log("TODO: start the workers and such...");
-		// handle messages from workers
-		workers.push(null);
+		Master._spawnWorkers(opts, greenlock);
+
 		ready.then(function(fn) {
 			// not sure what this API should be yet
-			fn({
-				//workers: workers.slice(0)
-			});
+			fn();
 		});
 	}
 
 	var master = {
-		worker: function() {
+		serve: function() {
 			kickoff();
 			return master;
 		},
@@ -54,22 +51,19 @@ Master.create = function(opts) {
 	};
 };
 
-// opts.approveDomains(options, certs, cb)
-GLE.create = function(opts) {
-	GLE._spawnWorkers(opts);
-
-	gl.tlsOptions = {};
-
-	return master;
-};
-
 function range(n) {
+	n = parseInt(n, 10);
+	if (!n) {
+		return [];
+	}
 	return new Array(n).join(",").split(",");
 }
 
-Master._spawnWorkers = function(opts) {
+Master._spawnWorkers = function(opts, greenlock) {
 	var numCpus = parseInt(process.env.NUMBER_OF_PROCESSORS, 10) || os.cpus().length;
 
+	// process rpc messages
+	// start when dead
 	var numWorkers = parseInt(opts.numWorkers, 10);
 	if (!numWorkers) {
 		if (numCpus <= 2) {
@@ -79,7 +73,68 @@ Master._spawnWorkers = function(opts) {
 		}
 	}
 
-	return range(numWorkers).map(function() {
-		return cluster.fork();
+	return range(numWorkers - 1).map(function() {
+		Master._spawnWorker(opts, greenlock);
 	});
+};
+
+Master._spawnWorker = function(opts, greenlock) {
+	var w = cluster.fork();
+	// automatically added to master's `cluster.workers`
+	w.on("exit", function(code, signal) {
+		// TODO handle failures
+		// Should test if the first starts successfully
+		// Should exit if failures happen too quickly
+
+		// For now just kill all when any die
+		if (signal) {
+			console.error("worker was killed by signal:", signal);
+		} else if (code !== 0) {
+			console.error("worker exited with error code:", code);
+		} else {
+			console.error("worker unexpectedly quit without exit code or signal");
+		}
+		process.exit(2);
+
+		//addWorker();
+	});
+
+	function handleMessage(msg) {
+		if (0 !== (msg._id || "").indexOf(msgPrefix)) {
+			return;
+		}
+		if ("string" !== typeof msg._funcname) {
+			// TODO developer error
+			return;
+		}
+
+		function rpc() {
+			return greenlock[msg._funcname](msg._input)
+				.then(function(result) {
+					w.send({
+						_id: msg._id,
+						_result: result
+					});
+				})
+				.catch(function(e) {
+					var error = new Error(e.message);
+					Object.getOwnPropertyNames(e).forEach(function(k) {
+						error[k] = e[k];
+					});
+					w.send({
+						_id: msg._id,
+						_error: error
+					});
+				});
+		}
+
+		try {
+			rpc();
+		} catch (e) {
+			console.error("Unexpected and uncaught greenlock." + msg._funcname + " error:");
+			console.error(e);
+		}
+	}
+
+	w.on("message", handleMessage);
 };
