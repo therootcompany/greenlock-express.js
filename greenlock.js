@@ -59,13 +59,13 @@ module.exports.create = function(opts) {
 
 function addGreenlockAgent(opts) {
 	// Add greenlock as part of Agent, unless this is greenlock
-	if (!/greenlock(-express|-pro)?/i.test(opts.packageAgent)) {
+	var packageAgent = opts.packageAgent || "";
+	if (!/greenlock(-express|-pro)?/i.test(packageAgent)) {
 		var pkg = require("./package.json");
-		var packageAgent = "Greenlock_Express/" + pkg.version;
-		opts.packageAgent += " " + packageAgent;
+		packageAgent += " Greenlock_Express/" + pkg.version;
 	}
 
-	return opts.packageAgent;
+	return packageAgent.trim();
 }
 
 // ex: John Doe <john@example.com> (https://john.doe)
