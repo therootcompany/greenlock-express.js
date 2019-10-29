@@ -23,11 +23,15 @@ HttpMiddleware.create = function(gl, defaultApp) {
 		var token = req.url.slice(challengePrefix.length);
 
 		gl.getAcmeHttp01ChallengeResponse({ type: "http-01", servername: hostname, token: token })
-			.then(function(result) {
-				respondWithGrace(res, result, hostname, token);
-			})
 			.catch(function(err) {
 				respondToError(gl, res, err, "http_01_middleware_challenge_response", hostname);
+				return { __done: true };
+			})
+			.then(function(result) {
+				if (result && result.__done) {
+					return;
+				}
+				return respondWithGrace(res, result, hostname, token);
 			});
 	};
 };

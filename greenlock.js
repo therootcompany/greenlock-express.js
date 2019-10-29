@@ -9,33 +9,49 @@ module.exports.create = function(opts) {
 
 	// TODO move to greenlock proper
 	greenlock.getAcmeHttp01ChallengeResponse = function(opts) {
-		return greenlock.find({ servername: opts.servername }).then(function(sites) {
-			if (!sites.length) {
-				return null;
-			}
-			var site = sites[0];
-			if (!site.challenges || !site.challenges["http-01"]) {
-				return null;
-			}
+		// TODO some sort of caching to prevent database hits?
+		return greenlock
+			._config({ servername: opts.servername })
+			.then(function(site) {
+				if (!site) {
+					return null;
+				}
 
-			var plugin;
-			try {
-				plugin = require(site.challenges["http-01"].module);
-				plugin = plugin.create(site.challenges["http-01"]);
-			} catch (e) {
-				console.error("error getting acme http-01 plugin");
-				console.error(e);
-				return null;
-			}
+				// Hmm... this _should_ be impossible
+				if (!site.challenges || !site.challenges["http-01"]) {
+					return null;
+				}
 
-			return plugin.get(opts).then(function(result) {
-				// TODO is this the right way?
-				var ch = (result && result.challenge) || result || {};
-				return {
-					keyAuthorization: ch.keyAuthorization
-				};
+				return Greenlock._loadChallenge(site.challenges, "http-01");
+			})
+			.then(function(plugin) {
+				return plugin
+					.get({
+						challenge: {
+							type: opts.type,
+							//hostname: opts.servername,
+							altname: opts.servername,
+							identifier: { value: opts.servername },
+							token: opts.token
+						}
+					})
+					.then(function(result) {
+						var keyAuth;
+						if (result) {
+							// backwards compat that shouldn't be dropped
+							// because new v3 modules had to do this to be
+							// backwards compatible with Greenlock v2.7 at
+							// the time.
+							if (result.challenge) {
+								result = challenge;
+							}
+							keyAuth = result.keyAuthorization;
+						}
+						return {
+							keyAuthorization: keyAuth
+						};
+					});
 			});
-		});
 	};
 
 	return greenlock;
@@ -43,9 +59,9 @@ module.exports.create = function(opts) {
 
 function addGreenlockAgent(opts) {
 	// Add greenlock as part of Agent, unless this is greenlock
-	if (!/^greenlock(-express|-pro)?/.test(opts.packageAgent)) {
+	if (!/greenlock(-express|-pro)?/i.test(opts.packageAgent)) {
 		var pkg = require("./package.json");
-		var packageAgent = pkg.name + "/" + pkg.version;
+		var packageAgent = "Greenlock_Express/" + pkg.version;
 		opts.packageAgent += " " + packageAgent;
 	}
 

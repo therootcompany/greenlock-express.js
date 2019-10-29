@@ -118,26 +118,24 @@ sni.create = function(greenlock, secureOpts) {
 			meta.refreshAt = Date.now() + randomRefreshOffset();
 		}
 
-		// TODO greenlock.get({ servername: servername })
 		// TODO don't get unknown certs at all, rely on auto-updates from greenlock
-		// Note: greenlock.renew() will return an existing fresh cert or issue a new one
-		return greenlock.renew({ servername: servername }).then(function(matches) {
+		// Note: greenlock.get() will return an existing fresh cert or issue a new one
+		return greenlock.get({ servername: servername }).then(function(result) {
 			var meta = getCachedMeta(servername);
 			if (!meta) {
-				meta = _cache[servername] = { secureContext: {} };
+				meta = _cache[servername] = { secureContext: { _valid: false } };
 			}
 			// prevent from being punked by bot trolls
 			meta.refreshAt = Date.now() + smallStagger;
 
 			// nothing to do
-			if (!matches.length) {
+			if (!result) {
 				return null;
 			}
 
 			// we only care about the first one
-			var pems = matches[0].pems;
-			var site = matches[0].site;
-			var match = matches[0];
+			var pems = result.pems;
+			var site = result.site;
 			if (!pems || !pems.cert) {
 				// nothing to do
 				// (and the error should have been reported already)
@@ -152,9 +150,10 @@ sni.create = function(greenlock, secureOpts) {
 					cert: pems.cert + "\n" + pems.chain + "\n"
 				})
 			};
+			meta.secureContext._valid = true;
 
 			// copy this same object into every place
-			[match.altnames || site.altnames || [match.subject || site.subject]].forEach(function(altname) {
+			(result.altnames || site.altnames || [result.subject || site.subject]).forEach(function(altname) {
 				_cache[altname] = meta;
 			});
 

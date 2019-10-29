@@ -75,7 +75,7 @@ Master._spawnWorkers = function(opts, greenlock) {
 		}
 	}
 
-	cluster.on("exit", function() {
+	cluster.once("exit", function() {
 		setTimeout(function() {
 			process.exit(3);
 		}, 100);
@@ -101,7 +101,7 @@ Master._spawnWorkers = function(opts, greenlock) {
 Master._spawnWorker = function(opts, greenlock) {
 	var w = cluster.fork();
 	// automatically added to master's `cluster.workers`
-	w.on("exit", function(code, signal) {
+	w.once("exit", function(code, signal) {
 		// TODO handle failures
 		// Should test if the first starts successfully
 		// Should exit if failures happen too quickly

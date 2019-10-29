@@ -14,14 +14,8 @@ function initialize() {
 		staging: true,
 		cluster: true,
 
-		challenges: {
-			"dns-01": {
-				module: "acme-dns-01-digitalocean"
-			}
-		},
-
 		notify: function(ev, params) {
-			console.log(ev, params);
+			console.info(ev, params);
 		}
 	};
 	return config;

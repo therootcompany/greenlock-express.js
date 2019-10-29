@@ -7,7 +7,7 @@ var msgPrefix = "greenlock:";
 
 Worker.create = function() {
 	var greenlock = {};
-	["getAcmeHttp01ChallengeResponse", "renew", "notify"].forEach(function(k) {
+	["getAcmeHttp01ChallengeResponse", "get", "notify"].forEach(function(k) {
 		greenlock[k] = function(args) {
 			return rpc(k, args);
 		};
@@ -40,10 +40,13 @@ function rpc(funcname, msg) {
 			if (msg._id !== id) {
 				return;
 			}
+			process.removeListener("message", getResponse);
 			clearTimeout(timeout);
 			resolve(msg._result);
 		}
 
+		// TODO keep a single listener than just responds
+		// via a collection of callbacks? or leave as is?
 		process.on("message", getResponse);
 		process.send({
 			_id: id,
