@@ -10,7 +10,11 @@ require("./")
 function initialize() {
 	var pkg = require("./package.json");
 	var config = {
-		package: pkg,
+		package: {
+			name: "Greenlock_Express_Demo",
+			version: pkg.version,
+			author: pkg.author
+		},
 		staging: true,
 		cluster: true,
 
