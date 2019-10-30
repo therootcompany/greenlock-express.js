@@ -111,14 +111,20 @@ SanitizeHost._checkServername = function(safeHost, tlsSocket) {
 		// TODO optimize / cache?
 		// *should* always have a string, right?
 		// *should* always be lowercase already, right?
-		if (
-			(cert.subject.CN || "").toLowerCase() !== safeHost &&
-			!(cert.subjectaltname || "").split(/,\s+/).some(function(name) {
-				// always prefixed with "DNS:"
-				return safeHost === name.slice(4).toLowerCase();
-			})
-		) {
-			return false;
+		//console.log(safeHost, cert.subject.CN, cert.subjectaltname);
+		var isSubject = (cert.subject.CN || "").toLowerCase() === safeHost;
+		if (isSubject) {
+			return true;
+		}
+
+		var dnsnames = (cert.subjectaltname || "").split(/,\s+/);
+		var inSanList = dnsnames.some(function(name) {
+			// always prefixed with "DNS:"
+			return safeHost === name.slice(4).toLowerCase();
+		});
+
+		if (isListed) {
+			return true;
 		}
 	} catch (e) {
 		// not sure what else to do in this situation...
