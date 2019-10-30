@@ -69,7 +69,7 @@ function addGreenlockAgent(opts) {
 }
 
 // ex: John Doe <john@example.com> (https://john.doe)
-var looseEmailRe = /.* <([^'" <>:;`]+@[^'" <>:;`]+\.[^'" <>:;`]+)> .*/;
+var looseEmailRe = /.*([^'" <>:;`]+@[^'" <>:;`]+\.[^'" <>:;`]+).*/;
 function parsePackage(opts) {
 	// 'package' is sometimes a reserved word
 	var pkg = opts.package || opts.pkg;
