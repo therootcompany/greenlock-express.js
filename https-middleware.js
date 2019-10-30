@@ -123,7 +123,7 @@ SanitizeHost._checkServername = function(safeHost, tlsSocket) {
 			return safeHost === name.slice(4).toLowerCase();
 		});
 
-		if (isListed) {
+		if (inSanList) {
 			return true;
 		}
 	} catch (e) {
