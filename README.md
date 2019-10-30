@@ -6,22 +6,42 @@
 
 Free SSL, Automated HTTPS / HTTP2, served with Node via Express, Koa, hapi, etc.
 
+### Let's Encrypt for Node, Express, etc
+
 ```js
 require("greenlock-express")
-	.init(getConfig)
-	.serve(worker);
+	.init(function getConfig() {
+		return { package: require("./package.json") };
+	})
+	.serve(httpsWorker);
 
-function getConfig() {
-	return {
-		package: require("./package.json")
-	};
-}
+function httpsWorker(server) {
+	// Works with any Node app (Express, etc)
+	var app = require("./my-express-app.js");
 
-function worker(server) {
-	server.serveApp(function(req, res) {
-		// Works with any Node app (Express, etc)
+	// See, all normal stuff here
+	app.get("/hello", function(req, res) {
 		res.end("Hello, Encrypted World!");
 	});
+
+	// Serves on 80 and 443
+	// Get's SSL certificates magically!
+	server.serveApp(app);
+}
+```
+
+Manage via API or the config file:
+
+```json
+{
+	"subscriberEmail": "letsencrypt-test@therootcompany.com",
+	"agreeToTerms": true,
+	"sites": {
+		"example.com": {
+			"subject": "example.com",
+			"altnames": ["example.com", "www.example.com"]
+		}
+	}
 }
 ```
 
