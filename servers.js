@@ -38,7 +38,7 @@ Servers.create = function(greenlock) {
 		}
 
 		if (_httpsServer) {
-			if (secureOpts && Object.keys(secureOpts)) {
+			if (secureOpts && Object.keys(secureOpts).length) {
 				throw new Error("Call glx.httpsServer(tlsOptions) before calling glx.serveApp(app)");
 			}
 			return _httpsServer;
@@ -86,7 +86,7 @@ Servers.create = function(greenlock) {
 
 				// TODO fetch greenlock.servername
 				_middlewareApp = app || _middlewareApp;
-				var secureServer = servers.httpsServer({}, app);
+				var secureServer = servers.httpsServer(null, app);
 				var secureAddr = "0.0.0.0";
 				var securePort = 443;
 				secureServer.listen(securePort, secureAddr, function() {

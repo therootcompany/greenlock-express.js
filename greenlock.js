@@ -68,12 +68,16 @@ function addGreenlockAgent(opts) {
 	return packageAgent.trim();
 }
 
-// ex: John Doe <john@example.com> (https://john.doe)
-var looseEmailRe = /.*([^'" <>:;`]+@[^'" <>:;`]+\.[^'" <>:;`]+).*/;
+// ex: "John Doe <john@example.com> (https://john.doe)"
+// ex: "John Doe <john@example.com>"
+// ex: "<john@example.com>"
+// ex: "john@example.com"
+var looseEmailRe = /(^|[\s<])([^'" <>:;`]+@[^'" <>:;`]+\.[^'" <>:;`]+)/;
 function parsePackage(opts) {
 	// 'package' is sometimes a reserved word
 	var pkg = opts.package || opts.pkg;
 	if (!pkg) {
+		opts.maintainerEmail = parseMaintainer(opts.maintainerEmail);
 		return opts;
 	}
 
@@ -90,13 +94,26 @@ function parsePackage(opts) {
 
 	if (!opts.maintainerEmail) {
 		try {
-			opts.maintainerEmail = pkg.author.email || pkg.author.match(looseEmailRe)[1];
+			opts.maintainerEmail = pkg.author.email || pkg.author.match(looseEmailRe)[2];
 		} catch (e) {}
 	}
 	if (!opts.maintainerEmail) {
 		throw new Error("missing or malformed `package.author`, which is used as the contact for support notices");
 	}
 	opts.package = undefined;
+	opts.maintainerEmail = parseMaintainer(opts.maintainerEmail);
 
 	return opts;
+}
+
+function parseMaintainer(maintainerEmail) {
+	try {
+		maintainerEmail = maintainerEmail.match(looseEmailRe)[2];
+	} catch (e) {
+		maintainerEmail = null;
+	}
+	if (!maintainerEmail) {
+		throw new Error("missing or malformed `maintainerEmail`, which is used as the contact for support notices");
+	}
+	return maintainerEmail;
 }
