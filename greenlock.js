@@ -7,51 +7,9 @@ module.exports.create = function(opts) {
 	var Greenlock = require("@root/greenlock");
 	var greenlock = Greenlock.create(opts);
 
-	// TODO move to greenlock proper
+	// re-export as top-level function to simplify rpc with workers
 	greenlock.getAcmeHttp01ChallengeResponse = function(opts) {
-		// TODO some sort of caching to prevent database hits?
-		return greenlock
-			._config({ servername: opts.servername })
-			.then(function(site) {
-				if (!site) {
-					return null;
-				}
-
-				// Hmm... this _should_ be impossible
-				if (!site.challenges || !site.challenges["http-01"]) {
-					return null;
-				}
-
-				return Greenlock._loadChallenge(site.challenges, "http-01");
-			})
-			.then(function(plugin) {
-				return plugin
-					.get({
-						challenge: {
-							type: opts.type,
-							//hostname: opts.servername,
-							altname: opts.servername,
-							identifier: { value: opts.servername },
-							token: opts.token
-						}
-					})
-					.then(function(result) {
-						var keyAuth;
-						if (result) {
-							// backwards compat that shouldn't be dropped
-							// because new v3 modules had to do this to be
-							// backwards compatible with Greenlock v2.7 at
-							// the time.
-							if (result.challenge) {
-								result = challenge;
-							}
-							keyAuth = result.keyAuthorization;
-						}
-						return {
-							keyAuthorization: keyAuth
-						};
-					});
-			});
+		return greenlock.challenges.get(opts);
 	};
 
 	return greenlock;
