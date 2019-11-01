@@ -11,38 +11,38 @@ var pkg = require("../../package.json");
 // Use glx.httpsServer(tlsOptions, app) instead.
 
 function httpsWorker(glx) {
-	//
-	// HTTP2 would have been the default httpsServer for node v12+
-	// However... https://github.com/expressjs/express/issues/3388
-	//
+    //
+    // HTTP2 would have been the default httpsServer for node v12+
+    // However... https://github.com/expressjs/express/issues/3388
+    //
 
-	// Get the raw http2 server:
-	var http2Server = glx.http2Server(function(req, res) {
-		res.end("Hello, Encrypted World!");
-	});
+    // Get the raw http2 server:
+    var http2Server = glx.http2Server(function(req, res) {
+        res.end("Hello, Encrypted World!");
+    });
 
-	http2Server.listen(443, "0.0.0.0", function() {
-		console.info("Listening on ", http2Server.address());
-	});
+    http2Server.listen(443, "0.0.0.0", function() {
+        console.info("Listening on ", http2Server.address());
+    });
 
-	// Note:
-	// You must ALSO listen on port 80 for ACME HTTP-01 Challenges
-	// (the ACME and http->https middleware are loaded by glx.httpServer)
-	var httpServer = glx.httpServer();
-	httpServer.listen(80, "0.0.0.0", function() {
-		console.info("Listening on ", httpServer.address());
-	});
+    // Note:
+    // You must ALSO listen on port 80 for ACME HTTP-01 Challenges
+    // (the ACME and http->https middleware are loaded by glx.httpServer)
+    var httpServer = glx.httpServer();
+    httpServer.listen(80, "0.0.0.0", function() {
+        console.info("Listening on ", httpServer.address());
+    });
 }
 
 //require("greenlock-express")
 require("../../")
-	.init(function getConfig() {
-		// Greenlock Config
+    .init(function getConfig() {
+        // Greenlock Config
 
-		return {
-			package: { name: "http2-example", version: pkg.version },
-			maintainerEmail: "jon@example.com",
-			cluster: false
-		};
-	})
-	.serve(httpsWorker);
+        return {
+            package: { name: "http2-example", version: pkg.version },
+            maintainerEmail: "jon@example.com",
+            cluster: false
+        };
+    })
+    .serve(httpsWorker);

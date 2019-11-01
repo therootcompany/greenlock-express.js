@@ -17,28 +17,28 @@ var GLE = module.exports;
 // under the hood. That's the hope, anyway.
 
 GLE.init = function(fn) {
-	if (cluster.isWorker) {
-		// ignore the init function and launch the worker
-		return require("./worker.js").create();
-	}
+    if (cluster.isWorker) {
+        // ignore the init function and launch the worker
+        return require("./worker.js").create();
+    }
 
-	var opts = fn();
-	if (!opts || "object" !== typeof opts) {
-		throw new Error(
-			"the `Greenlock.init(fn)` function should return an object `{ maintainerEmail, packageAgent, notify }`"
-		);
-	}
+    var opts = fn();
+    if (!opts || "object" !== typeof opts) {
+        throw new Error(
+            "the `Greenlock.init(fn)` function should return an object `{ maintainerEmail, packageAgent, notify }`"
+        );
+    }
 
-	// just for ironic humor
-	["cloudnative", "cloudscale", "webscale", "distributed", "blockchain"].forEach(function(k) {
-		if (opts[k]) {
-			opts.cluster = true;
-		}
-	});
+    // just for ironic humor
+    ["cloudnative", "cloudscale", "webscale", "distributed", "blockchain"].forEach(function(k) {
+        if (opts[k]) {
+            opts.cluster = true;
+        }
+    });
 
-	if (opts.cluster) {
-		return require("./master.js").create(opts);
-	}
+    if (opts.cluster) {
+        return require("./master.js").create(opts);
+    }
 
-	return require("./single.js").create(opts);
+    return require("./single.js").create(opts);
 };

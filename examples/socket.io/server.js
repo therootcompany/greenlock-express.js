@@ -9,41 +9,41 @@
 //       (see the websocket example)
 
 function httpsWorker(glx) {
-	var socketio = require("socket.io");
-	var io;
+    var socketio = require("socket.io");
+    var io;
 
-	// we need the raw https server
-	var server = glx.httpsServer();
+    // we need the raw https server
+    var server = glx.httpsServer();
 
-	io = socketio(server);
+    io = socketio(server);
 
-	// Then you do your socket.io stuff
-	io.on("connection", function(socket) {
-		console.log("a user connected");
-		socket.emit("Welcome");
+    // Then you do your socket.io stuff
+    io.on("connection", function(socket) {
+        console.log("a user connected");
+        socket.emit("Welcome");
 
-		socket.on("chat message", function(msg) {
-			socket.broadcast.emit("chat message", msg);
-		});
-	});
+        socket.on("chat message", function(msg) {
+            socket.broadcast.emit("chat message", msg);
+        });
+    });
 
-	// servers a node app that proxies requests to a localhost
-	glx.serveApp(function(req, res) {
-		res.setHeader("Content-Type", "text/html; charset=utf-8");
-		res.end("Hello, World!\n\n💚 🔒.js");
-	});
+    // servers a node app that proxies requests to a localhost
+    glx.serveApp(function(req, res) {
+        res.setHeader("Content-Type", "text/html; charset=utf-8");
+        res.end("Hello, World!\n\n💚 🔒.js");
+    });
 }
 
 var pkg = require("../../package.json");
 //require("greenlock-express")
 require("../../")
-	.init(function getConfig() {
-		// Greenlock Config
+    .init(function getConfig() {
+        // Greenlock Config
 
-		return {
-			package: { name: "socket-io-example", version: pkg.version },
-			maintainerEmail: "jon@example.com",
-			cluster: false
-		};
-	})
-	.serve(httpsWorker);
+        return {
+            package: { name: "socket-io-example", version: pkg.version },
+            maintainerEmail: "jon@example.com",
+            cluster: false
+        };
+    })
+    .serve(httpsWorker);

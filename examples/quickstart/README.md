@@ -10,13 +10,13 @@ Manage via API or the config file:
 
 ```json
 {
-	"subscriberEmail": "letsencrypt-test@therootcompany.com",
-	"agreeToTerms": true,
-	"sites": {
-		"example.com": {
-			"subject": "example.com",
-			"altnames": ["example.com", "www.example.com"]
-		}
-	}
+    "subscriberEmail": "letsencrypt-test@therootcompany.com",
+    "agreeToTerms": true,
+    "sites": {
+        "example.com": {
+            "subject": "example.com",
+            "altnames": ["example.com", "www.example.com"]
+        }
+    }
 }
 ```
