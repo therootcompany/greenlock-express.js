@@ -89,38 +89,17 @@ Manage via API or the config file:
   - [x] Key and Certificate Management
   - [x] ACME Challenge Plugins
 
-# Plenty of Examples
-
-**These are in-progress** Check back tomorrow (Nov 2nd, 2019).
-
-- [greenlock-express.js/examples/](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples)
-  - [Express](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/express/)
-  - [Node's **http2**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/http2/)
-  - [Node's https](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/https/)
-  - [**WebSockets**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/websockets/)
-  - [Socket.IO](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/socket-io/)
-  - [Cluster](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/cluster/)
-  - [**Wildcards**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/wildcards/) (coming soon)
-  - [**Localhost**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/localhost/) (coming soon)
-  - [**CI/CD**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/ci-cd/) (coming soon)
-  - [HTTP Proxy](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/http-proxy/)
-
-# Easy to Customize
-
-<!-- greenlock-manager-test => greenlock-manager-custom -->
-
-<!--
-- [greenlock.js/examples/](https://git.rootprojects.org/root/greenlock.js/src/branch/master/examples)
--->
-
-- [Custom Domain Management](https://git.rootprojects.org/root/greenlock-manager-test.js)
-- [Custom Key & Cert Storage](https://git.rootprojects.org/root/greenlock-store-test.js)
-- [Custom ACME HTTP-01 Challenges](https://git.rootprojects.org/root/acme-http-01-test.js)
-- [Custom ACME DNS-01 Challenges](https://git.rootprojects.org/root/acme-dns-01-test.js)
-
 # QuickStart Guide
 
 Easy as 1, 2, 3... 4
+
+1. Create a node project
+2. Create an http app (i.e. Express)
+3. Serve with Greenlock Express
+4. Manage SSL certifates and domains
+
+<details>
+<summary>Read Guide</summary>
 
 ## 1. Create a node project
 
@@ -284,6 +263,61 @@ Note: **Localhost**, **Wildcard**, and Certificates for Private Networks require
   - [**Wildcards**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/wildcards/) (coming soon)
   - [**Localhost**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/localhost/) (coming soon)
   - [**CI/CD**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/ci-cd/) (coming soon)
+
+</details>
+
+# Plenty of Examples
+
+**These are in-progress** Check back tomorrow (Nov 2nd, 2019).
+
+- [greenlock-express.js/examples/](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples)
+  - [Express](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/express/)
+  - [Node's **http2**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/http2/)
+  - [Node's https](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/https/)
+  - [**WebSockets**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/websockets/)
+  - [Socket.IO](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/socket-io/)
+  - [Cluster](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/cluster/)
+  - [**Wildcards**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/wildcards/) (coming soon)
+  - [**Localhost**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/localhost/) (coming soon)
+  - [**CI/CD**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/ci-cd/) (coming soon)
+  - [HTTP Proxy](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/http-proxy/)
+
+# Easy to Customize
+
+<!-- greenlock-manager-test => greenlock-manager-custom -->
+
+<!--
+- [greenlock.js/examples/](https://git.rootprojects.org/root/greenlock.js/src/branch/master/examples)
+-->
+
+- [Custom Domain Management](https://git.rootprojects.org/root/greenlock-manager-test.js)
+- [Custom Key & Cert Storage](https://git.rootprojects.org/root/greenlock-store-test.js)
+- [Custom ACME HTTP-01 Challenges](https://git.rootprojects.org/root/acme-http-01-test.js)
+- [Custom ACME DNS-01 Challenges](https://git.rootprojects.org/root/acme-dns-01-test.js)
+
+# Ready-made Integrations
+
+Greenlock Express integrates between Let's Encrypt's ACME Challenges and many popular services.
+
+| Type        | Service                                                                             | Plugin                   |
+| ----------- | ----------------------------------------------------------------------------------- | ------------------------ |
+| dns-01      | CloudFlare                                                                          | acme-dns-01-cloudflare   |
+| dns-01      | [Digital Ocean](https://git.rootprojects.org/root/acme-dns-01-digitalocean.js)      | acme-dns-01-digitalocean |
+| dns-01      | [DNSimple](https://git.rootprojects.org/root/acme-dns-01-dnsimple.js)               | acme-dns-01-dnsimple     |
+| dns-01      | [DuckDNS](https://git.rootprojects.org/root/acme-dns-01-duckdns.js)                 | acme-dns-01-duckdns      |
+| http-01     | File System / [Web Root](https://git.rootprojects.org/root/acme-http-01-webroot.js) | acme-http-01-webroot     |
+| dns-01      | [GoDaddy](https://git.rootprojects.org/root/acme-dns-01-godaddy.js)                 | acme-dns-01-godaddy      |
+| dns-01      | [Gandi](https://git.rootprojects.org/root/acme-dns-01-gandi.js)                     | acme-dns-01-gandi        |
+| dns-01      | [NameCheap](https://git.rootprojects.org/root/acme-dns-01-namecheap.js)             | acme-dns-01-namecheap    |
+| dns-01      | [Name&#46;com](https://git.rootprojects.org/root/acme-dns-01-namedotcom.js)         | acme-dns-01-namedotcom   |
+| dns-01      | Route53 (AWS)                                                                       | acme-dns-01-route53      |
+| http-01     | S3 (AWS, Digital Ocean, Scaleway)                                                   | acme-http-01-s3          |
+| dns-01      | [Vultr](https://git.rootprojects.org/root/acme-dns-01-vultr.js)                     | acme-dns-01-vultr        |
+| dns-01      | [Build your own](https://git.rootprojects.org/root/acme-dns-01-test.js)             | acme-dns-01-test         |
+| http-01     | [Build your own](https://git.rootprojects.org/root/acme-http-01-test.js)            | acme-http-01-test        |
+| tls-alpn-01 | [Contact us](mailto:support@therootcompany.com)                                     | -                        |
+
+Search `acme-http-01-` or `acme-dns-01-` on npm to find more.
 
 # Full Documentation
 
