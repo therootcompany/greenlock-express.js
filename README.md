@@ -115,7 +115,7 @@ npm init
 
 ## 2. Create an http app (i.e. express)
 
-This example is shown with Express, but any node app will doGreenlock
+This example is shown with Express, but any node app will do. Greenlock
 works with everything.
 (or any node-style http app)
 
