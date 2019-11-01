@@ -93,13 +93,8 @@ Manage via API or the config file:
 
 Easy as 1, 2, 3... 4
 
-1. Create a node project
-2. Create an http app (i.e. Express)
-3. Serve with Greenlock Express
-4. Manage SSL certifates and domains
-
 <details>
-<summary>Read Guide</summary>
+<summary>1. Create a node project</summary>
 
 ## 1. Create a node project
 
@@ -112,6 +107,11 @@ mkdir ~/my-project
 pushd ~/my-project
 npm init
 ```
+
+</details>
+
+<details>
+<summary>2. Create an http app (i.e. express)</summary>
 
 ## 2. Create an http app (i.e. express)
 
@@ -142,6 +142,11 @@ app.get("/", myPlainNodeHttpApp);
 
 module.exports = app;
 ```
+
+</details>
+
+<details>
+<summary>3. Serve with Greenlock Express</summary>
 
 ## 3. Serve with Greenlock Express
 
@@ -197,6 +202,11 @@ Greenlock Storage Directory: ~/.config/greenlock/
 Listening on 0.0.0.0:80 for ACME challenges and HTTPS redirects
 Listening on 0.0.0.0:443 for secure traffic
 ```
+
+</details>
+
+<details>
+<summary>4. Manage SSL Certificates and Domains</summary>
 
 ## 4. Manage domains
 
