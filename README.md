@@ -19,8 +19,18 @@ Free SSL, Automated HTTPS / HTTP2, served with Node via Express, Koa, hapi, etc.
 Greenlock Express is a **Web Server** with **Fully Automated HTTPS** and renewals.
 
 ```js
-var pkg = require("./package.json");
+"use strict";
 
+function httpsWorker(glx) {
+	// Serves on 80 and 443
+	// Get's SSL certificates magically!
+
+	glx.serveApp(function(req, res) {
+		res.end("Hello, Encrypted World!");
+	});
+}
+
+var pkg = require("./package.json");
 require("greenlock-express")
 	.init(function getConfig() {
 		// Greenlock Config
@@ -32,37 +42,6 @@ require("greenlock-express")
 		};
 	})
 	.serve(httpsWorker);
-```
-
-With **Express**:
-
-```js
-function httpsWorker(glx) {
-	// Works with any Node app (Express, etc)
-	var app = require("./my-express-app.js");
-
-	// See, all normal stuff here
-	app.get("/hello", function(req, res) {
-		res.end("Hello, Encrypted World!");
-	});
-
-	// Serves on 80 and 443
-	// Get's SSL certificates magically!
-	glx.serveApp(app);
-}
-```
-
-Or with **plain** node HTTP:
-
-```js
-function httpsWorker(glx) {
-	// Serves on 80 and 443
-	// Get's SSL certificates magically!
-
-	glx.serveApp(function(req, res) {
-		res.end("Hello, Encrypted World!");
-	});
-}
 ```
 
 Manage via API or the config file:
