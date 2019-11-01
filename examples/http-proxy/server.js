@@ -1,16 +1,9 @@
 "use strict";
 
-require("@root/greenlock-express")
-	.init(function getConfig() {
-		return { package: require("../package.json") };
-	})
-	.serve(httpsWorker);
-
 function httpsWorker(glx) {
-	var proxy = require("http-proxy").createProxyServer({ xfwd: true });
-
 	// we need the raw https server
 	var server = glx.httpsServer();
+	var proxy = require("http-proxy").createProxyServer({ xfwd: true });
 
 	// catches error events during proxying
 	proxy.on("error", function(err, req, res) {
@@ -20,11 +13,11 @@ function httpsWorker(glx) {
 		return;
 	});
 
-	// We'll proxy websocketts too
+	// We'll proxy websockets too
 	server.on("upgrade", function(req, socket, head) {
 		proxy.ws(req, socket, head, {
 			ws: true,
-			target: "ws://localhost:1443"
+			target: "ws://localhost:3000"
 		});
 	});
 
@@ -35,3 +28,17 @@ function httpsWorker(glx) {
 		});
 	});
 }
+
+var pkg = require("../../package.json");
+//require("greenlock-express")
+require("../../")
+	.init(function getConfig() {
+		// Greenlock Config
+
+		return {
+			package: { name: "http-proxy-example", version: pkg.version },
+			maintainerEmail: "jon@example.com",
+			cluster: false
+		};
+	})
+	.serve(httpsWorker);

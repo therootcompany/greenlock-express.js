@@ -66,7 +66,7 @@ Master._spawnWorkers = function(opts, greenlock) {
 
 	// process rpc messages
 	// start when dead
-	var numWorkers = parseInt(opts.numWorkers, 10);
+	var numWorkers = parseInt(opts.workers || opts.numWorkers, 10);
 	if (!numWorkers) {
 		if (numCpus <= 2) {
 			numWorkers = 2;

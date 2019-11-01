@@ -1,3 +1,11 @@
+# New Documentation &amp; [v2/v3 Migration Guide](https://git.rootprojects.org/root/greenlock.js/src/branch/v3/MIGRATION_GUIDE_V2_V3.md)
+
+Greenlock v3 just came out of private beta **today** (Nov 1st, 2019).
+
+The code is complete and we're working on great documentation.
+
+Many **examples** and **full API** documentation are still coming.
+
 # [Greenlock Express](https://git.rootprojects.org/root/greenlock-express.js) is Let's Encrypt for Node
 
 ![Greenlock Logo](https://git.rootprojects.org/root/greenlock.js/raw/branch/master/logo/greenlock-1063x250.png "Greenlock Logo")
@@ -8,14 +16,28 @@ Free SSL, Automated HTTPS / HTTP2, served with Node via Express, Koa, hapi, etc.
 
 ### Let's Encrypt for Node, Express, etc
 
+Greenlock Express is a **Web Server** with **Fully Automated HTTPS** and renewals.
+
 ```js
+var pkg = require("./package.json");
+
 require("greenlock-express")
 	.init(function getConfig() {
-		return { package: require("./package.json") };
+		// Greenlock Config
+
+		return {
+			package: { name: pkg.name, version: pkg.version },
+			maintainerEmail: pkg.author,
+			cluster: false
+		};
 	})
 	.serve(httpsWorker);
+```
 
-function httpsWorker(server) {
+With **Express**:
+
+```js
+function httpsWorker(glx) {
 	// Works with any Node app (Express, etc)
 	var app = require("./my-express-app.js");
 
@@ -26,11 +48,26 @@ function httpsWorker(server) {
 
 	// Serves on 80 and 443
 	// Get's SSL certificates magically!
-	server.serveApp(app);
+	glx.serveApp(app);
+}
+```
+
+Or with **plain** node HTTP:
+
+```js
+function httpsWorker(glx) {
+	// Serves on 80 and 443
+	// Get's SSL certificates magically!
+
+	glx.serveApp(function(req, res) {
+		res.end("Hello, Encrypted World!");
+	});
 }
 ```
 
 Manage via API or the config file:
+
+`~/.config/greenlock/manage.json`: (default filesystem config)
 
 ```json
 {
@@ -75,25 +112,32 @@ Manage via API or the config file:
 
 # Plenty of Examples
 
+**These are in-progress** Check back tomorrow (Nov 2nd, 2019).
+
 - [greenlock-express.js/examples/](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples)
-  - [Express](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/express.js)
-  - [Node's **http2**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/http2.js)
-  - [Node's https](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/https.js)
-  - [**WebSockets**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/websockets.js)
-  - [Socket.IO](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/socket-io.js)
-  - [Cluster](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/socket-io.js)
-  - [**Wildcards**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/wildcards/README.md)
-  - [**Localhost**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/localhost/README.md)
-  - [**CI/CD**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/ci-cd/README.md)
+  - [Express](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/express/)
+  - [Node's **http2**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/http2/)
+  - [Node's https](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/https/)
+  - [**WebSockets**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/websockets/)
+  - [Socket.IO](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/socket-io/)
+  - [Cluster](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/cluster/)
+  - [**Wildcards**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/wildcards/) (coming soon)
+  - [**Localhost**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/localhost/) (coming soon)
+  - [**CI/CD**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/ci-cd/) (coming soon)
+  - [HTTP Proxy](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/http-proxy/)
 
 # Easy to Customize
 
 <!-- greenlock-manager-test => greenlock-manager-custom -->
 
+<!--
 - [greenlock.js/examples/](https://git.rootprojects.org/root/greenlock.js/src/branch/master/examples)
-  - [Custom Domain Management](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/custom-manager/README.md)
-  - [Custom Key & Cert Storage](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/custom-store/README.md)
-  - [Custom ACME Challenges](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/custom-acme-challenges/README.md)
+-->
+
+- [Custom Domain Management](https://git.rootprojects.org/root/greenlock-manager-test.js)
+- [Custom Key & Cert Storage](https://git.rootprojects.org/root/greenlock-store-test.js)
+- [Custom ACME HTTP-01 Challenges](https://git.rootprojects.org/root/acme-http-01-test.js)
+- [Custom ACME DNS-01 Challenges](https://git.rootprojects.org/root/acme-dns-01-test.js)
 
 # QuickStart Guide
 
@@ -198,30 +242,13 @@ Listening on 0.0.0.0:443 for secure traffic
 
 ## 4. Manage domains
 
-Management can be done via the **CLI** or the JavaScript [**API**](https://git.rootprojects.org/root/greenlock.js/).
-Since this is the QuickStart, we'll demo the **CLI**:
+The management API is built to work with Databases, S3, etc.
 
-You need to create a Let's Encrypt _subscriber account_, which can be done globally, or per-site.
-All individuals, and most businesses, should set this globally:
+HOWEVER, by default it starts with a simple config file.
 
-```bash
-# Set a global subscriber account
-npx greenlock config --subscriber-email 'mycompany@example.com' --agree-to-terms true
-```
-
-<!-- todo print where the key was saved -->
-
-A Let's Encrypt SSL certificate has a "Subject" (Primary Domain) and up to 100 "Alternative Names"
-(of which the first _must_ be the subject).
-
-```bash
-# Add a certificate with specific domains
-npx greenlock add --subject example.com --altnames example.com,www.example.com
-```
-
-<!-- todo print where the cert was saved -->
-
+<!--
 This will update the config file (assuming the default fs-based management plugin):
+-->
 
 `~/.config/greenlock/manager.json`:
 
@@ -238,13 +265,46 @@ This will update the config file (assuming the default fs-based management plugi
 }
 ```
 
+COMING SOON
+
+Management can be done via the **CLI** or the JavaScript [**API**](https://git.rootprojects.org/root/greenlock.js/).
+Since this is the QuickStart, we'll demo the **CLI**:
+
+You need to create a Let's Encrypt _subscriber account_, which can be done globally, or per-site.
+All individuals, and most businesses, should set this globally:
+
+```bash
+# COMING SOON
+# (this command should be here by Nov 5th)
+# (edit the config by hand for now)
+#
+# Set a global subscriber account
+npx greenlock config --subscriber-email 'mycompany@example.com' --agree-to-terms true
+```
+
+<!-- todo print where the key was saved -->
+
+A Let's Encrypt SSL certificate has a "Subject" (Primary Domain) and up to 100 "Alternative Names"
+(of which the first _must_ be the subject).
+
+```bash
+# COMING SOON
+# (this command should be here by Nov 5th)
+# (edit the config by hand for now)
+#
+# Add a certificate with specific domains
+npx greenlock add --subject example.com --altnames example.com,www.example.com
+```
+
+<!-- todo print where the cert was saved -->
+
 Note: **Localhost**, **Wildcard**, and Certificates for Private Networks require
 [**DNS validation**](https://git.rootprojects.org/root/greenlock-exp).
 
 - DNS Validation
-  - [**Wildcards**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/wildcards/README.md)
-  - [**Localhost**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/localhost/README.md)
-  - [**CI/CD**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/ci-cd/README.md)
+  - [**Wildcards**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/wildcards/) (coming soon)
+  - [**Localhost**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/localhost/) (coming soon)
+  - [**CI/CD**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/ci-cd/) (coming soon)
 
 # Full Documentation
 
