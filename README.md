@@ -22,26 +22,26 @@ Greenlock Express is a **Web Server** with **Fully Automated HTTPS** and renewal
 "use strict";
 
 function httpsWorker(glx) {
-	// Serves on 80 and 443
-	// Get's SSL certificates magically!
+    // Serves on 80 and 443
+    // Get's SSL certificates magically!
 
-	glx.serveApp(function(req, res) {
-		res.end("Hello, Encrypted World!");
-	});
+    glx.serveApp(function(req, res) {
+        res.end("Hello, Encrypted World!");
+    });
 }
 
 var pkg = require("./package.json");
 require("greenlock-express")
-	.init(function getConfig() {
-		// Greenlock Config
+    .init(function getConfig() {
+        // Greenlock Config
 
-		return {
-			package: { name: pkg.name, version: pkg.version },
-			maintainerEmail: pkg.author,
-			cluster: false
-		};
-	})
-	.serve(httpsWorker);
+        return {
+            package: { name: pkg.name, version: pkg.version },
+            maintainerEmail: pkg.author,
+            cluster: false
+        };
+    })
+    .serve(httpsWorker);
 ```
 
 Manage via API or the config file:
@@ -50,44 +50,44 @@ Manage via API or the config file:
 
 ```json
 {
-	"subscriberEmail": "letsencrypt-test@therootcompany.com",
-	"agreeToTerms": true,
-	"sites": {
-		"example.com": {
-			"subject": "example.com",
-			"altnames": ["example.com", "www.example.com"]
-		}
-	}
+    "subscriberEmail": "letsencrypt-test@therootcompany.com",
+    "agreeToTerms": true,
+    "sites": {
+        "example.com": {
+            "subject": "example.com",
+            "altnames": ["example.com", "www.example.com"]
+        }
+    }
 }
 ```
 
 # Let's Encrypt for...
 
-- IoT
-- Enterprise On-Prem
-- Local Development
-- Home Servers
-- Quitting Heroku
+-   IoT
+-   Enterprise On-Prem
+-   Local Development
+-   Home Servers
+-   Quitting Heroku
 
 # Features
 
-- [x] Let's Encrypt v2 (November 2019)
-  - [x] ACME Protocol (RFC 8555)
-  - [x] HTTP Validation (HTTP-01)
-  - [x] DNS Validation (DNS-01)
-  - [ ] ALPN Validation (TLS-ALPN-01)
-    - Need ALPN validation? [contact us](mailto:greenlock-support@therootcompany.com)
-- [x] Automated HTTPS
-  - [x] Fully Automatic Renewals every 45 days
-  - [x] Free SSL
-  - [x] **Wildcard** SSL
-  - [x] **Localhost** certificates
-  - [x] HTTPS-enabled Secure **WebSockets** (`wss://`)
-- [x] Fully customizable
-  - [x] **Reasonable defaults**
-  - [x] Domain Management
-  - [x] Key and Certificate Management
-  - [x] ACME Challenge Plugins
+-   [x] Let's Encrypt v2 (November 2019)
+    -   [x] ACME Protocol (RFC 8555)
+    -   [x] HTTP Validation (HTTP-01)
+    -   [x] DNS Validation (DNS-01)
+    -   [ ] ALPN Validation (TLS-ALPN-01)
+        -   Need ALPN validation? [contact us](mailto:greenlock-support@therootcompany.com)
+-   [x] Automated HTTPS
+    -   [x] Fully Automatic Renewals every 45 days
+    -   [x] Free SSL
+    -   [x] **Wildcard** SSL
+    -   [x] **Localhost** certificates
+    -   [x] HTTPS-enabled Secure **WebSockets** (`wss://`)
+-   [x] Fully customizable
+    -   [x] **Reasonable defaults**
+    -   [x] Domain Management
+    -   [x] Key and Certificate Management
+    -   [x] ACME Challenge Plugins
 
 # QuickStart Guide
 
@@ -127,7 +127,7 @@ works with everything.
 // A plain, node-style app
 
 function myPlainNodeHttpApp(req, res) {
-	res.end("Hello, Encrypted World!");
+    res.end("Hello, Encrypted World!");
 }
 
 // Wrap that plain app in express,
@@ -152,9 +152,9 @@ module.exports = app;
 
 Greenlock Express is designed with these goals in mind:
 
-- Simplicity and ease-of-use
-- Performance and scalability
-- Configurability and control
+-   Simplicity and ease-of-use
+-   Performance and scalability
+-   Configurability and control
 
 You can start with **near-zero configuration** and
 slowly add options for greater performance and customization
@@ -164,21 +164,21 @@ later, if you need them.
 
 ```js
 require("greenlock-express")
-	.init(getConfig)
-	.serve(worker);
+    .init(getConfig)
+    .serve(worker);
 
 function getConfig() {
-	return {
-		// uses name and version as part of the ACME client user-agent
-		// uses author as the contact for support notices
-		package: require("./package.json")
-	};
+    return {
+        // uses name and version as part of the ACME client user-agent
+        // uses author as the contact for support notices
+        package: require("./package.json")
+    };
 }
 
 function worker(server) {
-	// Works with any Node app (Express, etc)
-	var app = require("my-express-app.js");
-	server.serveApp(app);
+    // Works with any Node app (Express, etc)
+    var app = require("my-express-app.js");
+    server.serveApp(app);
 }
 ```
 
@@ -222,14 +222,14 @@ This will update the config file (assuming the default fs-based management plugi
 
 ```json
 {
-	"subscriberEmail": "letsencrypt-test@therootcompany.com",
-	"agreeToTerms": true,
-	"sites": {
-		"example.com": {
-			"subject": "example.com",
-			"altnames": ["example.com", "www.example.com"]
-		}
-	}
+    "subscriberEmail": "letsencrypt-test@therootcompany.com",
+    "agreeToTerms": true,
+    "sites": {
+        "example.com": {
+            "subject": "example.com",
+            "altnames": ["example.com", "www.example.com"]
+        }
+    }
 }
 ```
 
@@ -269,10 +269,10 @@ npx greenlock add --subject example.com --altnames example.com,www.example.com
 Note: **Localhost**, **Wildcard**, and Certificates for Private Networks require
 [**DNS validation**](https://git.rootprojects.org/root/greenlock-exp).
 
-- DNS Validation
-  - [**Wildcards**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/wildcards/) (coming soon)
-  - [**Localhost**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/localhost/) (coming soon)
-  - [**CI/CD**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/ci-cd/) (coming soon)
+-   DNS Validation
+    -   [**Wildcards**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/wildcards/) (coming soon)
+    -   [**Localhost**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/localhost/) (coming soon)
+    -   [**CI/CD**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/ci-cd/) (coming soon)
 
 </details>
 
@@ -280,17 +280,17 @@ Note: **Localhost**, **Wildcard**, and Certificates for Private Networks require
 
 **These are in-progress** Check back tomorrow (Nov 2nd, 2019).
 
-- [greenlock-express.js/examples/](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples)
-  - [Express](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/express/)
-  - [Node's **http2**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/http2/)
-  - [Node's https](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/https/)
-  - [**WebSockets**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/websockets/)
-  - [Socket.IO](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/socket-io/)
-  - [Cluster](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/cluster/)
-  - [**Wildcards**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/wildcards/) (coming soon)
-  - [**Localhost**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/localhost/) (coming soon)
-  - [**CI/CD**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/ci-cd/) (coming soon)
-  - [HTTP Proxy](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/http-proxy/)
+-   [greenlock-express.js/examples/](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples)
+    -   [Express](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/express/)
+    -   [Node's **http2**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/http2/)
+    -   [Node's https](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/https/)
+    -   [**WebSockets**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/websockets/)
+    -   [Socket.IO](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/socket-io/)
+    -   [Cluster](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/cluster/)
+    -   [**Wildcards**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/wildcards/) (coming soon)
+    -   [**Localhost**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/localhost/) (coming soon)
+    -   [**CI/CD**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/ci-cd/) (coming soon)
+    -   [HTTP Proxy](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/http-proxy/)
 
 # Easy to Customize
 
@@ -300,10 +300,10 @@ Note: **Localhost**, **Wildcard**, and Certificates for Private Networks require
 - [greenlock.js/examples/](https://git.rootprojects.org/root/greenlock.js/src/branch/master/examples)
 -->
 
-- [Custom Domain Management](https://git.rootprojects.org/root/greenlock-manager-test.js)
-- [Custom Key & Cert Storage](https://git.rootprojects.org/root/greenlock-store-test.js)
-- [Custom ACME HTTP-01 Challenges](https://git.rootprojects.org/root/acme-http-01-test.js)
-- [Custom ACME DNS-01 Challenges](https://git.rootprojects.org/root/acme-dns-01-test.js)
+-   [Custom Domain Management](https://git.rootprojects.org/root/greenlock-manager-test.js)
+-   [Custom Key & Cert Storage](https://git.rootprojects.org/root/greenlock-store-test.js)
+-   [Custom ACME HTTP-01 Challenges](https://git.rootprojects.org/root/acme-http-01-test.js)
+-   [Custom ACME DNS-01 Challenges](https://git.rootprojects.org/root/acme-dns-01-test.js)
 
 # Ready-made Integrations
 
@@ -345,12 +345,12 @@ We're working on more comprehensive documentation for this newly released versio
 
 Do you need...
 
-- training?
-- specific features?
-- different integrations?
-- bugfixes, on _your_ timeline?
-- custom code, built by experts?
-- commercial support and licensing?
+-   training?
+-   specific features?
+-   different integrations?
+-   bugfixes, on _your_ timeline?
+-   custom code, built by experts?
+-   commercial support and licensing?
 
 You're welcome to [contact us](mailto:aj@therootcompany.com) in regards to IoT, On-Prem,
 Enterprise, and Internal installations, integrations, and deployments.
