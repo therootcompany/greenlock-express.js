@@ -12,10 +12,9 @@ var pkg = require("../../package.json");
 
 function httpsWorker(glx) {
 	//
-	// HTTPS/1.1 is only used for node v11 or lower
-	// (HTTP2 is used for node v12+)
+	// HTTPS 1.1 is the default
+	// (HTTP2 would be the default but... https://github.com/expressjs/express/issues/3388)
 	//
-	// Why not just require('https')?
 
 	// Get the raw https server:
 	var httpsServer = glx.httpsServer(null, function(req, res) {

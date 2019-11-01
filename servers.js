@@ -31,7 +31,18 @@ Servers.create = function(greenlock) {
 
 	var _middlewareApp;
 
+	servers.http2Server = function(secureOpts, defaultApp) {
+		return servers._httpsServer(secureOpts, defaultApp, function(secureOpts, fn) {
+			secureOpts.allowHTTP1 = true;
+			return require("http2").createSecureServer(secureOpts, fn);
+		});
+	};
 	servers.httpsServer = function(secureOpts, defaultApp) {
+		return servers._httpsServer(secureOpts, defaultApp, function(secureOpts, fn) {
+			return require("https").createServer(secureOpts, fn);
+		});
+	};
+	servers._httpsServer = function(secureOpts, defaultApp, createSecureServer) {
 		if (defaultApp) {
 			// TODO guard against being set twice?
 			_middlewareApp = defaultApp;
@@ -142,16 +153,4 @@ function wrapDefaultSniCallback(greenlock, secureOpts) {
 	// TODO greenlock.servername for workers
 	secureOpts.SNICallback = sni.create(greenlock, secureOpts);
 	return secureOpts;
-}
-
-function createSecureServer(secureOpts, fn) {
-	var major = process.versions.node.split(".")[0];
-
-	// TODO can we trust earlier versions as well?
-	if (major >= 12) {
-		secureOpts.allowHTTP1 = true;
-		return require("http2").createSecureServer(secureOpts, fn);
-	} else {
-		return require("https").createServer(secureOpts, fn);
-	}
 }

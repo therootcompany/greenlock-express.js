@@ -14,9 +14,9 @@ require("../../")
 			// Note: in cluster you CANNOT use in-memory state (see below)
 			cluster: true,
 
-      // This will default to the number of workers being equal to
-      // n-1 cpus, with a minimum of 2
-      workers: 4
+			// This will default to the number of workers being equal to
+			// n-1 cpus, with a minimum of 2
+			workers: 4
 		};
 	})
 	.serve(httpsWorker);

@@ -8,12 +8,8 @@ var minor = process.versions.node.split(".")[1];
 var _hasSetSecureContext = false;
 var shouldUpgrade = false;
 
-// TODO can we trust earlier versions as well?
-if (major >= 12) {
-	_hasSetSecureContext = !!require("http2").createSecureServer({}, function() {}).setSecureContext;
-} else {
-	_hasSetSecureContext = !!require("https").createServer({}, function() {}).setSecureContext;
-}
+// this applies to http2 as well (should exist in both or neither)
+_hasSetSecureContext = !!require("https").createServer({}, function() {}).setSecureContext;
 
 // TODO document in issues
 if (!_hasSetSecureContext) {

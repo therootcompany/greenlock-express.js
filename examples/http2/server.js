@@ -12,12 +12,12 @@ var pkg = require("../../package.json");
 
 function httpsWorker(glx) {
 	//
-	// HTTP2 is the default httpsServer for node v12+
-	// (HTTPS/1.1 is used for node <= v11)
+	// HTTP2 would have been the default httpsServer for node v12+
+	// However... https://github.com/expressjs/express/issues/3388
 	//
 
 	// Get the raw http2 server:
-	var http2Server = glx.httpsServer(function(req, res) {
+	var http2Server = glx.http2Server(function(req, res) {
 		res.end("Hello, Encrypted World!");
 	});
 
