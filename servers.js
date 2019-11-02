@@ -23,6 +23,9 @@ Servers.create = function(greenlock) {
             return _httpServer;
         }
 
+        if (!defaultApp) {
+            defaultApp = require("redirect-https")();
+        }
         _httpServer = http.createServer(HttpMiddleware.create(greenlock, defaultApp));
         _httpServer.once("error", startError);
 
@@ -89,7 +92,7 @@ Servers.create = function(greenlock) {
 
             var id = cluster.isWorker && cluster.worker.id;
             var idstr = (id && "#" + id + " ") || "";
-            var plainServer = servers.httpServer(require("redirect-https")());
+            var plainServer = servers.httpServer();
             var plainAddr = "0.0.0.0";
             var plainPort = 80;
             plainServer.listen(plainPort, plainAddr, function() {
