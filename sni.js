@@ -60,9 +60,20 @@ sni.create = function(greenlock, secureOpts) {
                     cb(null, secureContext);
                     return;
                 }
+
                 // Note: this does not replace tlsSocket.setSecureContext()
                 // as it only works when SNI has been sent
                 //console.log("debug sni got default context", servername, getCachedMeta(servername));
+                if (!/PROD/.test(process.env.ENV) || /DEV|STAG/.test(process.env.ENV)) {
+                    // Change this once
+                    // A) the 'notify' message passing is verified fixed in cluster mode
+                    // B) we have a good way to let people know their server isn't configured
+                    console.debug("debug: ignoring servername " + JSON.stringify(servername));
+                    console.debug("       (it's probably either missing from your config, or a bot)");
+                    notify("servername_unknown", {
+                        servername: servername
+                    });
+                }
                 cb(null, getDefaultContext());
             })
             .catch(function(err) {
@@ -110,6 +121,16 @@ sni.create = function(greenlock, secureOpts) {
     function getFreshContext(servername) {
         var meta = getCachedMeta(servername);
         if (!meta && !validServername(servername)) {
+            if ((servername && !/PROD/.test(process.env.ENV)) || /DEV|STAG/.test(process.env.ENV)) {
+                // Change this once
+                // A) the 'notify' message passing is verified fixed in cluster mode
+                // B) we have a good way to let people know their server isn't configured
+                console.debug("debug: invalid servername " + JSON.stringify(servername));
+                console.debug("       (it's probably just a bot trolling for vulnerable servers)");
+                notify("servername_invalid", {
+                    servername: servername
+                });
+            }
             return Promise.resolve(null);
         }
 
