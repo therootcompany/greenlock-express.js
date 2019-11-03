@@ -20,12 +20,20 @@ Servers.create = function(greenlock) {
 
     servers.httpServer = function(defaultApp) {
         if (_httpServer) {
+            if (defaultApp) {
+                console.error("error: can only call httpServer(app) once");
+                process.exit(1);
+            }
             return _httpServer;
         }
 
         if (!defaultApp) {
             defaultApp = require("redirect-https")();
         }
+        // HEADERS SENT DEBUG NOTE #1
+        // As seen above, it's only possible to create the server once.
+        // It always gets the http middleware, it always gets a single default app
+        // Therefore it seems impossible to be an http.on('connection', app) problem
         _httpServer = http.createServer(HttpMiddleware.create(greenlock, defaultApp));
         _httpServer.once("error", startError);
 
