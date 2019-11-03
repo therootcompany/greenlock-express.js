@@ -11,7 +11,7 @@ Single.create = function(opts) {
     var servers = Servers.create(greenlock);
 
     var single = {
-        serve: function(fn) {
+        ready: function(fn) {
             fn(servers);
             return single;
         },
@@ -21,5 +21,7 @@ Single.create = function(opts) {
             return single;
         }
     };
+    // backwards compat starts now
+    single.serve = single.ready;
     return single;
 };

@@ -14,7 +14,7 @@ Worker.create = function() {
     });
 
     var worker = {
-        serve: function(fn) {
+        ready: function(fn) {
             var servers = require("./servers.js").create(greenlock);
             fn(servers);
             return worker;
@@ -24,6 +24,8 @@ Worker.create = function() {
             return worker;
         }
     };
+    // backwards compat starts early...
+    worker.serve = worker.ready;
     return worker;
 };
 

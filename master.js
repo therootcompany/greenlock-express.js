@@ -37,7 +37,7 @@ Master.create = function(opts) {
     }
 
     var master = {
-        serve: function() {
+        ready: function() {
             kickoff();
             return master;
         },
@@ -50,6 +50,8 @@ Master.create = function(opts) {
             return master;
         }
     };
+    // backwards compat starts early...
+    master.serve = master.ready;
     return master;
 };
 
