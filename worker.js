@@ -7,7 +7,7 @@ var msgPrefix = "greenlock:";
 
 Worker.create = function() {
     var greenlock = {};
-    ["getAcmeHttp01ChallengeResponse", "get", "notify"].forEach(function(k) {
+    ["getAcmeHttp01ChallengeResponse", "get", "notify", "_notify"].forEach(function(k) {
         greenlock[k] = function(args) {
             return rpc(k, args);
         };
