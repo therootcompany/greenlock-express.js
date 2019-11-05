@@ -1,11 +1,3 @@
-# New Documentation &amp; [v2/v3 Migration Guide](https://git.rootprojects.org/root/greenlock.js/src/branch/v3/MIGRATION_GUIDE_V2_V3.md)
-
-Greenlock v3 just came out of private beta **today** (Nov 1st, 2019).
-
-The code is complete and we're working on great documentation.
-
-Many **examples** and **full API** documentation are still coming.
-
 # [Greenlock Express](https://git.rootprojects.org/root/greenlock-express.js) is Let's Encrypt for Node
 
 ![Greenlock Logo](https://git.rootprojects.org/root/greenlock.js/raw/branch/master/logo/greenlock-1063x250.png "Greenlock Logo")
@@ -14,51 +6,103 @@ Many **examples** and **full API** documentation are still coming.
 
 Free SSL, Automated HTTPS / HTTP2, served with Node via Express, Koa, hapi, etc.
 
-### Let's Encrypt for Node, Express, etc
+### Let's Encrypt for Node and Express (and Koa, hapi, rill, etc)
 
 Greenlock Express is a **Web Server** with **Fully Automated HTTPS** and renewals.
+
+You define your app, and let Greenlock handle issuing and renewing Free SSL Certificates.
+
+**Cloud-ready** with Node `cluster`.
+
+# Quick Start
+
+-   1. Create a Project with Greenlock Express
+-   2. Initialize and Setup
+-   3. Add Domains, and Hello, World!
+
+### Create your project
+
+```bash
+npm init
+```
+
+```bash
+npm install --save greenlock-express@v3
+```
+
+```bash
+npx greenlock init \
+    --maintainer-email 'jon@example.com' \
+    --manager-config-file ./greenlock.json
+```
+
+<details>
+<summary>server.js</summary>
 
 ```js
 "use strict";
 
-function httpsWorker(glx) {
-    // Serves on 80 and 443
-    // Get's SSL certificates magically!
-
-    glx.serveApp(function(req, res) {
-        res.end("Hello, Encrypted World!");
-    });
-}
-
-var pkg = require("./package.json");
 require("greenlock-express")
-    .init(function getConfig() {
-        // Greenlock Config
-
+    .init(function() {
         return {
-            package: { name: pkg.name, version: pkg.version },
-            maintainerEmail: pkg.author,
+            greenlock: require("./greenlock.js"),
+
+            // whether or not to run at cloudscale
             cluster: false
         };
     })
-    .serve(httpsWorker);
+    .ready(function(glx) {
+        var app = require("./app.js");
+
+        // Serves on 80 and 443
+        // Get's SSL certificates magically!
+        glx.serveApp(app);
+    });
 ```
 
-Manage via API or the config file:
+</details>
 
-`~/.config/greenlock/manage.json`: (default filesystem config)
+<details>
+<summary>greenlock.js</summary>
 
-```json
-{
-    "subscriberEmail": "letsencrypt-test@therootcompany.com",
-    "agreeToTerms": true,
-    "sites": {
-        "example.com": {
-            "subject": "example.com",
-            "altnames": ["example.com", "www.example.com"]
-        }
-    }
-}
+```js
+"use strict";
+
+var pkg = require("./package.json");
+module.exports = require("@root/greenlock").create({
+    // name & version for ACME client user agent
+    packageAgent: pkg.name + "/" + pkg.version,
+
+    // contact for security and critical bug notices
+    maintainerEmail: pkg.author,
+
+    // where to find .greenlockrc and set default paths
+    packageRoot: __dirname
+});
+```
+
+</details>
+
+`app.js`:
+
+```js
+var app = function(req, res) {
+    res.end("Hello, Encrypted World!");
+};
+
+module.exports = app;
+```
+
+```bash
+npx greenlock defaults --subscriber-email 'jon@example.com' --agree-to-terms
+```
+
+```bash
+npx greenlock add --subject example.com --altnames example.com
+```
+
+```bash
+npm start
 ```
 
 # Let's Encrypt for...
@@ -285,7 +329,7 @@ Note: **Localhost**, **Wildcard**, and Certificates for Private Networks require
     -   [Node's **http2**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/http2/)
     -   [Node's https](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/https/)
     -   [**WebSockets**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/websockets/)
-    -   [Socket.IO](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/socket-io/)
+    -   [Socket.IO](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/socket.io/)
     -   [Cluster](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/cluster/)
     -   [**Wildcards**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/wildcards/) (coming soon)
     -   [**Localhost**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/localhost/) (coming soon)
@@ -374,3 +418,8 @@ attribution, and/or visible source policies. We want to build great software and
 MPL-2.0 |
 [Terms of Use](https://therootcompany.com/legal/#terms) |
 [Privacy Policy](https://therootcompany.com/legal/#privacy)
+[Privacy Policy](https://therootcompany.com/legal/#privacy)
+
+```
+
+```

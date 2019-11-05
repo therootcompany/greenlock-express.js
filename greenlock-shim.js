@@ -1,11 +1,21 @@
 "use strict";
 
 module.exports.create = function(opts) {
-    opts = parsePackage(opts);
-    opts.packageAgent = addGreenlockAgent(opts);
-
     var Greenlock = require("@root/greenlock");
-    var greenlock = Greenlock.create(opts);
+    var greenlock = opts.greenlock;
+
+    if (!greenlock) {
+        opts = parsePackage(opts);
+        opts.packageAgent = addGreenlockAgent(opts);
+        greenlock = Greenlock.create(opts);
+        try {
+            if (opts.notify) {
+                greenlock._defaults.notify = opts.notify;
+            }
+        } catch (e) {
+            console.error("Developer Error: notify not attached correctly");
+        }
+    }
 
     // re-export as top-level function to simplify rpc with workers
     greenlock.getAcmeHttp01ChallengeResponse = function(opts) {

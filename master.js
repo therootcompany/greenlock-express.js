@@ -13,7 +13,7 @@ Master.create = function(opts) {
     var _readyCb;
     var _kicked = false;
 
-    var greenlock = require("./greenlock.js").create(opts);
+    var greenlock = require("./greenlock-shim.js").create(opts);
 
     var ready = new Promise(function(resolve) {
         resolveCb = resolve;

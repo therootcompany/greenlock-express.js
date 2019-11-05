@@ -24,9 +24,7 @@ GLE.init = function(fn) {
 
     var opts = fn();
     if (!opts || "object" !== typeof opts) {
-        throw new Error(
-            "the `Greenlock.init(fn)` function should return an object `{ maintainerEmail, packageAgent, notify }`"
-        );
+        throw new Error("the `Greenlock.init(fn)` function should return an object `{ greenlock, cluster }`");
     }
 
     // just for ironic humor
