@@ -14,7 +14,7 @@ You define your app, and let Greenlock handle issuing and renewing Free SSL Cert
 
 **Cloud-ready** with Node `cluster`.
 
-# Quick Start
+# Serve your Sites with Free SSL
 
 -   1. Create a Project with Greenlock Express
 -   2. Initialize and Setup
@@ -102,7 +102,7 @@ npx greenlock add --subject example.com --altnames example.com
 ```
 
 ```bash
-npm start
+npm start -- --staging
 ```
 
 # Let's Encrypt for...
