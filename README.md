@@ -1,11 +1,3 @@
-# New Documentation &amp; [v2/v3 Migration Guide](https://git.rootprojects.org/root/greenlock.js/src/branch/v3/MIGRATION_GUIDE_V2_V3.md)
-
-Greenlock v3 just came out of private beta **today** (Nov 1st, 2019).
-
-The code is complete and we're working on great documentation.
-
-Many **examples** and **full API** documentation are still coming.
-
 # [Greenlock Express](https://git.rootprojects.org/root/greenlock-express.js) is Let's Encrypt for Node
 
 ![Greenlock Logo](https://git.rootprojects.org/root/greenlock.js/raw/branch/master/logo/greenlock-1063x250.png "Greenlock Logo")
@@ -14,51 +6,104 @@ Many **examples** and **full API** documentation are still coming.
 
 Free SSL, Automated HTTPS / HTTP2, served with Node via Express, Koa, hapi, etc.
 
-### Let's Encrypt for Node, Express, etc
+### Let's Encrypt for Node and Express (and Koa, hapi, rill, etc)
 
 Greenlock Express is a **Web Server** with **Fully Automated HTTPS** and renewals.
+
+You define your app, and let Greenlock handle issuing and renewing Free SSL Certificates.
+
+**Cloud-ready** with Node `cluster`.
+
+# Serve your Sites with Free SSL
+
+-   1. Create a Project with Greenlock Express
+-   2. Initialize and Setup
+-   3. Add Domains, and Hello, World!
+
+### Create your project
+
+```bash
+npm init
+```
+
+```bash
+npm install --save greenlock-express@v3
+```
+
+```bash
+npx greenlock init --maintainer-email 'jon@example.com' --manager-config-file ./greenlock.json
+```
+
+<details>
+<summary>server.js</summary>
 
 ```js
 "use strict";
 
-function httpsWorker(glx) {
-    // Serves on 80 and 443
-    // Get's SSL certificates magically!
-
-    glx.serveApp(function(req, res) {
-        res.end("Hello, Encrypted World!");
-    });
-}
-
-var pkg = require("./package.json");
 require("greenlock-express")
-    .init(function getConfig() {
-        // Greenlock Config
-
+    .init(function() {
         return {
-            package: { name: pkg.name, version: pkg.version },
-            maintainerEmail: pkg.author,
+            greenlock: require("./greenlock.js"),
+
+            // whether or not to run at cloudscale
             cluster: false
         };
     })
-    .serve(httpsWorker);
+    .ready(function(glx) {
+        var app = require("./app.js");
+
+        // Serves on 80 and 443
+        // Get's SSL certificates magically!
+        glx.serveApp(app);
+    });
 ```
 
-Manage via API or the config file:
+</details>
 
-`~/.config/greenlock/manage.json`: (default filesystem config)
+<details>
+<summary>greenlock.js</summary>
 
-```json
-{
-    "subscriberEmail": "letsencrypt-test@therootcompany.com",
-    "agreeToTerms": true,
-    "sites": {
-        "example.com": {
-            "subject": "example.com",
-            "altnames": ["example.com", "www.example.com"]
-        }
-    }
-}
+```js
+"use strict";
+
+var pkg = require("./package.json");
+module.exports = require("@root/greenlock").create({
+    // name & version for ACME client user agent
+    packageAgent: pkg.name + "/" + pkg.version,
+
+    // contact for security and critical bug notices
+    maintainerEmail: pkg.author,
+
+    // where to find .greenlockrc and set default paths
+    packageRoot: __dirname
+});
+```
+
+</details>
+
+<details>
+<summary>app.js</summary>
+
+```js
+var app = function(req, res) {
+    res.end("Hello, Encrypted World!");
+};
+
+module.exports = app;
+```
+
+</details>
+
+```bash
+npx greenlock defaults --subscriber-email 'jon@example.com' --agree-to-terms
+```
+
+```bash
+npx greenlock add --subject example.com --altnames example.com
+```
+
+```bash
+npm start -- --staging
 ```
 
 # Let's Encrypt for...
@@ -163,23 +208,34 @@ later, if you need them.
 `server.js`:
 
 ```js
+"use strict";
+
 require("greenlock-express")
-    .init(getConfig)
-    .serve(worker);
+    .init(function() {
+        var pkg = require("./package.json");
+        return {
+            greenlock: require("@root/greenlock").create({
+                // name & version for ACME client user agent
+                packageAgent: pkg.name + "/" + pkg.version,
 
-function getConfig() {
-    return {
-        // uses name and version as part of the ACME client user-agent
-        // uses author as the contact for support notices
-        package: require("./package.json")
-    };
-}
+                // contact for security and critical bug notices
+                maintainerEmail: pkg.author,
 
-function worker(server) {
-    // Works with any Node app (Express, etc)
-    var app = require("my-express-app.js");
-    server.serveApp(app);
-}
+                // where to find .greenlockrc and set default paths
+                packageRoot: __dirname
+            }),
+
+            // whether or not to run at cloudscale
+            cluster: false
+        };
+    })
+    .ready(function(glx) {
+        var app = require("./app.js");
+
+        // Serves on 80 and 443
+        // Get's SSL certificates magically!
+        glx.serveApp(app);
+    });
 ```
 
 And start your server:
@@ -192,6 +248,11 @@ sudo setcap 'cap_net_bind_service=+ep' $(which node)
 ```bash
 # `npm start` will call `node ./server.js` by default
 npm start
+```
+
+```bash
+# use --staging to use the development API until you're ready to get real certificates
+npm start -- --staging
 ```
 
 ```txt
@@ -212,42 +273,108 @@ Listening on 0.0.0.0:443 for secure traffic
 
 The management API is built to work with Databases, S3, etc.
 
-HOWEVER, by default it starts with a simple config file.
+By default, it's just a simple config file and directory.
 
-<!--
-This will update the config file (assuming the default fs-based management plugin):
--->
+```bash
+# see which manager and what options are in use
+cat .greenlockrc
+```
 
-`~/.config/greenlock/manager.json`:
+<details>
+<summary>Example Output</summary>
 
 ```json
 {
-    "subscriberEmail": "letsencrypt-test@therootcompany.com",
-    "agreeToTerms": true,
-    "sites": {
-        "example.com": {
-            "subject": "example.com",
-            "altnames": ["example.com", "www.example.com"]
+    "manager": "greenlock-manager-fs",
+    "configFile": "./greenlock.json"
+}
+```
+
+</details>
+
+```bash
+# show the global defaults
+npx greenlock defaults
+```
+
+```js
+var defaults = await greenlock.defaults();
+```
+
+<details>
+<summary>Example Output</summary>
+
+```json
+{
+    "store": {
+        "module": "greenlock-store-fs",
+        "basePath": "./greenlock.d"
+    },
+    "challenges": {
+        "http-01": {
+            "module": "acme-http-01-standalone"
+        }
+    },
+    "renewOffset": "-45d",
+    "renewStagger": "3d",
+    "accountKeyType": "EC-P256",
+    "serverKeyType": "RSA-2048",
+    "subscriberEmail": "jon@example.com",
+    "agreeToTerms": true
+}
+```
+
+</details>
+
+```bash
+# show per-site configs
+npx greenlock config --subject example.com
+```
+
+```js
+greenlock.sites.get({ subject: "example.com" });
+```
+
+<details>
+<summary>Example Output</summary>
+
+```json
+{
+    "subject": "example.com",
+    "altnames": ["example.com"],
+    "renewAt": 1576638107754,
+    "defaults": {
+        "store": {
+            "module": "greenlock-store-fs",
+            "basePath": "./greenlock.d"
+        },
+        "challenges": {
+            "http-01": {
+                "module": "acme-http-01-standalone"
+            }
         }
     }
 }
 ```
 
-COMING SOON
+</details>
 
-Management can be done via the **CLI** or the JavaScript [**API**](https://git.rootprojects.org/root/greenlock.js/).
+Management can be done via the **CLI** or the JavaScript [**API**](https://git.rootprojects.org/root/greenlock.js).
 Since this is the QuickStart, we'll demo the **CLI**:
 
 You need to create a Let's Encrypt _subscriber account_, which can be done globally, or per-site.
 All individuals, and most businesses, should set this globally:
 
 ```bash
-# COMING SOON
-# (this command should be here by Nov 5th)
-# (edit the config by hand for now)
-#
 # Set a global subscriber account
-npx greenlock config --subscriber-email 'mycompany@example.com' --agree-to-terms true
+npx greenlock defaults --subscriber-email 'mycompany@example.com' --agree-to-terms true
+```
+
+```js
+greenlock.manager.defaults({
+    subscriberEmail: "mycompany@example.com",
+    agreeToTerms: true
+});
 ```
 
 <!-- todo print where the key was saved -->
@@ -256,12 +383,15 @@ A Let's Encrypt SSL certificate has a "Subject" (Primary Domain) and up to 100 "
 (of which the first _must_ be the subject).
 
 ```bash
-# COMING SOON
-# (this command should be here by Nov 5th)
-# (edit the config by hand for now)
-#
 # Add a certificate with specific domains
 npx greenlock add --subject example.com --altnames example.com,www.example.com
+```
+
+```js
+greenlock.sites.add({
+    subject: "example.com",
+    altnames: ["example.com"]
+});
 ```
 
 <!-- todo print where the cert was saved -->
@@ -278,14 +408,12 @@ Note: **Localhost**, **Wildcard**, and Certificates for Private Networks require
 
 # Plenty of Examples
 
-**These are in-progress** Check back tomorrow (Nov 2nd, 2019).
-
 -   [greenlock-express.js/examples/](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples)
     -   [Express](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/express/)
     -   [Node's **http2**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/http2/)
     -   [Node's https](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/https/)
     -   [**WebSockets**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/websockets/)
-    -   [Socket.IO](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/socket-io/)
+    -   [Socket.IO](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/socket.io/)
     -   [Cluster](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/cluster/)
     -   [**Wildcards**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/wildcards/) (coming soon)
     -   [**Localhost**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/localhost/) (coming soon)
@@ -301,9 +429,15 @@ Note: **Localhost**, **Wildcard**, and Certificates for Private Networks require
 -->
 
 -   [Custom Domain Management](https://git.rootprojects.org/root/greenlock-manager-test.js)
+    -   `npx greenlock init --manager ./path-or-npm-name.js --manager-FOO 'set option FOO'`
 -   [Custom Key & Cert Storage](https://git.rootprojects.org/root/greenlock-store-test.js)
+    -   `npx greenlock defaults --store greenlock-store-fs --store-base-path ./greenlock.d`
 -   [Custom ACME HTTP-01 Challenges](https://git.rootprojects.org/root/acme-http-01-test.js)
+    -   `npx greenlock defaults --challenge-http-01 ./you-http-01.js`
+    -   `npx greenlock update --subject example.com --challenge-http-01 acme-http-01-standalone`
 -   [Custom ACME DNS-01 Challenges](https://git.rootprojects.org/root/acme-dns-01-test.js)
+    -   `npx greenlock defaults --challenge-dns-01 acme-dns-01-ovh --challenge-dns-01-token xxxx`
+    -   `npx greenlock update --subject example.com --challenge-dns-01 ./your-dns-01.js
 
 # Ready-made Integrations
 
@@ -326,6 +460,13 @@ Greenlock Express integrates between Let's Encrypt's ACME Challenges and many po
 | dns-01      | [Build your own](https://git.rootprojects.org/root/acme-dns-01-test.js)             | acme-dns-01-test         |
 | http-01     | [Build your own](https://git.rootprojects.org/root/acme-http-01-test.js)            | acme-http-01-test        |
 | tls-alpn-01 | [Contact us](mailto:support@therootcompany.com)                                     | -                        |
+
+Example Usage:
+
+```bash
+npx greenlock defaults --challenge-dns-01 acme-dns-01-ovh --challenge-dns-01-token xxxx
+npx greenlock defaults --challenge-http-01 acme-http-01-s3 --challenge-http-01-bucket my-bucket
+```
 
 Search `acme-http-01-` or `acme-dns-01-` on npm to find more.
 
@@ -373,4 +514,5 @@ attribution, and/or visible source policies. We want to build great software and
 [Greenlock&trade;](https://git.rootprojects.org/root/greenlock.js) |
 MPL-2.0 |
 [Terms of Use](https://therootcompany.com/legal/#terms) |
+[Privacy Policy](https://therootcompany.com/legal/#privacy)
 [Privacy Policy](https://therootcompany.com/legal/#privacy)

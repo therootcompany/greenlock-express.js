@@ -1,6 +1,6 @@
 {
     "name": "greenlock-express",
-    "version": "3.0.15",
+    "version": "3.1.0",
     "description": "Free SSL and managed or automatic HTTPS for node.js with Express, Koa, Connect, Hapi, and all other middleware systems.",
     "main": "greenlock-express.js",
     "homepage": "https://greenlock.domains",
@@ -17,8 +17,8 @@
         "example": "examples"
     },
     "dependencies": {
-        "@root/greenlock": "^3.0.27",
-        "@root/greenlock-express": "^3.0.15",
+        "@root/greenlock": "^3.1.3",
+        "@root/greenlock-express": "^3.1.0",
         "redirect-https": "^1.1.5"
     },
     "trulyOptionalDependencies": {
