@@ -20,8 +20,6 @@ You define your app, and let Greenlock handle issuing and renewing Free SSL Cert
 -   2. Initialize and Setup
 -   3. Add Domains, and Hello, World!
 
-### Create your project
-
 ```bash
 npm init
 ```
