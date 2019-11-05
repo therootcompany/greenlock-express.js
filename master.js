@@ -48,10 +48,12 @@ Master.create = function(opts) {
             kickoff();
             resolveCb(fn);
             return master;
+        },
+        serve: function(fn) {
+            // ignore
+            master.ready(fn);
         }
     };
-    // backwards compat starts early...
-    master.serve = master.ready;
     return master;
 };
 

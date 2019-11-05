@@ -22,6 +22,17 @@ Worker.create = function() {
         master: function() {
             // ignore
             return worker;
+        },
+        serve: function(fn) {
+            // keeping backwards compat
+            if (1 === fn.length) {
+                worker.ready(fn);
+                return;
+            }
+            // serving the express app, right away
+            worker.ready(function(glx) {
+                glx.serveApp(fn);
+            });
         }
     };
     // backwards compat starts early...

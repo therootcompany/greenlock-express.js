@@ -22,9 +22,14 @@ GLE.init = function(fn) {
         return require("./worker.js").create();
     }
 
-    var opts = fn();
+    var opts;
+    if ("function" === typeof fn) {
+        opts = fn();
+    } else if ("object" === typeof fn) {
+        opts = fn;
+    }
     if (!opts || "object" !== typeof opts) {
-        throw new Error("the `Greenlock.init(fn)` function should return an object `{ greenlock, cluster }`");
+        throw new Error("the `Greenlock.init(fn)` function should return an object `{ packageRoot, cluster }`");
     }
 
     // just for ironic humor

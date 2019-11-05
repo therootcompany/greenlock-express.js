@@ -19,6 +19,17 @@ Single.create = function(opts) {
             // ignore
             //fn(master);
             return single;
+        },
+        serve: function(fn) {
+            // keeping backwards compat
+            if (1 === fn.length) {
+                single.ready(fn);
+                return;
+            }
+            // serving the app, right away
+            single.ready(function(glx) {
+                glx.serveApp(fn);
+            });
         }
     };
     // backwards compat starts now
