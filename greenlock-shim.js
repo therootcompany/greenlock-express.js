@@ -22,6 +22,24 @@ module.exports.create = function(opts) {
         return greenlock.challenges.get(opts);
     };
 
+    greenlock._find({}).then(function(sites) {
+        if (sites.length <= 0) {
+            console.warn("warning: No sites available. Did you add them?");
+            console.warn("         npx greenlock add --subject example.com --altnames example.com");
+            return;
+        }
+        console.info("Ready to Serve:");
+        var max = 3;
+        if (sites.length >= 1) {
+            sites.slice(0, max).forEach(function(site) {
+                console.info("\t", site.altnames.join(" "));
+            });
+        }
+        if (sites.length > max) {
+            console.info("and %d others", sites.length - max);
+        }
+    });
+
     return greenlock;
 };
 
