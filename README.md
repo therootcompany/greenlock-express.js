@@ -31,9 +31,7 @@ npm install --save greenlock-express@v3
 ```
 
 ```bash
-npx greenlock init \
-    --maintainer-email 'jon@example.com' \
-    --manager-config-file ./greenlock.json
+npx greenlock init --maintainer-email 'jon@example.com' --manager-config-file ./greenlock.json
 ```
 
 <details>
