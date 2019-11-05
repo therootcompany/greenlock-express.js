@@ -104,6 +104,14 @@ npx greenlock add --subject example.com --altnames example.com
 npm start -- --staging
 ```
 
+```txt
+> my-project@1.0.0 start /srv/www/my-project
+> node server.js
+
+Listening on 0.0.0.0:80 for ACME challenges and HTTPS redirects
+Listening on 0.0.0.0:443 for secure traffic
+```
+
 # Let's Encrypt for...
 
 -   IoT
