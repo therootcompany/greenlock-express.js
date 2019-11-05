@@ -443,7 +443,7 @@ Note: **Localhost**, **Wildcard**, and Certificates for Private Networks require
     -   `npx greenlock update --subject example.com --challenge-http-01 acme-http-01-standalone`
 -   [Custom ACME DNS-01 Challenges](https://git.rootprojects.org/root/acme-dns-01-test.js)
     -   `npx greenlock defaults --challenge-dns-01 acme-dns-01-ovh --challenge-dns-01-token xxxx`
-    -   `npx greenlock update --subject example.com --challenge-dns-01 ./your-dns-01.js
+    -   `npx greenlock update --subject example.com --challenge-dns-01 ./your-dns-01.js`
 
 # Ready-made Integrations
 
