@@ -17,7 +17,7 @@ var GLE = module.exports;
 // under the hood. That's the hope, anyway.
 
 GLE.init = function(fn) {
-    if (cluster.isWorker) {
+    if (false !== fn.cluster && cluster.isWorker) {
         // ignore the init function and launch the worker
         return require("./worker.js").create();
     }
