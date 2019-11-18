@@ -1,11 +1,8 @@
 "use strict";
 
-var path = require("path");
-var fs = require("fs");
-
 module.exports.create = function(opts) {
     var Greenlock = require("@root/greenlock");
-    var Init = require("./init.js");
+    var Init = require("@root/greenlock/init.js");
     var greenlock = opts.greenlock;
 
     /*
@@ -24,6 +21,7 @@ module.exports.create = function(opts) {
         opts = Init._init(opts);
         greenlock = Greenlock.create(opts);
     }
+    opts.packageAgent = addGreenlockAgent(opts);
 
     try {
         if (opts.notify) {
@@ -59,3 +57,14 @@ module.exports.create = function(opts) {
 
     return greenlock;
 };
+
+function addGreenlockAgent(opts) {
+    // Add greenlock as part of Agent, unless this is greenlock
+    var packageAgent = opts.packageAgent || "";
+    if (!/greenlock(-express|-pro)?/i.test(packageAgent)) {
+        var pkg = require("./package.json");
+        packageAgent += " Greenlock_Express/" + pkg.version;
+    }
+
+    return packageAgent.trim();
+}

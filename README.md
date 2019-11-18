@@ -29,7 +29,7 @@ npm install --save greenlock-express@v3
 ```
 
 ```bash
-npx greenlock init --maintainer-email 'jon@example.com' --manager-config-file ./greenlock.json
+npx greenlock init --maintainer-email 'jon@example.com'
 ```
 
 <details>
@@ -39,13 +39,11 @@ npx greenlock init --maintainer-email 'jon@example.com' --manager-config-file ./
 "use strict";
 
 require("greenlock-express")
-    .init(function() {
-        return {
-            greenlock: require("./greenlock.js"),
+    .init({
+        packageRoot: __dirname,
 
-            // whether or not to run at cloudscale
-            cluster: false
-        };
+        // whether or not to run at cloudscale
+        cluster: false
     })
     .ready(function(glx) {
         var app = require("./app.js");
@@ -83,6 +81,8 @@ module.exports = require("@root/greenlock").create({
 <summary>app.js</summary>
 
 ```js
+"use strict";
+
 var app = function(req, res) {
     res.end("Hello, Encrypted World!");
 };
@@ -93,12 +93,17 @@ module.exports = app;
 </details>
 
 ```bash
-npx greenlock defaults --subscriber-email 'jon@example.com' --agree-to-terms
-```
-
-```bash
 npx greenlock add --subject example.com --altnames example.com
 ```
+
+<details>
+<summary>greenlock.json</summary>
+
+```json
+{ "sites": [{ "subject": "example.com", "altnames": ["example.com"] }] }
+```
+
+</details>
 
 ```bash
 npm start -- --staging
