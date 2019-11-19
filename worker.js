@@ -35,8 +35,6 @@ Worker.create = function() {
             });
         }
     };
-    // backwards compat starts early...
-    worker.serve = worker.ready;
     return worker;
 };
 

@@ -32,7 +32,5 @@ Single.create = function(opts) {
             });
         }
     };
-    // backwards compat starts now
-    single.serve = single.ready;
     return single;
 };

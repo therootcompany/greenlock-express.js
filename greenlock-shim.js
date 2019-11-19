@@ -2,7 +2,7 @@
 
 module.exports.create = function(opts) {
     var Greenlock = require("@root/greenlock");
-    var Init = require("@root/greenlock/lib/init.js");
+    //var Init = require("@root/greenlock/lib/init.js");
     var greenlock = opts.greenlock;
 
     /*
@@ -18,7 +18,7 @@ module.exports.create = function(opts) {
     */
 
     if (!greenlock) {
-        opts = Init._init(opts);
+        //opts = Init._init(opts);
         greenlock = Greenlock.create(opts);
     }
     opts.packageAgent = addGreenlockAgent(opts);
