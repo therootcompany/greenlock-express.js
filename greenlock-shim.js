@@ -2,7 +2,7 @@
 
 module.exports.create = function(opts) {
     var Greenlock = require("@root/greenlock");
-    var Init = require("@root/greenlock/init.js");
+    var Init = require("@root/greenlock/lib/init.js");
     var greenlock = opts.greenlock;
 
     /*
