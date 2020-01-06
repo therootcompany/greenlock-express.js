@@ -25,11 +25,11 @@ npm init
 ```
 
 ```bash
-npm install --save greenlock-express@v3
+npm install --save greenlock-express@v4
 ```
 
 ```bash
-npx greenlock init --maintainer-email 'jon@example.com'
+npx greenlock init --maintainer-email 'jon@example.com' --config-dir ./greenlock.d
 ```
 
 <details>
@@ -65,13 +65,16 @@ require("greenlock-express")
 var pkg = require("./package.json");
 module.exports = require("@root/greenlock").create({
     // name & version for ACME client user agent
-    packageAgent: pkg.name + "/" + pkg.version,
+    //packageAgent: pkg.name + "/" + pkg.version,
 
     // contact for security and critical bug notices
     maintainerEmail: pkg.author,
 
     // where to find .greenlockrc and set default paths
-    packageRoot: __dirname
+    packageRoot: __dirname,
+
+    // where config and certificate stuff go
+    configDir: "./greenlock.d"
 });
 ```
 
@@ -221,32 +224,27 @@ later, if you need them.
 ```js
 "use strict";
 
+//var pkg = require("./package.json");
+var app = require("./app.js");
+
 require("greenlock-express")
-    .init(function() {
-        var pkg = require("./package.json");
-        return {
-            greenlock: require("@root/greenlock").create({
-                // name & version for ACME client user agent
-                packageAgent: pkg.name + "/" + pkg.version,
+    .init({
+        // name & version for ACME client user agent
+        //packageAgent: pkg.name + "/" + pkg.version,
 
-                // contact for security and critical bug notices
-                maintainerEmail: pkg.author,
+        // contact for security and critical bug notices
+        maintainerEmail: pkg.author,
 
-                // where to find .greenlockrc and set default paths
-                packageRoot: __dirname
-            }),
+        // where to find .greenlockrc and set default paths
+        packageRoot: __dirname,
 
-            // whether or not to run at cloudscale
-            cluster: false
-        };
+        // where config and certificate stuff go
+        configDir: "./greenlock.d",
+
+        // whether or not to run at cloudscale
+        cluster: false
     })
-    .ready(function(glx) {
-        var app = require("./app.js");
-
-        // Serves on 80 and 443
-        // Get's SSL certificates magically!
-        glx.serveApp(app);
-    });
+    .serve(app);
 ```
 
 And start your server:
@@ -267,9 +265,8 @@ npm start -- --staging
 ```
 
 ```txt
-Greenlock v3.0.0
-Greenlock Manager Config File: ~/.config/greenlock/manager.json
-Greenlock Storage Directory: ~/.config/greenlock/
+Greenlock v4.0.0
+Greenlock Config Dir/File: ./greenlock.d/config.json
 
 Listening on 0.0.0.0:80 for ACME challenges and HTTPS redirects
 Listening on 0.0.0.0:443 for secure traffic
@@ -296,8 +293,10 @@ cat .greenlockrc
 
 ```json
 {
-    "manager": "greenlock-manager-fs",
-    "configFile": "./greenlock.json"
+    "manager": {
+        "module": "@greenlock/manager"
+    },
+    "configDir": "./greenlock.d"
 }
 ```
 
@@ -525,5 +524,4 @@ attribution, and/or visible source policies. We want to build great software and
 [Greenlock&trade;](https://git.rootprojects.org/root/greenlock.js) |
 MPL-2.0 |
 [Terms of Use](https://therootcompany.com/legal/#terms) |
-[Privacy Policy](https://therootcompany.com/legal/#privacy)
 [Privacy Policy](https://therootcompany.com/legal/#privacy)
