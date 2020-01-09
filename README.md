@@ -29,7 +29,7 @@ npm install --save greenlock-express@v4
 ```
 
 ```bash
-npx greenlock init --maintainer-email 'jon@example.com' --config-dir ./greenlock.d
+npx greenlock init --config-dir ./greenlock.d --maintainer-email 'jon@example.com'
 ```
 
 <details>
@@ -38,44 +38,21 @@ npx greenlock init --maintainer-email 'jon@example.com' --config-dir ./greenlock
 ```js
 "use strict";
 
+var app = require("./app.js");
+
 require("greenlock-express")
     .init({
         packageRoot: __dirname,
 
+        // contact for security and critical bug notices
+        configDir: "./greenlock.d",
+
         // whether or not to run at cloudscale
         cluster: false
     })
-    .ready(function(glx) {
-        var app = require("./app.js");
-
-        // Serves on 80 and 443
-        // Get's SSL certificates magically!
-        glx.serveApp(app);
-    });
-```
-
-</details>
-
-<details>
-<summary>greenlock.js</summary>
-
-```js
-"use strict";
-
-var pkg = require("./package.json");
-module.exports = require("@root/greenlock").create({
-    // name & version for ACME client user agent
-    //packageAgent: pkg.name + "/" + pkg.version,
-
-    // contact for security and critical bug notices
-    maintainerEmail: pkg.author,
-
-    // where to find .greenlockrc and set default paths
-    packageRoot: __dirname,
-
-    // where config and certificate stuff go
-    configDir: "./greenlock.d"
-});
+    // Serves on 80 and 443
+    // Get's SSL certificates magically!
+    .serve(app);
 ```
 
 </details>
@@ -86,6 +63,8 @@ module.exports = require("@root/greenlock").create({
 ```js
 "use strict";
 
+// Here's a vanilla HTTP app to start,
+// but feel free to replace it with Express, Koa, etc
 var app = function(req, res) {
     res.end("Hello, Encrypted World!");
 };
@@ -100,7 +79,9 @@ npx greenlock add --subject example.com --altnames example.com
 ```
 
 <details>
-<summary>greenlock.json</summary>
+<summary>greenlock.d/config.json</summary>
+
+<!-- TODO update manager to write array rather than object -->
 
 ```json
 { "sites": [{ "subject": "example.com", "altnames": ["example.com"] }] }
