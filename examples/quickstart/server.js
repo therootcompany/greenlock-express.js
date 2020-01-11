@@ -1,32 +1,27 @@
 "use strict";
 
-function httpsWorker(glx) {
-    // This can be a node http app (shown),
-    // an Express app, or Hapi, Koa, Rill, etc
-    var app = function(req, res) {
-        res.end("Hello, Encrypted World!");
-    };
+// This can be a node http app (shown),
+// an Express app, or Hapi, Koa, Rill, etc
+var app = function(req, res) {
+    res.end("Hello, Encrypted World!");
+};
+
+//require("greenlock-express")
+require("../../")
+    .init({
+        // Package name+version are taken from <packageRoot>/package.json and used for ACME client user agent
+        packageRoot: __dirname,
+        // configDir is relative to packageRoot, not _this_ file
+        configDir: "./greenlock.d",
+
+        // Maintainer email is the contact for critical bug and security notices
+        // by default package.json.author.email will be used
+        //maintainerEmail: "jon@example.com",
+
+        // Change to true when you're ready to make your app cloud-scale
+        cluster: false
+    })
 
     // Serves on 80 and 443
     // Get's SSL certificates magically!
-    glx.serveApp(app);
-}
-
-var pkg = require("../../package.json");
-//require("greenlock-express")
-require("../../")
-    .init(function getConfig() {
-        // Greenlock Config
-
-        return {
-            // Package name+version is used for ACME client user agent
-            package: { name: "websocket-example", version: pkg.version },
-
-            // Maintainer email is the contact for critical bug and security notices
-            maintainerEmail: "jon@example.com",
-
-            // Change to true when you're ready to make your app cloud-scale
-            cluster: false
-        };
-    })
-    .serve(httpsWorker);
+    .serve(app);

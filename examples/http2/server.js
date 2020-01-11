@@ -1,7 +1,5 @@
 "use strict";
 
-var pkg = require("../../package.json");
-
 // The WRONG way:
 //var http2 = require('http2');
 //var http2Server = https.createSecureServer(tlsOptions, app);
@@ -9,6 +7,17 @@ var pkg = require("../../package.json");
 // Why is that wrong?
 // Greenlock needs to change some low-level http and https options.
 // Use glx.httpsServer(tlsOptions, app) instead.
+
+//require("greenlock-express")
+require("../../")
+    .init({
+        packageRoot: __dirname,
+        configDir: "./greenlock.d",
+
+        maintainerEmail: "jon@example.com",
+        cluster: false
+    })
+    .ready(httpsWorker);
 
 function httpsWorker(glx) {
     //
@@ -29,20 +38,8 @@ function httpsWorker(glx) {
     // You must ALSO listen on port 80 for ACME HTTP-01 Challenges
     // (the ACME and http->https middleware are loaded by glx.httpServer)
     var httpServer = glx.httpServer();
+
     httpServer.listen(80, "0.0.0.0", function() {
         console.info("Listening on ", httpServer.address());
     });
 }
-
-//require("greenlock-express")
-require("../../")
-    .init(function getConfig() {
-        // Greenlock Config
-
-        return {
-            package: { name: "http2-example", version: pkg.version },
-            maintainerEmail: "jon@example.com",
-            cluster: false
-        };
-    })
-    .serve(httpsWorker);

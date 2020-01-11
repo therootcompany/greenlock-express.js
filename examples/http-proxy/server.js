@@ -1,5 +1,21 @@
 "use strict";
 
+//require("greenlock-express")
+require("../../")
+    .init(function getConfig() {
+        // Greenlock Config
+
+        return {
+            packageRoot: __dirname,
+            configDir: "./greenlock.d",
+
+            maintainerEmail: "jon@example.com",
+
+            cluster: false
+        };
+    })
+    .ready(httpsWorker);
+
 function httpsWorker(glx) {
     // we need the raw https server
     var server = glx.httpsServer();
@@ -28,17 +44,3 @@ function httpsWorker(glx) {
         });
     });
 }
-
-var pkg = require("../../package.json");
-//require("greenlock-express")
-require("../../")
-    .init(function getConfig() {
-        // Greenlock Config
-
-        return {
-            package: { name: "http-proxy-example", version: pkg.version },
-            maintainerEmail: "jon@example.com",
-            cluster: false
-        };
-    })
-    .serve(httpsWorker);

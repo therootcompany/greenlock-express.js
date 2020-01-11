@@ -1,7 +1,5 @@
 "use strict";
 
-var pkg = require("../../package.json");
-
 // The WRONG way:
 //var http = require('http');
 //var httpServer = https.createSecureServer(redirectToHttps);
@@ -9,6 +7,17 @@ var pkg = require("../../package.json");
 // Why is that wrong?
 // Greenlock needs to change some low-level http and https options.
 // Use glx.httpServer(redirectToHttps) instead.
+
+//require("greenlock-express")
+require("../../")
+    .init({
+        packageRoot: __dirname,
+        configDir: "./greenlock.d",
+
+        maintainerEmail: "jon@example.com",
+        cluster: false
+    })
+    .ready(httpsWorker);
 
 function httpsWorker(glx) {
     //
@@ -27,16 +36,3 @@ function httpsWorker(glx) {
         console.info("Listening on ", httpServer.address());
     });
 }
-
-//require("greenlock-express")
-require("../../")
-    .init(function getConfig() {
-        // Greenlock Config
-
-        return {
-            package: { name: "plain-http-example", version: pkg.version },
-            maintainerEmail: "jon@example.com",
-            cluster: false
-        };
-    })
-    .serve(httpsWorker);

@@ -1,0 +1,12 @@
+{
+  "name": "https1-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "John Doe <j.doe@example.com> (https://example.com/)",
+  "license": "ISC"
+}

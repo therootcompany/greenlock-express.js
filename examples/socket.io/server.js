@@ -8,6 +8,17 @@
 //       You can just use WebSockets
 //       (see the websocket example)
 
+//require("greenlock-express")
+require("../../")
+    .init({
+        packageRoot: __dirname,
+        configDir: "./greenlock.d",
+
+        maintainerEmail: "jon@example.com",
+        cluster: false
+    })
+    .ready(httpsWorker);
+
 function httpsWorker(glx) {
     var socketio = require("socket.io");
     var io;
@@ -33,17 +44,3 @@ function httpsWorker(glx) {
         res.end("Hello, World!\n\n💚 🔒.js");
     });
 }
-
-var pkg = require("../../package.json");
-//require("greenlock-express")
-require("../../")
-    .init(function getConfig() {
-        // Greenlock Config
-
-        return {
-            package: { name: "socket-io-example", version: pkg.version },
-            maintainerEmail: "jon@example.com",
-            cluster: false
-        };
-    })
-    .serve(httpsWorker);
