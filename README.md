@@ -202,6 +202,32 @@ For a more detail read the full
     -   [**CI/CD**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/ci-cd/) (coming soon)
     -   [HTTP Proxy](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/http-proxy/)
 
+# Troubleshooting
+
+### What if the example didn't work?
+
+Double check the following:
+
+-   **Public Facing IP** for `http-01` challenges
+    -   Are you running this _as_ a public-facing webserver (good)? or localhost (bad)?
+    -   Does `ifconfig` show a public address (good)? or a private one - 10.x, 192.168.x, etc (bad)?
+    -   If you're on a non-public server, are you using the `dns-01` challenge?
+-   **valid email**
+    -   You MUST set `maintainerEmail` to a **valid address**
+    -   MX records must validate (`dig MX example.com` for `'john@example.com'`)
+-   **valid DNS records**
+    -   Must have public DNS records (test with `dig +trace A example.com; dig +trace www.example.com` for `[ 'example.com', 'www.example.com' ]`)
+-   **write access**
+    -   You MUST set `configDir` to a writeable location (test with `touch ./greenlock.d/config.json`)
+-   **port binding privileges**
+    -   You MUST be able to bind to ports 80 and 443
+    -   You can do this via `sudo` or [`setcap`](https://gist.github.com/firstdoit/6389682)
+-   **API limits**
+    -   You MUST NOT exceed the API [**usage limits**](https://letsencrypt.org/docs/staging-environment/) per domain, certificate, IP address, etc
+-   **Red Lock, Untrusted**
+    -   You MUST switch from `npm start -- --staging` to `npm start` to use the **production** server
+    -   The API URL should not have 'acme-staging-v02', but should have 'acme-v02'
+
 # Using a Database, S3, etc
 
 If you have a small site, the default file storage will work well for you.
