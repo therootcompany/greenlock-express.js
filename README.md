@@ -85,9 +85,9 @@ Works with _any_ node http app, including
 -   [x] cluster
 -   [x] etc...
 
-# QuickStart: Serve Sites with Free SSL
+# v4 QuickStart
 
-Easy as 1, 2, 3... 4
+Serving sites with Free SSL is as easy as 1, 2, 3... 4
 
 ### Overview
 
