@@ -140,11 +140,12 @@ cat .greenlockrc
 </details>
 
 ```bash
-# show the global defaults
+# show the global defaults with the CLI
 npx greenlock defaults
 ```
 
 ```js
+// show the global defaults with the API
 var defaults = await greenlock.defaults();
 ```
 
@@ -174,11 +175,12 @@ var defaults = await greenlock.defaults();
 </details>
 
 ```bash
-# show per-site configs
+# show per-site configs with the CLI
 npx greenlock config --subject example.com
 ```
 
 ```js
+// show a site config with the API
 greenlock.sites.get({ subject: "example.com" });
 ```
 
@@ -213,11 +215,12 @@ You need to create a Let's Encrypt _subscriber account_, which can be done globa
 All individuals, and most businesses, should set this globally:
 
 ```bash
-# Set a global subscriber account
+# Set a global subscriber account with the CLI
 npx greenlock defaults --subscriber-email 'mycompany@example.com' --agree-to-terms true
 ```
 
 ```js
+// set a global subscriber account with the API
 greenlock.manager.defaults({
     subscriberEmail: "mycompany@example.com",
     agreeToTerms: true
@@ -230,11 +233,12 @@ A Let's Encrypt SSL certificate has a "Subject" (Primary Domain) and up to 100 "
 (of which the first _must_ be the subject).
 
 ```bash
-# Add a certificate with specific domains
+# Add a certificate with specific domains with the CLI
 npx greenlock add --subject example.com --altnames example.com,www.example.com
 ```
 
 ```js
+// Add a certificate with specific domains with the API
 greenlock.sites.add({
     subject: "example.com",
     altnames: ["example.com"]
