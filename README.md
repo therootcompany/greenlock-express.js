@@ -1,4 +1,4 @@
-# [Greenlock Express](https://git.rootprojects.org/root/greenlock-express.js) is Let's Encrypt for Node
+# [Greenlock Express v4](https://git.rootprojects.org/root/greenlock-express.js) is Let's Encrypt for Node
 
 | Built by [Root](https://therootcompany.com) for [Hub](https://rootprojects.org/hub/) |
 
@@ -89,6 +89,8 @@ Works with _any_ node http app, including
 
 Easy as 1, 2, 3... 4
 
+### Overview
+
 1. Create a Project with Greenlock Express
     - `server.js`
     - `app.js`
@@ -99,12 +101,16 @@ Easy as 1, 2, 3... 4
 4. Hello, World!
     - `npm start -- --staging`
 
+## 1. Create your Project
+
 ```bash
 npm init
 npm install --save greenlock-express@v4
 ```
 
 You can use **local file storage** or a **database**. The default is to use file storage.
+
+## 2. Initialize and Config (Dir or DB)
 
 ```bash
 # Note: you can use the CLI to create `server.js` and `greenlock.d/config.json`
@@ -147,7 +153,7 @@ var app = function(req, res) {
 module.exports = app;
 ```
 
-</details>
+### 3. Add Sites
 
 ```bash
 # Note: you can use the CLI to edit the config file
@@ -161,6 +167,8 @@ npx greenlock add --subject example.com --altnames example.com
 ```json
 { "sites": [{ "subject": "example.com", "altnames": ["example.com"] }] }
 ```
+
+### 4. Hello, Encrypted World!
 
 ```bash
 # Note: you can use npm start to run server.js with the --staging flag set
@@ -177,7 +185,8 @@ Listening on 0.0.0.0:443 for secure traffic
 
 ## Walkthrough
 
-Read the full [WALKTHROUGH](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/WALKTHROUGH.md)
+For a more detail read the full
+[WALKTHROUGH](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/WALKTHROUGH.md).
 
 # Examples
 
