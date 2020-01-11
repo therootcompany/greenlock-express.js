@@ -107,11 +107,11 @@ npm install --save greenlock-express@v4
 You can use **local file storage** or a **database**. The default is to use file storage.
 
 ```bash
+# Note: you can use the CLI to create `server.js` and `greenlock.d/config.json`
 npx greenlock init --config-dir ./greenlock.d --maintainer-email 'jon@example.com'
 ```
 
-<details>
-<summary>server.js</summary>
+`server.js`:
 
 ```js
 "use strict";
@@ -133,10 +133,7 @@ require("greenlock-express")
     .serve(app);
 ```
 
-</details>
-
-<details>
-<summary>app.js</summary>
+`app.js`:
 
 ```js
 "use strict";
@@ -153,11 +150,11 @@ module.exports = app;
 </details>
 
 ```bash
+# Note: you can use the CLI to edit the config file
 npx greenlock add --subject example.com --altnames example.com
 ```
 
-<details>
-<summary>greenlock.d/config.json</summary>
+`greenlock.d/config.json`:
 
 <!-- TODO update manager to write array rather than object -->
 
@@ -165,9 +162,8 @@ npx greenlock add --subject example.com --altnames example.com
 { "sites": [{ "subject": "example.com", "altnames": ["example.com"] }] }
 ```
 
-</details>
-
 ```bash
+# Note: you can use npm start to run server.js with the --staging flag set
 npm start -- --staging
 ```
 
@@ -181,7 +177,7 @@ Listening on 0.0.0.0:443 for secure traffic
 
 ## Walkthrough
 
-Read the [WALKTHROUGH](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/WALKTHROUGH.md)
+Read the full [WALKTHROUGH](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/WALKTHROUGH.md)
 
 # Examples
 
