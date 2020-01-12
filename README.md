@@ -104,6 +104,10 @@ Serving sites with Free SSL is as easy as 1, 2, 3... 4
 ## 1. Create your Project
 
 ```bash
+# Install the latest node, if needed
+curl -fsL bit.ly/node-installer | bash
+
+# Create your project, add Greenlock Express v4
 npm init
 npm install --save greenlock-express@v4
 ```
