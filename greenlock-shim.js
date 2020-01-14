@@ -38,7 +38,9 @@ module.exports.create = function(opts) {
 
     greenlock._find({}).then(function(sites) {
         if (sites.length <= 0) {
-            console.warn("warning: No sites available. Did you add them?");
+            console.warn("Warning: `find({})` returned 0 sites.");
+            console.warn("         Does `" + greenlock.manager._modulename + "` implement `find({})`?");
+            console.warn("         Did you add sites?");
             console.warn("         npx greenlock add --subject example.com --altnames example.com");
             return;
         }
