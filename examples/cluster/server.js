@@ -16,7 +16,12 @@ require("../../")
         // n-1 cpus, with a minimum of 2
         workers: 4
     })
-    .ready(httpsWorker);
+    // ready is only executed by workers (no-op in master)
+    .ready(httpsWorker)
+    // master is only executed by master (no-op in a worker)
+    .master(function() {
+        console.info("I'm the master");
+    });
 
 function httpsWorker(glx) {
     // WRONG

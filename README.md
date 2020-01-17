@@ -194,17 +194,32 @@ For a more detail read the full
 
 # Examples
 
--   [greenlock-express.js/examples/](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples)
-    -   [Express](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/express/)
-    -   [Node's **http2**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/http2/)
-    -   [Node's https](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/https/)
-    -   [**WebSockets**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/websockets/)
-    -   [Socket.IO](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/socket.io/)
-    -   [Cluster](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/cluster/)
-    -   [**Wildcards**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/wildcards/) (coming soon)
-    -   [**Localhost**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/localhost/) (coming soon)
-    -   [**CI/CD**](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/ci-cd/) (coming soon)
-    -   [HTTP Proxy](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/http-proxy/)
+To see all of the examples, just browse [greenlock-express.js/examples/](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples)
+
+|        Example         | Location + Description                                                                                                                     |
+| :--------------------: | :----------------------------------------------------------------------------------------------------------------------------------------- |
+|        Express         | [./examples/express/][ex-express] how to export an express app                                                                             |
+|    Node's **http2**    | [./examples/http2/][ex-http2] how to use Node's built-in http2 server                                                                      |
+|      Node's https      | [./examples/https][ex-https] how to customize the https server                                                                             |
+|     **WebSockets**     | [./examples/websockets/][ex-websockets] how to use `on('upgrade')`                                                                         |
+| <span>Socket.IO</span> | [./examples/socket.io][ex-socketio] how to overcomplicate a persistent connection                                                          |
+|        Cluster         | [./examples/cluster/][ex-cluster] how to use Node's built-in clustering with master and worker processes                                   |
+|     **Wildcards**      | [coming someday][ex-wildcards] (ask to help create this) how to use DNS-01 for wildcard certs                                              |
+|     **Localhost**      | [coming someday][ex-localhost] (ask to help create this) how to use DNS-01 for domains that resolve to private networks, such as 127.0.0.1 |
+|       **CI/CD**        | [coming someday][ex-cicd] (ask to help create this) how to use the `--staging` environment for test deployments                            |
+|       HTTP Proxy       | [examples/http-proxy][ex-http-proxy] how to (reverse) proxy decrypted traffic to another server                                            |
+|           -            | Build your own<br>Be sure to tell me about it (open an issue)                                                                              |
+
+[ex-express]: https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/express/
+[ex-http2]: https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/http2/
+[ex-https]: https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/https2/
+[ex-websockets]: https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/websockets/
+[ex-socketio]: https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/socketo.io/
+[ex-cluster]: https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/cluster/
+[ex-wildcards]: https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/wildcards/
+[ex-localhost]: https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/localhost/
+[ex-cicd]: https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/ci-cd/
+[ex-http-proxy]: https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/http-proxy/
 
 # Troubleshooting
 
@@ -257,15 +272,40 @@ See the section on **Custom** callbacks and plugins below.
 -->
 
 -   [Custom Domain Management](https://git.rootprojects.org/root/greenlock-manager-test.js)
-    -   `npx greenlock init --manager ./path-or-npm-name.js --manager-FOO 'set option FOO'`
+    -   edit `server.js` and/or `.greenlockrc` to switch from the default `configDir` manager to your config system or database
+    -   CLI example: `npx greenlock init --manager ./path-or-npm-name.js --manager-FOO 'set option FOO'`
 -   [Custom Key & Cert Storage](https://git.rootprojects.org/root/greenlock-store-test.js)
-    -   `npx greenlock defaults --store greenlock-store-fs --store-base-path ./greenlock.d`
+    -   edit the `defaults` section of `greenlock.d/config.json` to change the certificate store or database
+    -   CLI example: `npx greenlock defaults --store greenlock-store-fs --store-base-path ./greenlock.d`
 -   [Custom ACME HTTP-01 Challenges](https://git.rootprojects.org/root/acme-http-01-test.js)
-    -   `npx greenlock defaults --challenge-http-01 ./you-http-01.js`
-    -   `npx greenlock update --subject example.com --challenge-http-01 acme-http-01-standalone`
+    -   edit the `defaults` section of `greenlock.d/config.json` to change the challenges by hand
+    -   CLI example: `npx greenlock defaults --challenge-http-01 ./you-http-01.js`
 -   [Custom ACME DNS-01 Challenges](https://git.rootprojects.org/root/acme-dns-01-test.js)
-    -   `npx greenlock defaults --challenge-dns-01 acme-dns-01-ovh --challenge-dns-01-token xxxx`
-    -   `npx greenlock update --subject example.com --challenge-dns-01 ./your-dns-01.js`
+    -   edit the `defaults` section of `greenlock.d/config.json` to change the challenges by hand
+    -   CLI example: `npx greenlock defaults --challenge-dns-01 acme-dns-01-ovh --challenge-dns-01-token xxxx`
+    -   Per-site example: `npx greenlock update --subject example.com --challenge-dns-01 ./your-dns-01.js`
+    -   API example:
+        ```js
+        greenlock.sites.set({
+            subject: "example.com",
+            challenges: {
+                "dns-01": {
+                    module: "my-npm-module-name",
+                    foo: "some option",
+                    bar: "some other option"
+                }
+            }
+        });
+        ```
+
+If you're using the default `configDir` management you can edit `greenlock.d/config.json` by hand to change
+which default and per-site modules are used.
+
+You can use the CLI, even if you're using a database, buckets, or your own file storage.
+
+You can also use the API, particularly if you need to set values dynamically per-site or per-user
+rather than using the global defaults. The certificate store and all challenges can be set
+per-site, but most per-site use cases are for DNS-01.
 
 # Ready-made Integrations
 
