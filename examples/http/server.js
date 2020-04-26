@@ -2,7 +2,7 @@
 
 // The WRONG way:
 //var http = require('http');
-//var httpServer = https.createSecureServer(redirectToHttps);
+//var httpServer = http.createServer(redirectToHttps);
 //
 // Why is that wrong?
 // Greenlock needs to change some low-level http and https options.
