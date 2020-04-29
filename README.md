@@ -212,7 +212,7 @@ To see all of the examples, just browse [greenlock-express.js/examples/](https:/
 
 [ex-express]: https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/express/
 [ex-http2]: https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/http2/
-[ex-https]: https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/https2/
+[ex-https]: https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/https/
 [ex-websockets]: https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/websockets/
 [ex-socketio]: https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/socketo.io/
 [ex-cluster]: https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/cluster/
