@@ -161,7 +161,7 @@ module.exports = app;
 
 ```bash
 # Note: you can use the CLI to edit the config file
-npx greenlock add --subject example.com --altnames example.com
+npx greenlock add --subject example.com --altnames example.com,www.example.com
 ```
 
 `greenlock.d/config.json`:
@@ -169,7 +169,7 @@ npx greenlock add --subject example.com --altnames example.com
 <!-- TODO update manager to write array rather than object -->
 
 ```json
-{ "sites": [{ "subject": "example.com", "altnames": ["example.com"] }] }
+{ "sites": [{ "subject": "example.com", "altnames": ["example.com,www.example.com"] }] }
 ```
 
 ### 4. Hello, Encrypted World!
