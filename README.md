@@ -169,7 +169,7 @@ npx greenlock add --subject example.com --altnames example.com,www.example.com
 <!-- TODO update manager to write array rather than object -->
 
 ```json
-{ "sites": [{ "subject": "example.com", "altnames": ["example.com,www.example.com"] }] }
+{ "sites": [{ "subject": "example.com", "altnames": [ "example.com", "www.example.com" ] }] }
 ```
 
 ### 4. Hello, Encrypted World!
