@@ -201,15 +201,17 @@ Before you go into your specific use case, just try out the QuickStart from star
 
 ### 2. How to use JavaScript configuration?
 
-You don't. The configuration has to be serializable (i.e. could go in a database).
+You don't. It's JSON on purpose.
+
+The configuration has to be serializable (i.e. could go in a database).
 
 The config file is meant for **simple** use cases, for the average dev and it is managed with `npx greenlock ...`, as shown in the QuickStart.
 
-If you have an **advanced** use case (i.e. you need stuff in a database), you can use the Greenlock API (not Greenlock Express) and you'll love it.
+If you have a **dynamic** or **advanced** use case (i.e. you need stuff in a database, or to change config on-the-fly), you can use the Greenlock API (not Greenlock Express) and you'll love it.
 
-If you're layering a lot of **complexity** with dev ops tools, but you don't really understand the tools that well (i.e. Docker), either use ENVIRONMENT variables or put the `npx greenlock ...` commands in your setup script.
+If you're layering a lot of **complexity** with dev ops tools, but you don't really understand the tools that well (i.e. **Docker**), either use ENVIRONMENT variables or put the `npx greenlock ...` commands in your setup script. You MUST use a database for **lambda** "cloud functions" and such.
 
-You can also just mangle the Greenlock API to do what you want... but I don't recommend it. Keep it simple.
+You can also just mangle the Greenlock API to do what you want... but I don't recommend it. Keep it simple and your future self with thank you.
 
 General rule of thumb: commit code, not data / config.
 
