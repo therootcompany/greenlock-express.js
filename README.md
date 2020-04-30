@@ -192,44 +192,6 @@ Listening on 0.0.0.0:443 for secure traffic
 For a more detail read the full
 [WALKTHROUGH](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/WALKTHROUGH.md).
 
-# FAQ
-### 1. But did YOU read the QuickStart?
-
-99% of the questions I get are answered in the QuickStart, or in the Examples.
-
-Before you go into your specific use case, just try out the QuickStart from start to finish so that you can see that the default setup works, you get feel for the "lay of the land", and you know what to edit.
-
-### 2. How to use JavaScript configuration?
-
-You don't. It's JSON on purpose.
-
-The configuration has to be serializable (i.e. could go in a database).
-
-The config file is meant for **simple** use cases, for the average dev and it is managed with `npx greenlock ...`, as shown in the QuickStart.
-
-If you have a **dynamic** or **advanced** use case (i.e. you need stuff in a database, or to change config on-the-fly), you can use the Greenlock API (not Greenlock Express) and you'll love it.
-
-If you're layering a lot of **complexity** with dev ops tools, but you don't really understand the tools that well (i.e. **Docker**), either use ENVIRONMENT variables or put the `npx greenlock ...` commands in your setup script. You MUST use a database for **lambda** "cloud functions" and such.
-
-You can also just mangle the Greenlock API to do what you want... but I don't recommend it. Keep it simple and your future self with thank you.
-
-General rule of thumb: commit code, not data / config.
-
-### 3. How to use non-standard ports (not 80, 443)?
-
-You don't. Not usually.
-
-Let's Encrypt **REQUIRES port 80** for HTTP-01 challenges.
-
-But if you're using DNS-01 or you have a proxy in place, just use the raw node server. See these examples:
-
-- [examples/http/server.js](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/http/server.js)
-- [examples/https/server.js](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/https/server.js)
-
-If you want to use Greenlock as a proxy, see this example:
-
-- [examples/http-proxy/server.js](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/http-proxy/server.js)
-
 # Examples
 
 To see all of the examples, just browse [greenlock-express.js/examples/](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples)
@@ -258,6 +220,45 @@ To see all of the examples, just browse [greenlock-express.js/examples/](https:/
 [ex-localhost]: https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/localhost/
 [ex-cicd]: https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/ci-cd/
 [ex-http-proxy]: https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/http-proxy/
+
+
+# FAQ
+## 1. But did YOU read the QuickStart?
+
+99% of the questions I get are answered in the QuickStart, or in the Examples.
+
+Before you go into your specific use case, just try out the QuickStart from start to finish so that you can see that the default setup works, you get feel for the "lay of the land", and you know what to edit.
+
+## 2. How to use JavaScript configuration?
+
+You don't. It's JSON on purpose.
+
+The configuration has to be serializable (i.e. could go in a database).
+
+The config file is meant for **simple** use cases, for the average dev and it is managed with `npx greenlock ...`, as shown in the QuickStart.
+
+If you have a **dynamic** or **advanced** use case (i.e. you need stuff in a database, or to change config on-the-fly), you can use the Greenlock API (not Greenlock Express) and you'll love it.
+
+If you're layering a lot of **complexity** with dev ops tools, but you don't really understand the tools that well (i.e. **Docker**), either use ENVIRONMENT variables or put the `npx greenlock ...` commands in your setup script. You MUST use a database for **lambda** "cloud functions" and such.
+
+You can also just mangle the Greenlock API to do what you want... but I don't recommend it. Keep it simple and your future self with thank you.
+
+General rule of thumb: commit code, not data / config.
+
+## 3. How to use non-standard ports (not 80, 443)?
+
+You don't. Not usually.
+
+Let's Encrypt **REQUIRES port 80** for HTTP-01 challenges.
+
+But if you're using DNS-01 or you have a proxy in place, just use the raw node server. See these examples:
+
+- [examples/http/server.js](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/http/server.js)
+- [examples/https/server.js](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/https/server.js)
+
+If you want to use Greenlock as a proxy, see this example:
+
+- [examples/http-proxy/server.js](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/http-proxy/server.js)
 
 # Troubleshooting
 
