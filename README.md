@@ -195,13 +195,13 @@ For a more detail read the full
 # FAQ
 ### 1. But did YOU read the QuickStart?
 
-Most of the questions I get come from people not even looking at the QuickStart and just jumping to asking a quostion
+99% of the questions I get are answered in the QuickStart, or in the Examples.
+
+Before you go into your specific use case, just try out the QuickStart from start to finish so that you can see that the default setup works, you get feel for the "lay of the land", and you know what to edit.
 
 ### 2. How to use JavaScript configuration?
 
 You don't. The configuration has to be serializable (i.e. could go in a database).
-
-(General rule of thumb: commit code, not data / config.)
 
 The config file is meant for **simple** use cases, for the average dev and it is managed with `npx greenlock ...`, as shown in the QuickStart.
 
@@ -210,6 +210,8 @@ If you have an **advanced** use case (i.e. you need stuff in a database), you ca
 If you're layering a lot of **complexity** with dev ops tools, but you don't really understand the tools that well (i.e. Docker), either use ENVIRONMENT variables or put the `npx greenlock ...` commands in your setup script.
 
 You can also just mangle the Greenlock API to do what you want... but I don't recommend it. Keep it simple.
+
+General rule of thumb: commit code, not data / config.
 
 ### 3. How to use non-standard ports (not 80, 443)?
 
