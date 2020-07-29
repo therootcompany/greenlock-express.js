@@ -249,7 +249,7 @@ Listening on 0.0.0.0:80 for ACME challenges and HTTPS redirects
 Listening on 0.0.0.0:443 for secure traffic
 ```
 
-If everything worked you can visit your site in your browser, and after a few seconds you'll see a "Hello World" message, and certificates will be saved in `greenlock.d/staging`. Run again without `--staging` and you will get real certificates.
+If everything worked you can visit your site in your browser, and after a few seconds you'll get a certificate warning and, after that, see a "Hello World" message. The debug (staging) certificates will be saved in `greenlock.d/staging`. Run again without `--staging` and you will get real certificates.
 
 ### Season to taste
 
