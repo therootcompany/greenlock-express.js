@@ -107,8 +107,12 @@ Serving sites with Free SSL is as easy as 1, 2, 3... 4
 If you're familiar with node, npm, and npx: this is all you need to do:
 
 ```bash
+npm init
+npm install --save greenlock-express@v4
+
 npx greenlock init --config-dir greenlock.d --maintainer-email jon@example.com
 npx greenlock add --subject example.com --altnames example.com
+
 npm start -- --staging
 ```
 
