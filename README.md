@@ -103,40 +103,63 @@ Serving sites with Free SSL is as easy as 1, 2, 3... 4
 
 ## 1. Create your Project
 
+If you need to install Node.js, do so:
+
+Mac, Linux:
+
 ```bash
-# Install the latest node, if needed (Mac, Linux)
 curl -fsS https://webinstall.dev/node | bash
+```
 
-# Windows 10
-# curl -fsSA "MS" https://webinstall.dev/node | powershell
+Windows 10:
 
-# Create your project, add Greenlock Express v4
+```pwsh
+curl -fsSA "MS" https://webinstall.dev/node | powershell
+```
+
+Then create a directory for your project, and initialize it:
+
+```bash
+mkdir -p my-sites
+pushd my-sites
 npm init
 npm install --save greenlock-express@v4
 ```
 
-You can use **local file storage** or a **database**. The default is to use file storage.
-
 ## 2. Initialize and Config (Dir or DB)
 
+You can use **local file storage** or a **database**. The default is to use file storage.
+
+You'll need to create `server.js` and `greenlock.d/config.json`. You can do so using the CLI, API, or by hand.
+
+### Using the CLI (simplest, recommended)
+
+Anytime you install an npm module that contains an executable,
+you can run it using `npx`.
+
+To initialize the Greenlock config, run `npx greenlock init`:
+
 ```bash
-# Note: you can use the CLI to create `server.js` and `greenlock.d/config.json`
 npx greenlock init --config-dir ./greenlock.d --maintainer-email 'jon@example.com'
 ```
+
+### By Hand (for advanced users)
+
+Create `server.js` like so:
 
 `server.js`:
 
 ```js
-"use strict";
+'use strict';
 
-var app = require("./app.js");
+var app = require('./app.js');
 
-require("greenlock-express")
+require('greenlock-express')
     .init({
         packageRoot: __dirname,
 
-        // contact for security and critical bug notices
-        configDir: "./greenlock.d",
+        // where to look for configuration
+        configDir: './greenlock.d',
 
         // whether or not to run at cloudscale
         cluster: false
@@ -146,26 +169,54 @@ require("greenlock-express")
     .serve(app);
 ```
 
+Create `app.js` like so:
+
 `app.js`:
 
 ```js
-"use strict";
+'use strict';
 
 // Here's a vanilla HTTP app to start,
 // but feel free to replace it with Express, Koa, etc
 var app = function(req, res) {
-    res.end("Hello, Encrypted World!");
+    res.end('Hello, Encrypted World!');
 };
 
 module.exports = app;
 ```
 
-### 3. Add Sites
+Greenlock uses `.greenlockrc` to figure out whether to use the file system or a database for config,
+as well as where its root directory is.
+
+`.greenlockrc`
+
+```json
+{"manager":{"module":"@greenlock/manager"},"configDir":"greenlock.d"}
+```
+
+The `greenlock.d/config.json` is NOT intended to be edited by hand, as it is a substitute for a database, but it looks like this:
+
+```json
+{ "defaults": { "subscriberEmail": "john.doe@example.com" }, "sites": [] }
+```
+
+## 3. Add Sites
+
+For security, you must specify which sites you allow to request certificates. If you need this to be dynamic (i.e. checking a database or API, see the section below on custom site managers).
+
+Every site has a "subject" (its primary domain name) and one or more "altnames" (secondary or related domain names on the same certificate).
+
+### Using CLI (simple, recommended)
+
+Simply supply the names of sites that you manage and they will be added to the file system config, or database.
 
 ```bash
-# Note: you can use the CLI to edit the config file
 npx greenlock add --subject example.com --altnames example.com,www.example.com
 ```
+
+### By Hand (debugging only)
+
+You should NOT edit `greenlock.d/config.json` with your own tools. Use `greenlock.manager.add({})` instead.
 
 `greenlock.d/config.json`:
 
@@ -175,7 +226,15 @@ npx greenlock add --subject example.com --altnames example.com,www.example.com
 { "sites": [{ "subject": "example.com", "altnames": [ "example.com", "www.example.com" ] }] }
 ```
 
-### 4. Hello, Encrypted World!
+## 4. Hello, Encrypted World!
+
+That was it! Now you can run your server!
+
+When you run `npm start`, it will automatically run `node server.js` (or `package.json.scripts.start`).
+
+For arguments that `npm start` should ignore, place them after `--`.
+
+Here we use `--staging` in order to tell greenlock to issue test certificates rather than real certificates.
 
 ```bash
 # Note: you can use npm start to run server.js with the --staging flag set
@@ -190,7 +249,40 @@ Listening on 0.0.0.0:80 for ACME challenges and HTTPS redirects
 Listening on 0.0.0.0:443 for secure traffic
 ```
 
-## Walkthrough
+If everything worked you can visit your site in your browser, and after a few seconds you'll see a "Hello World" message, and certificates will be saved in `greenlock.d/staging`. Run again without `--staging` and you will get real certificates.
+
+### Season to taste
+
+Now you're ready to update `app.js` with your code. For example, try this next:
+
+```bash
+npm install --save express
+mkdir -p public
+echo '<h1>Hello!</h1>' >> public/index.html
+```
+
+`app.js`:
+
+```js
+'use strict';
+
+var path = require('path');
+var express = require('express');
+var app = express();
+
+app.get('/', express.static(path.join(__dirname, "public")));
+
+module.exports = app;
+
+// for development and debugging
+if (require.main === module) {
+    require('http').createServer(app).listen(3000, function () {
+        console.info("Listening for HTTP on", this.address());
+    });
+}
+```
+
+# Walkthrough
 
 For a more detail read the full
 [WALKTHROUGH](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/WALKTHROUGH.md).
