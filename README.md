@@ -89,17 +89,30 @@ Works with _any_ node http app, including
 
 Serving sites with Free SSL is as easy as 1, 2, 3... 4
 
-### Overview
+## Overview
 
 1. Create a Project with Greenlock Express
     - `server.js`
     - `app.js`
 2. Setup the config file (or database)
+    - `.greenlockrc`
     - `greenlock.d/config.json`
 3. Add Domains
     - `npx greenlock add --subject example.com --altnames example.com`
 4. Hello, World!
     - `npm start -- --staging`
+
+### TL;DR
+
+If you're familiar with node, npm, and npx: this is all you need to do:
+
+```bash
+npx greenlock init --config-dir greenlock.d --maintainer-email jon@example.com
+npx greenlock add --subject example.com --altnames example.com
+npm start -- --staging
+```
+
+Once you've tested that that works, you can change `app.js` to suit your needs replace the built-in callbacks for things like certificate storage as you like.
 
 ## 1. Create your Project
 
