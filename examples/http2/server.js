@@ -26,7 +26,8 @@ function httpsWorker(glx) {
     //
 
     // Get the raw http2 server:
-    var http2Server = glx.http2Server(function(req, res) {
+    var tlsOptions = null;
+    var http2Server = glx.http2Server(tlsOptions, function(req, res) {
         res.end("Hello, Encrypted World!");
     });
 
