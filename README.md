@@ -1,3 +1,10 @@
+# Mirror of git.rootprojects.org/root/greenlock-express.js
+
+Github does not expose the ability to automatically update mirrors,
+so this may lag behind the official repository which is found at:
+
+-   <https://git.rootprojects.org/root/greenlock-express.js>
+
 # [Greenlock Express v4](https://git.rootprojects.org/root/greenlock-express.js) is Let's Encrypt for Node
 
 | Built by [Root](https://therootcompany.com) for [Hub](https://rootprojects.org/hub/) |
@@ -167,16 +174,16 @@ Create `server.js` like so:
 `server.js`:
 
 ```js
-'use strict';
+"use strict";
 
-var app = require('./app.js');
+var app = require("./app.js");
 
-require('greenlock-express')
+require("greenlock-express")
     .init({
         packageRoot: __dirname,
 
         // where to look for configuration
-        configDir: './greenlock.d',
+        configDir: "./greenlock.d",
 
         // whether or not to run at cloudscale
         cluster: false
@@ -191,12 +198,12 @@ Create `app.js` like so:
 `app.js`:
 
 ```js
-'use strict';
+"use strict";
 
 // Here's a vanilla HTTP app to start,
 // but feel free to replace it with Express, Koa, etc
-var app = function(req, res) {
-    res.end('Hello, Encrypted World!');
+var app = function (req, res) {
+    res.end("Hello, Encrypted World!");
 };
 
 module.exports = app;
@@ -208,7 +215,7 @@ as well as where its root directory is.
 `.greenlockrc`
 
 ```json
-{"manager":{"module":"@greenlock/manager"},"configDir":"greenlock.d"}
+{ "manager": { "module": "@greenlock/manager" }, "configDir": "greenlock.d" }
 ```
 
 The `greenlock.d/config.json` is NOT intended to be edited by hand, as it is a substitute for a database, but it looks like this:
@@ -240,7 +247,7 @@ You should NOT edit `greenlock.d/config.json` with your own tools. Use `greenloc
 <!-- TODO update manager to write array rather than object -->
 
 ```json
-{ "sites": [{ "subject": "example.com", "altnames": [ "example.com", "www.example.com" ] }] }
+{ "sites": [{ "subject": "example.com", "altnames": ["example.com", "www.example.com"] }] }
 ```
 
 ## 4. Hello, Encrypted World!
@@ -281,21 +288,23 @@ echo '<h1>Hello!</h1>' >> public/index.html
 `app.js`:
 
 ```js
-'use strict';
+"use strict";
 
-var path = require('path');
-var express = require('express');
+var path = require("path");
+var express = require("express");
 var app = express();
 
-app.get('/', express.static(path.join(__dirname, "public")));
+app.get("/", express.static(path.join(__dirname, "public")));
 
 module.exports = app;
 
 // for development and debugging
 if (require.main === module) {
-    require('http').createServer(app).listen(3000, function () {
-        console.info("Listening for HTTP on", this.address());
-    });
+    require("http")
+        .createServer(app)
+        .listen(3000, function () {
+            console.info("Listening for HTTP on", this.address());
+        });
 }
 ```
 
@@ -333,8 +342,8 @@ To see all of the examples, just browse [greenlock-express.js/examples/](https:/
 [ex-cicd]: https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/ci-cd/
 [ex-http-proxy]: https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/http-proxy/
 
-
 # FAQ
+
 ## 1. But did YOU read the QuickStart?
 
 99% of the questions I get are answered in the QuickStart, or in the Examples.
@@ -365,12 +374,12 @@ Let's Encrypt **REQUIRES port 80** for HTTP-01 challenges.
 
 But if you're using DNS-01 or you have a proxy in place, just use the raw node server. See these examples:
 
-- [examples/http/server.js](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/http/server.js)
-- [examples/https/server.js](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/https/server.js)
+-   [examples/http/server.js](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/http/server.js)
+-   [examples/https/server.js](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/https/server.js)
 
 If you want to use Greenlock as a proxy, see this example:
 
-- [examples/http-proxy/server.js](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/http-proxy/server.js)
+-   [examples/http-proxy/server.js](https://git.rootprojects.org/root/greenlock-express.js/src/branch/master/examples/http-proxy/server.js)
 
 # Troubleshooting
 
