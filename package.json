@@ -17,8 +17,8 @@
         "example": "examples"
     },
     "dependencies": {
-        "@root/greenlock": "^4.0.4",
-        "redirect-https": "^1.1.5"
+        "@root/greenlock": "^4.0.5",
+        "redirect-https": "^1.3.1"
     },
     "trulyOptionalDependencies": {
         "http-proxy": "^1.17.0",
